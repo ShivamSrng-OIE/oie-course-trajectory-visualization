@@ -1,0 +1,965 @@
+{
+  "ENGL 102": {
+    "course_code": "ENGL 102",
+    "course_name": "English Composition: Introduction to Writing for Research",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "ENGL 100",
+      "ENGL 101"
+    ],
+    "prerequisites_description": {
+      "ENGL 100": "C",
+      "ENGL 101": "C"
+    },
+    "corequisites": [],
+    "course_description": "This course builds on the skills students learned and practiced in ENGL 101 and provides an introduction to writing using both primary and secondary sources. Emphasis is on developing research questions, finding and citing sources, conducting primary research, and synthesizing elements of research into persuasive arguments. Students also complete this course knowing how to correctly document and attribute sources.",
+    "course_link": "https://catalog.njit.edu/search/?P=ENGL%20102",
+    "track": "track_1",
+    "year": "1",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "ENGL 100",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 101",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 3,
+    "dependency_count": 12,
+    "location": {
+      "x": 27.32811517206997,
+      "y": -198.12413815873643,
+      "z": 200
+    }
+  },
+  "ENGL 101": {
+    "course_code": "ENGL 101",
+    "course_name": "English Composition: Introduction to Academic Writing",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "placement-test score"
+    ],
+    "prerequisites_description": {},
+    "corequisites": [],
+    "course_description": "This course provides an introduction to college-level writing, particularly the rhetorical dimensions of composition, including purpose, audience, occasion, and genre. The course also focuses on the writing process, asking students to brainstorm topics, to write drafts, and to revise their writing based on reflection and peer feedback. Activities in the course involve reading challenging articles, essays, and prose and considering paintings, films, and other visual compositions. Additionally, students work to analyze claims, to formulate independent arguments, and to communicate ideas through clear, well-organized writing.",
+    "course_link": "https://catalog.njit.edu/search/?P=ENGL%20101",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 1,
+    "dependency_count": 1,
+    "location": {
+      "x": -190.2128923650344,
+      "y": 61.79850789564287,
+      "z": 0
+    }
+  },
+  "CS 103": {
+    "course_code": "CS 103",
+    "course_name": "Computer Science with Business Problems",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prequisites": [],
+    "prerequisites_description": {},
+    "corequisites": [],
+    "course_description": "An introductory course in computer science, with applications to business and managerial decision making. Topics include basic concepts of computer systems, software engineering, algorithm design, programming languages and abstraction, with applications.",
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20103",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0
+  },
+  "CS 104": {
+    "course_code": "CS 104",
+    "course_name": "Computer Programming and Graphics Problems",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prequisites": [],
+    "prerequisites_description": {},
+    "corequisites": [],
+    "course_description": "An introductory course in computer science with applications in computer graphics for architecture. Emphasis on programming methodology using a high level language as the vehicle to illustrate the concepts. Topics include basic concepts of computer systems, software engineering, algorithm design, programming languages and data abstraction, with applications.",
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20104",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0
+  },
+  "CS 113": {
+    "course_code": "CS 113",
+    "course_name": "Introduction to Computer Science",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prequisites": [
+      "CS 100",
+      "CS 103"
+    ],
+    "prerequisites_description": {
+      "CS 100": "C",
+      "CS 103": "C"
+    },
+    "corequisites": [],
+    "course_description": "Intensive introduction to computer science. Problem solving decomposition. Writing, debugging, and analyzing computer programs. Introduction to arrays and lists. Iteration and recursion. The Java language is introduced and used to highlight these concepts. A student receiving degree credit for CS 113 cannot receive degree credit for CS 115.",
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20113",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0
+  },
+  "MATH 101": {
+    "course_code": "MATH 101",
+    "course_name": "Foundations of Mathematics for the Liberal Arts",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [],
+    "prerequisites_description": {},
+    "corequisites": [],
+    "course_description": "Intended for students in degree programs offered by HSS and History. This course reviews principles of algebra and the foundations of mathematics. Degree credit awarded for degrees offered by HUM and HIST.",
+    "course_link": "https://catalog.njit.edu/search/?P=MATH%20101",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": -166.91181761401464,
+      "y": -110.1836881792669,
+      "z": 0
+    }
+  },
+  "Natural Science GER": {
+    "course_link": "https://catalog.njit.edu/undergraduate/academic-policies-procedures/general-education-requirements/natural-science-ger/",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": 196.87210464363304,
+      "y": -35.23314367447797,
+      "z": 200
+    }
+  },
+  "Social Sciences GER": {
+    "course_link": "https://catalog.njit.edu/undergraduate/academic-policies-procedures/general-education-requirements/social-science-ger/",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": 198.18926197221722,
+      "y": 26.85174927091066,
+      "z": 0
+    }
+  },
+  "FYS SEM": {
+    "course_code": "FYS SEM",
+    "course_name": "First-Year Student Seminar",
+    "credits": 0,
+    "contact_hours": "1 contact hour (1;0;0)",
+    "prerequisites": [],
+    "prerequisites_description": {},
+    "corequisites": [],
+    "course_description": "Addresses issues related to a successful college life during weekly seminars. Topics include time management, study skills, interpersonal relationships, wellness, multicultural issues and career decision making. Freshman Seminar is a graduation requirement for all first-time, full-time freshmen.",
+    "course_link": "https://catalog.njit.edu/search/?P=FYS%20SEM",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": 102.57544073825045,
+      "y": 171.6923963294638,
+      "z": 0
+    }
+  },
+  "History and Humanities GER 200 level": {
+    "course_link": "https://catalog.njit.edu/undergraduate/academic-policies-procedures/general-education-requirements/ger-200-level/",
+    "track": "track_1",
+    "year": "1",
+    "semester": "2",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": -138.56335613130216,
+      "y": 144.22273169521483,
+      "z": 200
+    }
+  },
+  "MATH 105": {
+    "course_code": "MATH 105",
+    "course_name": "Elementary Probability and Statistics",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [],
+    "prerequisites_description": {},
+    "corequisites": [],
+    "course_description": "Consider notions of probability. Topics include the binomial and normal distributions, expected value, and variance. The notions of sampling, hypothesis testing, and confidence intervals are applied to elementary situations.",
+    "course_link": "https://catalog.njit.edu/search/?P=MATH%20105",
+    "track": "track_1",
+    "year": "1",
+    "semester": "2",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": -179.98240061882208,
+      "y": -87.21430769940118,
+      "z": 200
+    }
+  },
+  "COM 303": {
+    "course_code": "COM 303",
+    "course_name": "Video Narrative",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "ENGL 102",
+      [
+        "History and Humanities GER 200 level course"
+      ]
+    ],
+    "prerequisites_description": {
+      "ENGL 102": "C",
+      "History and Humanities GER 200 level course": "C"
+    },
+    "corequisites": [],
+    "course_description": "Introduces various multimedia resources and environments in order to develop new strategies for both reading and writing within a visually-based, screen-oriented culture. Students will study different historical and theoretical lineages in videography, and learn hands-on techniques and technologies to produce independent media works of their own.  This course satisfies the three credit 300 GER in History and Humanities.",
+    "course_link": "https://catalog.njit.edu/search/?P=COM%20303",
+    "track": "track_1",
+    "year": "2",
+    "semester": "1",
+    "complete path": [
+      {
+        "source": "ENGL 100",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 101",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 102",
+        "destination": "COM 303",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "History and Humanities GER 200 level course",
+        "destination": "COM 303",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 5,
+    "dependency_count": 0,
+    "location": {
+      "x": -157.23611140501902,
+      "y": 123.59937406891855,
+      "z": 400
+    }
+  },
+  "COM 353": {
+    "course_code": "COM 353",
+    "course_name": "Applied Visual Communication",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "ENGL 102",
+      [
+        "History and Humanities GER 200 level course"
+      ]
+    ],
+    "prerequisites_description": {
+      "ENGL 102": "C",
+      "History and Humanities GER 200 level course": "C"
+    },
+    "corequisites": [],
+    "course_description": "This course explores information structuring using traditional and contemporary techniques and introduces students to the principles of visual communication and provides hands-on practice in document design. The focus is on preparing and presenting information in both professional and popular contexts. Students learn about and work with concepts that enable effective use of graphics and text. This course satisfies the three credit 300 GER in History and Humanities.",
+    "course_link": "https://catalog.njit.edu/search/?P=COM%20353",
+    "track": "track_1",
+    "year": "2",
+    "semester": "1",
+    "complete path": [
+      {
+        "source": "ENGL 100",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 101",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 102",
+        "destination": "COM 353",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "History and Humanities GER 200 level course",
+        "destination": "COM 353",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 5,
+    "dependency_count": 0,
+    "location": {
+      "x": -166.13862067183058,
+      "y": -111.346121267252,
+      "z": 400
+    }
+  },
+  "HIST 345": {
+    "course_code": "HIST 345",
+    "course_name": "Communication through the Ages",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "ENGL 102",
+      [
+        "History and Humanities GER 200 level course"
+      ]
+    ],
+    "prerequisites_description": {
+      "ENGL 102": "C",
+      "History and Humanities GER 200 level course": "C"
+    },
+    "corequisites": [],
+    "course_description": "Modes of communication, ancient and modern, in their social and cultural context, from cave paintings to computers. Topics include literacy and economic development in the West; the technological revolution in media beginning with Daguerre, Samuel Morse, and Alexander Graham Bell; the institutional development of mass media and popular culture; and contemporary trends in world communication and interaction. This course may be used to satisfy a three credit 300 level GER in History and Humanities.",
+    "course_link": "https://catalog.njit.edu/search/?P=HIST%20345",
+    "track": "track_1",
+    "year": "2",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "ENGL 100",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 101",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 102",
+        "destination": "HIST 345",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "History and Humanities GER 200 level course",
+        "destination": "HIST 345",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 5,
+    "dependency_count": 0,
+    "location": {
+      "x": -149.9379415079341,
+      "y": -132.35790001493427,
+      "z": 600
+    }
+  },
+  "COM 354": {
+    "course_code": "COM 354",
+    "course_name": "Designing Digital Media",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "ENGL 102",
+      [
+        "History and Humanities GER 200 level course"
+      ]
+    ],
+    "prerequisites_description": {
+      "ENGL 102": "C",
+      "History and Humanities GER 200 level course": "C"
+    },
+    "corequisites": [],
+    "course_description": "This course explores how computer technology has influenced the presentation of information and the ways in which it is structured via digital media. Students learn how various web-based media platforms and tools are used to present familiar topics in ways that are both dynamic and that align with contemporary culture. Through guided interactive activities, the course develops techniques for presenting information for technical, commercial, and artistic use. Projects involve the use of HTML editors, NJIT networks, and graphical and animation software. This course satisfies the three credit 300 GER in History and Humanities.",
+    "course_link": "https://catalog.njit.edu/search/?P=COM%20354",
+    "track": "track_1",
+    "year": "2",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "ENGL 100",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 101",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 102",
+        "destination": "COM 354",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "History and Humanities GER 200 level course",
+        "destination": "COM 354",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 5,
+    "dependency_count": 0,
+    "location": {
+      "x": 79.54647126479715,
+      "y": -183.5002967553971,
+      "z": 600
+    }
+  },
+  "COM 339": {
+    "course_code": "COM 339",
+    "course_name": "Practical Journalism",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "ENGL 102",
+      [
+        "History and Humanities GER 200 level course"
+      ]
+    ],
+    "prerequisites_description": {
+      "ENGL 102": "C",
+      "History and Humanities GER 200 level course": "C"
+    },
+    "corequisites": [],
+    "course_description": "A descriptive and analytic survey of news systems. Assignments include practice in writing straight news items, sports writing, feature writing, science writing, interviewing, and editing with emphasis on understanding methods. The survey of printed and broadcast news systems includes the influence of technological, economic, legal, ethical, and historical factors. This course satisfies the three credit 300 GER in History and Humanities.",
+    "course_link": "https://catalog.njit.edu/search/?P=COM%20339",
+    "track": "track_1",
+    "year": "2",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "ENGL 100",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 101",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 102",
+        "destination": "COM 339",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "History and Humanities GER 200 level course",
+        "destination": "COM 339",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 5,
+    "dependency_count": 0,
+    "location": {
+      "x": 199.1003644346956,
+      "y": 18.948479674406773,
+      "z": 600
+    }
+  },
+  "COM 355": {
+    "course_code": "COM 355",
+    "course_name": "Digital Media Futures",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "ENGL 102",
+      [
+        "History and Humanities GER 200 level course"
+      ]
+    ],
+    "prerequisites_description": {
+      "ENGL 102": "C",
+      "History and Humanities GER 200 level course": "C"
+    },
+    "corequisites": [],
+    "course_description": "This course provides students with opportunities to explore past, current, and possible future directions pertaining to information theories and practices as they continue to advance in both print and digital media formats. Beginning with early approaches in this area like cybernetics, the course then focuses on how digital technology is continuing to transform the fields of communication and media, especially in terms of user interactivity, game design, storytelling, web-application development, marketing, and many social and cultural political movements. Course assignments cover a wide array of formats and skills, ranging from research papers to digital narrative production as well as new and creative approaches to video and audio production. This course satisfies the three credit 300 GER in History and Humanities.",
+    "course_link": "https://catalog.njit.edu/search/?P=COM%20355",
+    "track": "track_1",
+    "year": "3",
+    "semester": "1",
+    "complete path": [
+      {
+        "source": "ENGL 100",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 101",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 102",
+        "destination": "COM 355",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "History and Humanities GER 200 level course",
+        "destination": "COM 355",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 5,
+    "dependency_count": 0,
+    "location": {
+      "x": -190.70157698443245,
+      "y": -60.27361392558592,
+      "z": 800
+    }
+  },
+  "History and Humanities GER 300+ level": {
+    "course_link": "https://catalog.njit.edu/undergraduate/academic-policies-procedures/general-education-requirements/ger-300-level/",
+    "track": "track_1",
+    "year": "3",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": -163.08307121545508,
+      "y": -115.77526455566753,
+      "z": 1000
+    }
+  },
+  "STS 349": {
+    "course_code": "STS 349",
+    "course_name": "Electronic Music in Practice",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "ENGL 102",
+      [
+        "History and Humanities GER 200 level course"
+      ]
+    ],
+    "prerequisites_description": {
+      "ENGL 102": "C",
+      "History and Humanities GER 200 level course": "C"
+    },
+    "corequisites": [],
+    "course_description": "Students will learn the basics of notebook computer-based music composition and production. Emphasis will be on composition and making of music, learning the aesthetics necessary to get the most out of your machine. Course will require extensive work on your own laptop computer. Computer requirements: A PC or Macintosh system running Ableton Live. This course satisfies the three credit 300 GER in History and Humanities.",
+    "course_link": "https://catalog.njit.edu/search/?P=STS%20349",
+    "track": "track_1",
+    "year": "3",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "ENGL 100",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 101",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 102",
+        "destination": "STS 349",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "History and Humanities GER 200 level course",
+        "destination": "STS 349",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 5,
+    "dependency_count": 0,
+    "location": {
+      "x": 63.885983022082115,
+      "y": 189.52198071279815,
+      "z": 1000
+    }
+  },
+  "COM 312": {
+    "course_code": "COM 312",
+    "course_name": "Oral Presentations",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "ENGL 102",
+      [
+        "History and Humanities GER 200 level course"
+      ]
+    ],
+    "prerequisites_description": {
+      "ENGL 102": "C",
+      "History and Humanities GER 200 level course": "C"
+    },
+    "corequisites": [],
+    "course_description": "Instruction and practice in effective oral presentations. Students deliver a wide range of presentations adapted to the needs of a variety of audiences. Topics include voice and diction, presentation skills, the effective use of visual aids, reporting technical material and audience analysis. This course satisfies the three credit 300 GER in History and Humanities.",
+    "course_link": "https://catalog.njit.edu/search/?P=COM%20312",
+    "track": "track_1",
+    "year": "3",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "ENGL 100",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 101",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 102",
+        "destination": "COM 312",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "History and Humanities GER 200 level course",
+        "destination": "COM 312",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 5,
+    "dependency_count": 0,
+    "location": {
+      "x": -160.50426028189838,
+      "y": 119.32469330092836,
+      "z": 1000
+    }
+  },
+  "COM 318": {
+    "course_code": "COM 318",
+    "course_name": "Communication Theory and Practice",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "ENGL 102",
+      [
+        "History and Humanities GER 200 level course"
+      ]
+    ],
+    "prerequisites_description": {
+      "ENGL 102": "C",
+      "History and Humanities GER 200 level course": "C"
+    },
+    "corequisites": [],
+    "course_description": "Understanding communication in terms of both conceptual formulations and practical applications is fundamental to nearly all contemporary activities. This course provides students with an opportunity to discover and critically employ communication theories through a wide variety of formats related to both professional and everyday environments including language, visual media, advertising, cultural issues, and social progress. Students gain experience conducting theoretically rigorous computer-mediated case studies and live field investigations to develop their understanding of how communication and media contribute to all sectors of society. This course satisfies the three credit 300 GER in History and Humanities.",
+    "course_link": "https://catalog.njit.edu/search/?P=COM%20318",
+    "track": "track_1",
+    "year": "4",
+    "semester": "1",
+    "complete path": [
+      {
+        "source": "ENGL 100",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 101",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 102",
+        "destination": "COM 318",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "History and Humanities GER 200 level course",
+        "destination": "COM 318",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 5,
+    "dependency_count": 0,
+    "location": {
+      "x": 179.437250830359,
+      "y": -88.33047613617182,
+      "z": 1200
+    }
+  },
+  "COM 490": {
+    "course_code": "COM 490",
+    "course_name": "Co-op Work Experience I",
+    "credits": 3,
+    "contact_hours": "3  (0;0;3)",
+    "prerequisites": [
+      "ENGL 102",
+      [
+        "History and Humanities GER 200 level course"
+      ],
+      "department approval",
+      "permission of the Office of Cooperative Education and Internships"
+    ],
+    "prerequisites_description": {
+      "ENGL 102": "C",
+      "History and Humanities GER 200 level course": "C"
+    },
+    "corequisites": [],
+    "course_description": "Students gain major-related work experience and reinforcement of their academic program. Work assignments are facilitated and approved by the co-op office. Requires mandatory participation in seminars and completion of a report. \nNote: Normal grading applies to this COOP Experience.",
+    "course_link": "https://catalog.njit.edu/search/?P=COM%20490",
+    "track": "track_1",
+    "year": "4",
+    "semester": "1",
+    "complete path": [
+      {
+        "source": "ENGL 100",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 101",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 102",
+        "destination": "COM 490",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "History and Humanities GER 200 level course",
+        "destination": "COM 490",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "department approval",
+        "destination": "COM 490",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "permission of the Office of Cooperative Education and Internships",
+        "destination": "COM 490",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 7,
+    "dependency_count": 0,
+    "location": {
+      "x": 139.45643484726088,
+      "y": 143.35934842099306,
+      "z": 1200
+    }
+  },
+  "COM 491": {
+    "course_code": "COM 491",
+    "course_name": "Co-op Work Experience II",
+    "credits": 3,
+    "contact_hours": "3  (0;0;3)",
+    "prerequisites": [
+      "ENGL 102",
+      [
+        "History and Humanities GER 200 level course"
+      ],
+      "department approval",
+      "permission of the Office of Cooperative Education and Internships"
+    ],
+    "prerequisites_description": {
+      "ENGL 102": "C",
+      "History and Humanities GER 200 level course": "C"
+    },
+    "corequisites": [],
+    "course_description": "Students gain major-related work experience and reinforcement of their academic program. Work assignments are facilitated and approved by the co-op office. Requires mandatory participation in seminars and completion of a report. \nNote: Normal grading applies to this COOP Experience.",
+    "course_link": "https://catalog.njit.edu/search/?P=COM%20491",
+    "track": "track_1",
+    "year": "4",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "ENGL 100",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 101",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 102",
+        "destination": "COM 491",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "History and Humanities GER 200 level course",
+        "destination": "COM 491",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "department approval",
+        "destination": "COM 491",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "permission of the Office of Cooperative Education and Internships",
+        "destination": "COM 491",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 7,
+    "dependency_count": 0,
+    "location": {
+      "x": -62.22908003831791,
+      "y": 190.07246406985055,
+      "z": 1400
+    }
+  },
+  "COM 496": {
+    "course_code": "COM 496",
+    "course_name": "Senior Project-Communication and Media",
+    "credits": 2,
+    "contact_hours": "4  (0;0;4)",
+    "prerequisites": [
+      "ENGL 102",
+      [
+        "History and Humanities GER 200 level course"
+      ]
+    ],
+    "prerequisites_description": {
+      "ENGL 102": "C",
+      "History and Humanities GER 200 level course": "C"
+    },
+    "corequisites": [],
+    "course_description": "Intended for Communication and Media majors only. For professional and technical communication majors only. Provides students with a capstone experience. Offers PTC students the opportunity to enhance their understanding of communication through their integration of skills and knowledge gained in prior courses. The resultant research thesis or field project, of substantial length and originality, represents the culmination of the undergraduate disciplinary experience. Utilizing both a seminar and workshop approach, entails intense and sustained collaboration between student and instructor, and cooperation among students.",
+    "course_link": "https://catalog.njit.edu/search/?P=COM%20496",
+    "track": "track_1",
+    "year": "4",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "ENGL 100",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 101",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 102",
+        "destination": "COM 496",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "History and Humanities GER 200 level course",
+        "destination": "COM 496",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 5,
+    "dependency_count": 0,
+    "location": {
+      "x": -199.99949879806684,
+      "y": -0.4477505131895019,
+      "z": 1400
+    }
+  },
+  "Humanities and Social Science Senior Seminar GER": {
+    "course_link": "https://catalog.njit.edu/undergraduate/academic-policies-procedures/general-education-requirements/hss-capstone/",
+    "track": "track_1",
+    "year": "4",
+    "semester": "2",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": -61.37740795183115,
+      "y": -190.34918910548186,
+      "z": 1400
+    }
+  }
+}

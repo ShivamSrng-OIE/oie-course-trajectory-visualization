@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+
+body {
+  overflow: hidden;
+  font-size: 1rem;
+  font-weight: 400;
+  font-family: 'Mulish', sans-serif;
+}
+
+.indexpage-main-layout {
+  padding: 0px;
+  margin: 0px;
+  height: 100vh;
+  display: flex;
+  color: #FFFFFF;
+  flex-direction: row;
+  background: #131314;
+}
+
+.Select-control {
+  cursor: pointer;
+  background-color: #1E1F20 !important;
+}
+
+.Select-value-label {
+  color: white !important;
+}
+
+.Select--single > .Select-control .Select-value, .Select-placeholder {
+  border: 1px solid grey;
+  border-radius: 4px;
+}
+
+.VirtualizedSelectOption {
+  background-color: #1E1F20 !important;
+  color: white;
+}

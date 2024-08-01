@@ -1,0 +1,1603 @@
+{
+  "CS 114": {
+    "course_code": "CS 114",
+    "course_name": "Introduction to Computer Science II",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "CS 113"
+    ],
+    "prerequisites_description": {
+      "CS 113": "C"
+    },
+    "corequisites": [],
+    "course_description": "A study of advanced programming topics with logical structures of data, their physical representation, and the design of computer algorithms operating on the structures. Course covers program specifications, correctness and efficiency, data abstraction, and algorithm analysis. Students receiving degree credit for CS 114 cannot receive degree credit for CS 116 or CS 505.",
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20114",
+    "track": "track_1",
+    "year": "2",
+    "semester": "1",
+    "complete path": [
+      {
+        "source": "CS 100",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 103",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 113",
+        "destination": "CS 114",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 3,
+    "dependency_count": 5,
+    "location": {
+      "x": -132.0182506654728,
+      "y": -150.237084274251,
+      "z": 400
+    }
+  },
+  "MATH 111": {
+    "course_code": "MATH 111",
+    "course_name": "Calculus I",
+    "credits": 4,
+    "contact_hours": "5  (4;0;1)",
+    "prerequisites": [
+      "MATH 110",
+      "standardized entrance examinations"
+    ],
+    "prerequisites_description": {
+      "MATH 110": "C"
+    },
+    "corequisites": [],
+    "course_description": "Topics include limits, differentiation, applications of differentiation, and integration.",
+    "course_link": "https://catalog.njit.edu/search/?P=MATH%20111",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [
+      {
+        "source": "MATH 110",
+        "destination": "MATH 111",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "standardized entrance examinations",
+        "destination": "MATH 111",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 2,
+    "dependency_count": 4,
+    "location": {
+      "x": 43.79585674740905,
+      "y": -195.14590165248265,
+      "z": 0
+    }
+  },
+  "PHYS 111": {
+    "course_code": "PHYS 111",
+    "course_name": "Physics I",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [],
+    "prerequisites_description": {},
+    "corequisites": [
+      "PHYS 111A",
+      "MATH 111"
+    ],
+    "course_description": "Elementary mechanics with an emphasis on the fundamental concepts and laws of mechanics, especially the conservation laws. Topics are scalar and vector quantities of mechanics; rectilinear and circular motion; equilibrium and Newton's laws of motion; work, energy, momentum; the conservation laws. Lab must be taken concurrently. See PHYS 111A.",
+    "course_link": "https://catalog.njit.edu/search/?P=PHYS%20111",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [
+      {
+        "source": "PHYS 111A",
+        "destination": "PHYS 111",
+        "relation": "corequisite"
+      },
+      {
+        "source": "MATH 110",
+        "destination": "MATH 111",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "standardized entrance examinations",
+        "destination": "MATH 111",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 111",
+        "destination": "PHYS 111",
+        "relation": "corequisite"
+      }
+    ],
+    "on_dependant_courses_count": 4,
+    "dependency_count": 3,
+    "location": {
+      "x": 147.10337990176507,
+      "y": 135.5012753500017,
+      "z": 0
+    }
+  },
+  "PHYS 111A": {
+    "course_code": "PHYS 111A",
+    "course_name": "Physics I Lab",
+    "credits": 1,
+    "contact_hours": "2  (0;2;0)",
+    "prerequisites": [],
+    "prerequisites_description": {},
+    "corequisites": [
+      "PHYS 111"
+    ],
+    "course_description": "Laboratory component of PHYS 111. Lab must be taken concurrently with PHYS 111.",
+    "course_link": "https://catalog.njit.edu/search/?P=PHYS%20111A",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [
+      {
+        "source": "MATH 110",
+        "destination": "MATH 111",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "standardized entrance examinations",
+        "destination": "MATH 111",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 111",
+        "destination": "PHYS 111",
+        "relation": "corequisite"
+      },
+      {
+        "source": "PHYS 111",
+        "destination": "PHYS 111A",
+        "relation": "corequisite"
+      }
+    ],
+    "on_dependant_courses_count": 4,
+    "dependency_count": 3,
+    "location": {
+      "x": -43.79585674740902,
+      "y": 195.14590165248265,
+      "z": 0
+    }
+  },
+  "MATH 112": {
+    "course_code": "MATH 112",
+    "course_name": "Calculus II",
+    "credits": 4,
+    "contact_hours": "5  (4;0;1)",
+    "prerequisites": [
+      "MATH 111"
+    ],
+    "prerequisites_description": {
+      "MATH 111": "C"
+    },
+    "corequisites": [],
+    "course_description": "Topics include integration, applications of integration, series, exponential and logarithmic functions, transcendental functions, polar coordinates, and conic sections.",
+    "course_link": "https://catalog.njit.edu/search/?P=MATH%20112",
+    "track": "track_1",
+    "year": "1",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "MATH 110",
+        "destination": "MATH 111",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "standardized entrance examinations",
+        "destination": "MATH 111",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 111",
+        "destination": "MATH 112",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 3,
+    "dependency_count": 3,
+    "location": {
+      "x": 63.94633696576586,
+      "y": -189.50162529292652,
+      "z": 200
+    }
+  },
+  "CS 280": {
+    "course_code": "CS 280",
+    "course_name": "Programming Language Concepts",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "CS 114",
+      "CS 116",
+      "IT 114"
+    ],
+    "prerequisites_description": {
+      "CS 114": "C",
+      "CS 116": "C",
+      "IT 114": "C"
+    },
+    "corequisites": [],
+    "course_description": "Conceptual study of programming language syntax, semantics and implementation. Course covers language definition structure, data types and structures, control structures and data flow, run-time consideration, and interpretative languages.",
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20280",
+    "track": "track_1",
+    "year": "2",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "CS 100",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 103",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 113",
+        "destination": "CS 114",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 114",
+        "destination": "CS 280",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 116",
+        "destination": "CS 280",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "IT 114",
+        "destination": "CS 280",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 6,
+    "dependency_count": 3,
+    "location": {
+      "x": 109.61591432418072,
+      "y": -167.2852394172118,
+      "z": 600
+    }
+  },
+  "CS 100": {
+    "course_code": "CS 100",
+    "course_name": "Roadmap to Computing",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [],
+    "prerequisites_description": {},
+    "corequisites": [],
+    "course_description": "An introduction to programming and problem solving skills using Python or other very high level language. Topics include basic strategies for problem solving, constructs that control the flow of execution of a program and the use of high level data types such as lists, strings and dictionaries in problem representation. The course also presents an overview of selected topics in computing, such as networking and databases.",
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20100",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 2,
+    "location": {
+      "x": -147.10337990176504,
+      "y": -135.50127535000172,
+      "z": 0
+    }
+  },
+  "ENGL 101": {
+    "course_code": "ENGL 101",
+    "course_name": "English Composition: Introduction to Academic Writing",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "placement-test score"
+    ],
+    "prerequisites_description": {},
+    "corequisites": [],
+    "course_description": "This course provides an introduction to college-level writing, particularly the rhetorical dimensions of composition, including purpose, audience, occasion, and genre. The course also focuses on the writing process, asking students to brainstorm topics, to write drafts, and to revise their writing based on reflection and peer feedback. Activities in the course involve reading challenging articles, essays, and prose and considering paintings, films, and other visual compositions. Additionally, students work to analyze claims, to formulate independent arguments, and to communicate ideas through clear, well-organized writing.",
+    "course_link": "https://catalog.njit.edu/search/?P=ENGL%20101",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 1,
+    "dependency_count": 2,
+    "location": {
+      "x": 190.89923664917418,
+      "y": -59.644626302480866,
+      "z": 0
+    }
+  },
+  "CS 113": {
+    "course_code": "CS 113",
+    "course_name": "Introduction to Computer Science",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "CS 100",
+      "CS 103"
+    ],
+    "prerequisites_description": {
+      "CS 100": "C",
+      "CS 103": "C"
+    },
+    "corequisites": [],
+    "course_description": "Intensive introduction to computer science. Problem solving decomposition. Writing, debugging, and analyzing computer programs. Introduction to arrays and lists. Iteration and recursion. The Java language is introduced and used to highlight these concepts. A student receiving degree credit for CS 113 cannot receive degree credit for CS 115.",
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20113",
+    "track": "track_1",
+    "year": "1",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "CS 100",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 103",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 2,
+    "dependency_count": 2,
+    "location": {
+      "x": -160.46625073291162,
+      "y": -119.37580314168503,
+      "z": 200
+    }
+  },
+  "CS 241": {
+    "course_code": "CS 241",
+    "course_name": "Foundations of Computer Science I",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "CS 114",
+      "MATH 112"
+    ],
+    "prerequisites_description": {
+      "CS 114": "C",
+      "MATH 112": "C"
+    },
+    "corequisites": [],
+    "course_description": "An introduction to the foundations of computer science with emphasis on the development of  techniques for the design and proof of correctness of algorithms and the analysis of their computational complexity. Reasoning techniques based on propositional and predicate logic and relational calculus operations with applications to databases will also be introduced. Auxiliary topics such as combinatorics of finite sets, functions and relations, and graph-theory definitions and graph storage alternatives will also be examined.",
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20241",
+    "track": "track_1",
+    "year": "2",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "CS 100",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 103",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 113",
+        "destination": "CS 114",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 114",
+        "destination": "CS 241",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 110",
+        "destination": "MATH 111",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "standardized entrance examinations",
+        "destination": "MATH 111",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 111",
+        "destination": "MATH 112",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 112",
+        "destination": "CS 241",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 8,
+    "dependency_count": 2,
+    "location": {
+      "x": -90.06530985137692,
+      "y": -178.57278617240496,
+      "z": 600
+    }
+  },
+  "PHYS 121": {
+    "course_code": "PHYS 121",
+    "course_name": "Physics II",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "PHYS 111",
+      "PHYS 111A",
+      "MATH 111"
+    ],
+    "prerequisites_description": {
+      "PHYS 111": "C",
+      "PHYS 111A": "C",
+      "MATH 111": "C"
+    },
+    "corequisites": [
+      "PHYS 121A",
+      "MATH 112"
+    ],
+    "course_description": "This course deals with an introduction to electricity and magnetism. Topics include simple dc circuits, the electric field, the magnetic field, electric potential, capacitance relationships between electric and magnetic fields, inductance, and simple ac circuits. Lab must be taken concurrently. See PHYS 121A.",
+    "course_link": "https://catalog.njit.edu/search/?P=PHYS%20121",
+    "track": "track_1",
+    "year": "1",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "PHYS 111A",
+        "destination": "PHYS 111",
+        "relation": "corequisite"
+      },
+      {
+        "source": "MATH 110",
+        "destination": "MATH 111",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "standardized entrance examinations",
+        "destination": "MATH 111",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 111",
+        "destination": "PHYS 111",
+        "relation": "corequisite"
+      },
+      {
+        "source": "PHYS 111",
+        "destination": "PHYS 121",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "PHYS 122",
+        "destination": "PHYS 121A",
+        "relation": "corequisite"
+      },
+      {
+        "source": "PHYS 121A",
+        "destination": "PHYS 121",
+        "relation": "corequisite"
+      },
+      {
+        "source": "MATH 112",
+        "destination": "PHYS 121",
+        "relation": "corequisite"
+      }
+    ],
+    "on_dependant_courses_count": 8,
+    "dependency_count": 1,
+    "location": {
+      "x": 59.65258729930505,
+      "y": 190.89674913025308,
+      "z": 200
+    }
+  },
+  "PHYS 121A": {
+    "course_code": "PHYS 121A",
+    "course_name": "Physics II Lab",
+    "credits": 1,
+    "contact_hours": "2  (0;2;0)",
+    "prerequisites": [
+      "PHYS 111",
+      "PHYS 111A",
+      "MATH 111"
+    ],
+    "prerequisites_description": {
+      "PHYS 111": "C",
+      "PHYS 111A": "C",
+      "MATH 111": "C"
+    },
+    "corequisites": [
+      "PHYS 121",
+      "PHYS 122"
+    ],
+    "course_description": "Laboratory component of PHYS 121 and PHYS 122. Lab must be taken concurrently with PHYS 121 or PHYS 122.",
+    "course_link": "https://catalog.njit.edu/search/?P=PHYS%20121A",
+    "track": "track_1",
+    "year": "1",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "PHYS 111A",
+        "destination": "PHYS 111",
+        "relation": "corequisite"
+      },
+      {
+        "source": "MATH 110",
+        "destination": "MATH 111",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "standardized entrance examinations",
+        "destination": "MATH 111",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 111",
+        "destination": "PHYS 111",
+        "relation": "corequisite"
+      },
+      {
+        "source": "PHYS 111",
+        "destination": "PHYS 121A",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 112",
+        "destination": "PHYS 121",
+        "relation": "corequisite"
+      },
+      {
+        "source": "PHYS 121",
+        "destination": "PHYS 121A",
+        "relation": "corequisite"
+      },
+      {
+        "source": "PHYS 122",
+        "destination": "PHYS 121A",
+        "relation": "corequisite"
+      }
+    ],
+    "on_dependant_courses_count": 8,
+    "dependency_count": 1,
+    "location": {
+      "x": -163.119933965968,
+      "y": 115.72332151704876,
+      "z": 200
+    }
+  },
+  "MATH 333": {
+    "course_code": "MATH 333",
+    "course_name": "Probability and Statistics",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "MATH 112"
+    ],
+    "prerequisites_description": {
+      "MATH 112": "C"
+    },
+    "corequisites": [],
+    "course_description": "Descriptive statistics and statistical inference. Topics include discrete and continuous distributions of random variables, statistical inference for the mean and variance of populations, and graphical analysis of data.",
+    "course_link": "https://catalog.njit.edu/search/?P=MATH%20333",
+    "track": "track_1",
+    "year": "2",
+    "semester": "1",
+    "complete path": [
+      {
+        "source": "MATH 110",
+        "destination": "MATH 111",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "standardized entrance examinations",
+        "destination": "MATH 111",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 111",
+        "destination": "MATH 112",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 112",
+        "destination": "MATH 333",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 4,
+    "dependency_count": 1,
+    "location": {
+      "x": 195.11215083984536,
+      "y": 43.94597358859439,
+      "z": 400
+    }
+  },
+  "YWCC 207": {
+    "course_code": "YWCC 207",
+    "course_name": "Computing & Effective Com",
+    "credits": 1,
+    "contact_hours": "1 contact hour (1;0;0)",
+    "prerequisites": [
+      "Student of YWCC",
+      "sophomore/junior standing"
+    ],
+    "prerequisites_description": {},
+    "corequisites": [],
+    "course_description": "Through encouraging collaboration and communication, this course addresses how to best present oneself via verbal and nonverbal communication. Students will learn how to effectively network, create resumes, interview and best present ideas. The skills learned in this course prepare students for co-op/internship opportunities as well as future employment.",
+    "course_link": "https://catalog.njit.edu/search/?P=YWCC%20207",
+    "track": "track_1",
+    "year": "2",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "Student of YWCC",
+        "destination": "YWCC 207",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "sophomore/junior standing",
+        "destination": "YWCC 207",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 2,
+    "dependency_count": 1,
+    "location": {
+      "x": -199.6812241755577,
+      "y": -11.287546755193038,
+      "z": 600
+    }
+  },
+  "CS 288": {
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20288",
+    "track": "track_1",
+    "year": "3",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 1,
+    "location": {
+      "x": -116.21663968244098,
+      "y": 162.7688319701339,
+      "z": 800
+    }
+  },
+  "CS 356": {
+    "course_code": "CS 356",
+    "course_name": "Introduction to Computer Networks",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "CS 280"
+    ],
+    "prerequisites_description": {
+      "CS 280": "C"
+    },
+    "corequisites": [],
+    "course_description": "This course provides an introduction to computer networks, with a special focus on Internet architecture and protocols. Topics include layered-network architectures, addressing, naming, forwarding, routing, communication reliability, the client-server model, web and email protocols. Besides the theoretical foundations, students acquire practical experience by programming reduced versions of real Internet protocols.",
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20356",
+    "track": "track_1",
+    "year": "3",
+    "semester": "1",
+    "complete path": [
+      {
+        "source": "CS 100",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 103",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 113",
+        "destination": "CS 114",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 114",
+        "destination": "CS 280",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 116",
+        "destination": "CS 280",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "IT 114",
+        "destination": "CS 280",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 280",
+        "destination": "CS 356",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 7,
+    "dependency_count": 1,
+    "location": {
+      "x": 118.88944160392263,
+      "y": 160.82692770524304,
+      "z": 800
+    }
+  },
+  "CS 490": {
+    "course_code": "CS 490",
+    "course_name": "Guided Design in Software Engineering",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "CS 280",
+      "CS 288"
+    ],
+    "prerequisites_description": {
+      "CS 280": "C",
+      "CS 288": "C"
+    },
+    "corequisites": [],
+    "course_description": "This course focuses on the methodology for developing software systems. Methods and techniques for functional requirements analysis and specifications, design, coding, testing and proving, integration and maintenance are discussed.",
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20490",
+    "track": "track_1",
+    "year": "4",
+    "semester": "1",
+    "complete path": [
+      {
+        "source": "CS 100",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 103",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 113",
+        "destination": "CS 114",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 114",
+        "destination": "CS 280",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 116",
+        "destination": "CS 280",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "IT 114",
+        "destination": "CS 280",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 280",
+        "destination": "CS 490",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 288",
+        "destination": "CS 490",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 8,
+    "dependency_count": 1,
+    "location": {
+      "x": 91.40543339221033,
+      "y": -177.8905470967533,
+      "z": 1200
+    }
+  },
+  "FYS SEM": {
+    "course_code": "FYS SEM",
+    "course_name": "First-Year Student Seminar",
+    "credits": 0,
+    "contact_hours": "1 contact hour (1;0;0)",
+    "prerequisites": [],
+    "prerequisites_description": {},
+    "corequisites": [],
+    "course_description": "Addresses issues related to a successful college life during weekly seminars. Topics include time management, study skills, interpersonal relationships, wellness, multicultural issues and career decision making. Freshman Seminar is a graduation requirement for all first-time, full-time freshmen.",
+    "course_link": "https://catalog.njit.edu/search/?P=FYS%20SEM",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": -190.89923664917418,
+      "y": 59.64462630248089,
+      "z": 0
+    }
+  },
+  "ENGL 102": {
+    "course_code": "ENGL 102",
+    "course_name": "English Composition: Introduction to Writing for Research",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "ENGL 100",
+      "ENGL 101"
+    ],
+    "prerequisites_description": {
+      "ENGL 100": "C",
+      "ENGL 101": "C"
+    },
+    "corequisites": [],
+    "course_description": "This course builds on the skills students learned and practiced in ENGL 101 and provides an introduction to writing using both primary and secondary sources. Emphasis is on developing research questions, finding and citing sources, conducting primary research, and synthesizing elements of research into persuasive arguments. Students also complete this course knowing how to correctly document and attribute sources.",
+    "course_link": "https://catalog.njit.edu/search/?P=ENGL%20102",
+    "track": "track_1",
+    "year": "1",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "ENGL 100",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 101",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 3,
+    "dependency_count": 0,
+    "location": {
+      "x": 199.9872604338088,
+      "y": 2.2573577873096005,
+      "z": 200
+    }
+  },
+  "Science Elective": {
+    "course_link": "https://catalog.njit.edu/undergraduate/academic-policies-procedures/general-education-requirements/natural-science-ger/",
+    "track": "track_1",
+    "year": "2",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": 18.497865872192982,
+      "y": 199.1427351378261,
+      "z": 400
+    }
+  },
+  "History and Humanities GER 200 level": {
+    "course_link": "https://catalog.njit.edu/undergraduate/academic-policies-procedures/general-education-requirements/ger-200-level/",
+    "track": "track_1",
+    "year": "2",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": -183.67984101149338,
+      "y": 79.13100533920013,
+      "z": 400
+    }
+  },
+  "IS 350": {
+    "course_code": "IS 350",
+    "course_name": "Computers, Society and Ethics",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "ENGL 101",
+      [
+        "CS 100",
+        "CS 101",
+        "CS 103",
+        "CS 104",
+        "CS 113",
+        "CS 115",
+        "BNFO 135"
+      ],
+      [
+        "History and Humanities GER 200 level course"
+      ]
+    ],
+    "prerequisites_description": {
+      "ENGL 101": "C",
+      "CS 100": "C",
+      "CS 101": "C",
+      "CS 103": "C",
+      "CS 104": "C",
+      "CS 113": "C",
+      "CS 115": "C",
+      "BNFO 135": "C",
+      "History and Humanities GER 200 level course": "C"
+    },
+    "corequisites": [],
+    "course_description": "Examines the historical evolution of computer and information systems and explores their implications in the home, business, government, medicine and education. Topics include automation and job impact, privacy, and legal and ethical issues.",
+    "course_link": "https://catalog.njit.edu/search/?P=IS%20350",
+    "track": "track_1",
+    "year": "2",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 101",
+        "destination": "IS 350",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 100",
+        "destination": "IS 350",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 101",
+        "destination": "IS 350",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 103",
+        "destination": "IS 350",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 104",
+        "destination": "IS 350",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 113",
+        "destination": "IS 350",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 115",
+        "destination": "IS 350",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "BNFO 135",
+        "destination": "IS 350",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "History and Humanities GER 200 level course",
+        "destination": "IS 350",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 10,
+    "dependency_count": 0,
+    "location": {
+      "x": 199.6812241755577,
+      "y": 11.287546755193063,
+      "z": 600
+    }
+  },
+  "or COM 313": {
+    "course_link": "https://catalog.njit.edu/search/?P=or%20COM%20313",
+    "track": "track_1",
+    "year": "2",
+    "semester": "2",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0
+  },
+  "CS 332": {
+    "course_code": "CS 332",
+    "course_name": "Principles of Operating Systems",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "CS 114",
+      "CS 116",
+      "IT 114"
+    ],
+    "prerequisites_description": {
+      "CS 114": "C",
+      "CS 116": "C",
+      "IT 114": "C"
+    },
+    "corequisites": [],
+    "course_description": "Organization of operating systems covering structure, process management and scheduling; interaction of concurrent processes; interrupts; I/O, device handling; memory and virtual memory management and file management.",
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20332",
+    "track": "track_1",
+    "year": "3",
+    "semester": "1",
+    "complete path": [
+      {
+        "source": "CS 100",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 103",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 113",
+        "destination": "CS 114",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 114",
+        "destination": "CS 332",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 116",
+        "destination": "CS 332",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "IT 114",
+        "destination": "CS 332",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 6,
+    "dependency_count": 0,
+    "location": {
+      "x": -190.71527498597092,
+      "y": -60.23025723857979,
+      "z": 800
+    }
+  },
+  "Social Sciences GER": {
+    "course_link": "https://catalog.njit.edu/undergraduate/academic-policies-procedures/general-education-requirements/social-science-ger/",
+    "track": "track_1",
+    "year": "3",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": -1.6518824326716857,
+      "y": -199.99317809472558,
+      "z": 800
+    }
+  },
+  "CS 301": {
+    "course_code": "CS 301",
+    "course_name": "Introduction to Data Science",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "CS 114",
+      [
+        "MATH 333",
+        "MATH 341"
+      ]
+    ],
+    "prerequisites_description": {
+      "CS 114": "C",
+      "MATH 333": "C",
+      "MATH 341": "C"
+    },
+    "corequisites": [],
+    "course_description": "This course is designed for CS BS students to equip them with introductory principles as well as hands-on skills that are required to solve data science problems. The first part of the course focuses on learning models, formalism, and algorithmic techniques that are popular in data science and heavily used in practice. In the second part of the course, students are introduced to data science tools (e.g., Excel, Python).",
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20301",
+    "track": "track_1",
+    "year": "3",
+    "semester": "1",
+    "complete path": [
+      {
+        "source": "CS 100",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 103",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 113",
+        "destination": "CS 114",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 114",
+        "destination": "CS 301",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 110",
+        "destination": "MATH 111",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "standardized entrance examinations",
+        "destination": "MATH 111",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 111",
+        "destination": "MATH 112",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 112",
+        "destination": "MATH 333",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 333",
+        "destination": "CS 301",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 341",
+        "destination": "CS 301",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 10,
+    "dependency_count": 0,
+    "location": {
+      "x": 189.69435549716096,
+      "y": -63.372324342071586,
+      "z": 800
+    }
+  },
+  "CS 331": {
+    "course_code": "CS 331",
+    "course_name": "Database System Design & Mgmt",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "CS 114",
+      "CS 116",
+      "IT 114"
+    ],
+    "prerequisites_description": {
+      "CS 114": "C",
+      "CS 116": "C",
+      "IT 114": "C"
+    },
+    "corequisites": [],
+    "course_description": "Database system architecture; data modeling using the entity-relationship model; storage of databases; the hierarchical, network and relational data models; formal and commercial query languages; functional dependencies and normalization for relational database design; relation decomposition; concurrency control and transactions management. Student projects involve the use of a DBMS package.",
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20331",
+    "track": "track_1",
+    "year": "3",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "CS 100",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 103",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 113",
+        "destination": "CS 114",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 114",
+        "destination": "CS 331",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 116",
+        "destination": "CS 331",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "IT 114",
+        "destination": "CS 331",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 6,
+    "dependency_count": 0,
+    "location": {
+      "x": -199.63883520155542,
+      "y": -12.013970175016821,
+      "z": 1000
+    }
+  },
+  "YWCC 307": {
+    "course_code": "YWCC 307",
+    "course_name": "Professional Dev in Computing",
+    "credits": 1,
+    "contact_hours": "1 contact hour (1;0;0)",
+    "prerequisites": [
+      "YWCC 207"
+    ],
+    "prerequisites_description": {},
+    "corequisites": [],
+    "course_description": "This course is designed for junior year students to reflect back on the college experience and to help plan for the future as a computing professional. The course will explore transitional issues that occur during the progression from student to professional through reflection on co-op and/or internship.",
+    "course_link": "https://catalog.njit.edu/search/?P=YWCC%20307",
+    "track": "track_1",
+    "year": "3",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "Student of YWCC",
+        "destination": "YWCC 207",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "sophomore/junior standing",
+        "destination": "YWCC 207",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "YWCC 207",
+        "destination": "YWCC 307",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 3,
+    "dependency_count": 0,
+    "location": {
+      "x": -89.41501422890454,
+      "y": -178.89928795399047,
+      "z": 1000
+    }
+  },
+  "CS 341": {
+    "course_code": "CS 341",
+    "course_name": "Foundations of Computer Science II",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "CS 280",
+      [
+        "CS 241",
+        "MATH 226"
+      ]
+    ],
+    "prerequisites_description": {
+      "CS 280": "C",
+      "CS 241": "C",
+      "MATH 226": "C"
+    },
+    "corequisites": [],
+    "course_description": "This course provides an introduction to automata theory, computability theory, and complexity theory. Theoretical models such as finite-state machines, push-down stack machines, and Turing machines are developed and related to issues in programming language theory.  Also, the course covers undecidability and complexity classes P, NP, and NPC.",
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20341",
+    "track": "track_1",
+    "year": "3",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "CS 100",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 103",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 113",
+        "destination": "CS 114",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 114",
+        "destination": "CS 280",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 116",
+        "destination": "CS 280",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "IT 114",
+        "destination": "CS 280",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 280",
+        "destination": "CS 341",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 110",
+        "destination": "MATH 111",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "standardized entrance examinations",
+        "destination": "MATH 111",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 111",
+        "destination": "MATH 112",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 112",
+        "destination": "CS 241",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 241",
+        "destination": "CS 341",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 226",
+        "destination": "CS 341",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 13,
+    "dependency_count": 0,
+    "location": {
+      "x": 199.63883520155542,
+      "y": 12.013970175016885,
+      "z": 1000
+    }
+  },
+  "CS 350": {
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20350",
+    "track": "track_1",
+    "year": "3",
+    "semester": "2",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": 89.41501422890474,
+      "y": 178.89928795399038,
+      "z": 1000
+    }
+  },
+  "CS 351": {
+    "course_code": "CS 351",
+    "course_name": "Introduction to Cybersecurity",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "CS 241",
+      "CS 356"
+    ],
+    "prerequisites_description": {
+      "CS 241": "C",
+      "CS 356": "C"
+    },
+    "corequisites": [],
+    "course_description": "This course will give a broad overview of cybersecurity. There are two main goals of this course. First, students will learn fundamental concepts of cybersecurity. Second, this course will help students gain knowledge of the applications to computer systems and communication security. Topics include basics of cryptography, access control, malware, software security, storage and file security, operating-system security, database security and secure communication protocols.",
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20351",
+    "track": "track_1",
+    "year": "3",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "CS 100",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 103",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 113",
+        "destination": "CS 114",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 114",
+        "destination": "CS 241",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 110",
+        "destination": "MATH 111",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "standardized entrance examinations",
+        "destination": "MATH 111",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 111",
+        "destination": "MATH 112",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "MATH 112",
+        "destination": "CS 241",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 241",
+        "destination": "CS 351",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 116",
+        "destination": "CS 280",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "IT 114",
+        "destination": "CS 280",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 280",
+        "destination": "CS 356",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 356",
+        "destination": "CS 351",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 13,
+    "dependency_count": 0,
+    "location": {
+      "x": -110.2238209726508,
+      "y": 166.88531777897367,
+      "z": 1000
+    }
+  },
+  "CS 435": {
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20435",
+    "track": "track_1",
+    "year": "4",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": -140.93813170727682,
+      "y": -141.902935243998,
+      "z": 1200
+    }
+  },
+  "History and Humanities GER 300+ level": {
+    "course_link": "https://catalog.njit.edu/undergraduate/academic-policies-procedures/general-education-requirements/ger-300-level/",
+    "track": "track_1",
+    "year": "4",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": 197.4297963000774,
+      "y": 31.960530860890522,
+      "z": 1200
+    }
+  },
+  "CS 491": {
+    "course_code": "CS 491",
+    "course_name": "Senior Project",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "CS 490",
+      "senior standing",
+      "project proposal approval"
+    ],
+    "prerequisites_description": {
+      "CS 490": "C"
+    },
+    "corequisites": [],
+    "course_description": "An opportunity for the student to integrate the knowledge and skills gained in previous computer science work into a team-based project. The project involves investigation of current literature as well as computer implementation of either a part of a large program or the whole of a small system.",
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20491",
+    "track": "track_1",
+    "year": "4",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "CS 100",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 103",
+        "destination": "CS 113",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 113",
+        "destination": "CS 114",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 114",
+        "destination": "CS 280",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 116",
+        "destination": "CS 280",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "IT 114",
+        "destination": "CS 280",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 280",
+        "destination": "CS 490",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 288",
+        "destination": "CS 490",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "CS 490",
+        "destination": "CS 491",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "senior standing",
+        "destination": "CS 491",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "project proposal approval",
+        "destination": "CS 491",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 11,
+    "dependency_count": 0,
+    "location": {
+      "x": 10.73031752874758,
+      "y": 199.71194327263518,
+      "z": 1400
+    }
+  },
+  "Humanities and Social Science Senior Seminar GER": {
+    "course_link": "https://catalog.njit.edu/undergraduate/academic-policies-procedures/general-education-requirements/hss-capstone/",
+    "track": "track_1",
+    "year": "4",
+    "semester": "2",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": -186.62149455998536,
+      "y": 71.91952285852123,
+      "z": 1400
+    }
+  }
+}

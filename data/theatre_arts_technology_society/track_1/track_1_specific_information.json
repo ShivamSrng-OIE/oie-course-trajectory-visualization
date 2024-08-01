@@ -1,0 +1,744 @@
+{
+  "ENGL 102": {
+    "course_code": "ENGL 102",
+    "course_name": "English Composition: Introduction to Writing for Research",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "ENGL 100",
+      "ENGL 101"
+    ],
+    "prerequisites_description": {
+      "ENGL 100": "C",
+      "ENGL 101": "C"
+    },
+    "corequisites": [],
+    "course_description": "This course builds on the skills students learned and practiced in ENGL 101 and provides an introduction to writing using both primary and secondary sources. Emphasis is on developing research questions, finding and citing sources, conducting primary research, and synthesizing elements of research into persuasive arguments. Students also complete this course knowing how to correctly document and attribute sources.",
+    "course_link": "https://catalog.njit.edu/search/?P=ENGL%20102",
+    "track": "track_1",
+    "year": "1",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "ENGL 100",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 101",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 3,
+    "dependency_count": 6,
+    "location": {
+      "x": 199.97132240996473,
+      "y": 3.386770380457882,
+      "z": 200
+    }
+  },
+  "ENGL 101": {
+    "course_code": "ENGL 101",
+    "course_name": "English Composition: Introduction to Academic Writing",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "placement-test score"
+    ],
+    "prerequisites_description": {},
+    "corequisites": [],
+    "course_description": "This course provides an introduction to college-level writing, particularly the rhetorical dimensions of composition, including purpose, audience, occasion, and genre. The course also focuses on the writing process, asking students to brainstorm topics, to write drafts, and to revise their writing based on reflection and peer feedback. Activities in the course involve reading challenging articles, essays, and prose and considering paintings, films, and other visual compositions. Additionally, students work to analyze claims, to formulate independent arguments, and to communicate ideas through clear, well-organized writing.",
+    "course_link": "https://catalog.njit.edu/search/?P=ENGL%20101",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 1,
+    "dependency_count": 1,
+    "location": {
+      "x": -192.83369678466252,
+      "y": -53.058132122803194,
+      "z": 0
+    }
+  },
+  "MATH 101": {
+    "course_code": "MATH 101",
+    "course_name": "Foundations of Mathematics for the Liberal Arts",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [],
+    "prerequisites_description": {},
+    "corequisites": [],
+    "course_description": "Intended for students in degree programs offered by HSS and History. This course reviews principles of algebra and the foundations of mathematics. Degree credit awarded for degrees offered by HUM and HIST.",
+    "course_link": "https://catalog.njit.edu/search/?P=MATH%20101",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": -50.4671580966325,
+      "y": -193.52794618258494,
+      "z": 0
+    }
+  },
+  "Natural Science GER": {
+    "course_link": "https://catalog.njit.edu/undergraduate/academic-policies-procedures/general-education-requirements/natural-science-ger/",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": 142.36653868802995,
+      "y": -140.46981405978178,
+      "z": 0
+    }
+  },
+  "Natural Science GER Laboratory": {
+    "course_link": "https://catalog.njit.edu/undergraduate/academic-policies-procedures/general-education-requirements/natural-science-ger/",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": 192.8336967846625,
+      "y": 53.05813212280326,
+      "z": 0
+    }
+  },
+  "FYS SEM": {
+    "course_code": "FYS SEM",
+    "course_name": "First-Year Student Seminar",
+    "credits": 0,
+    "contact_hours": "1 contact hour (1;0;0)",
+    "prerequisites": [],
+    "prerequisites_description": {},
+    "corequisites": [],
+    "course_description": "Addresses issues related to a successful college life during weekly seminars. Topics include time management, study skills, interpersonal relationships, wellness, multicultural issues and career decision making. Freshman Seminar is a graduation requirement for all first-time, full-time freshmen.",
+    "course_link": "https://catalog.njit.edu/search/?P=FYS%20SEM",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": 50.4671580966327,
+      "y": 193.5279461825849,
+      "z": 0
+    }
+  },
+  "CS 100": {
+    "course_code": "CS 100",
+    "course_name": "Roadmap to Computing",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prequisites": [],
+    "prerequisites_description": {},
+    "corequisites": [],
+    "course_description": "An introduction to programming and problem solving skills using Python or other very high level language. Topics include basic strategies for problem solving, constructs that control the flow of execution of a program and the use of high level data types such as lists, strings and dictionaries in problem representation. The course also presents an overview of selected topics in computing, such as networking and databases.",
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20100",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0
+  },
+  "CS 101": {
+    "course_code": "CS 101",
+    "course_name": "Computer Programming and Problem Solving",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prequisites": [],
+    "prerequisites_description": {},
+    "corequisites": [],
+    "course_description": "An introductory course that is designed for engineering freshmen. This course introduces students to the engineering problem solving process in the context of MATLAB. The emphasis is on the logical analysis of a problem and the formulation of a computer program leading to its solution. Topics include basic concepts of computer systems, algorithm design, programming languages and data abstraction. At the end of class, a comparison between MATLAB and C/C++ will be discussed to provide students a better understanding of the general concept of computer programming.",
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20101",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0
+  },
+  "CS 103": {
+    "course_code": "CS 103",
+    "course_name": "Computer Science with Business Problems",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prequisites": [],
+    "prerequisites_description": {},
+    "corequisites": [],
+    "course_description": "An introductory course in computer science, with applications to business and managerial decision making. Topics include basic concepts of computer systems, software engineering, algorithm design, programming languages and abstraction, with applications.",
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20103",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0
+  },
+  "CS 104": {
+    "course_code": "CS 104",
+    "course_name": "Computer Programming and Graphics Problems",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prequisites": [],
+    "prerequisites_description": {},
+    "corequisites": [],
+    "course_description": "An introductory course in computer science with applications in computer graphics for architecture. Emphasis on programming methodology using a high level language as the vehicle to illustrate the concepts. Topics include basic concepts of computer systems, software engineering, algorithm design, programming languages and data abstraction, with applications.",
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20104",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0
+  },
+  "CS 115": {
+    "course_code": "CS 115",
+    "course_name": "Introduction to Computer Science in C++",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prequisites": [],
+    "prerequisites_description": {},
+    "corequisites": [],
+    "course_description": "Fundamentals of computer science are introduced, with emphasis on programming methodology and problem solving. Topics include basic concepts of computer systems, software engineering, algorithm design, programming languages and data abstraction, with applications. The high level language C++ is fully discussed and serves as the vehicle to illustrate many of the concepts. CS majors should enroll in CS 113.",
+    "course_link": "https://catalog.njit.edu/search/?P=CS%20115",
+    "track": "track_1",
+    "year": "1",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0
+  },
+  "or PHYS 203": {
+    "course_link": "https://catalog.njit.edu/search/?P=or%20PHYS%20203",
+    "track": "track_1",
+    "year": "1",
+    "semester": "2",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0
+  },
+  "or THTR 212": {
+    "course_link": "https://catalog.njit.edu/search/?P=or%20THTR%20212",
+    "track": "track_1",
+    "year": "1",
+    "semester": "2",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0
+  },
+  "MATH 105": {
+    "course_code": "MATH 105",
+    "course_name": "Elementary Probability and Statistics",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [],
+    "prerequisites_description": {},
+    "corequisites": [],
+    "course_description": "Consider notions of probability. Topics include the binomial and normal distributions, expected value, and variance. The notions of sampling, hypothesis testing, and confidence intervals are applied to elementary situations.",
+    "course_link": "https://catalog.njit.edu/search/?P=MATH%20105",
+    "track": "track_1",
+    "year": "1",
+    "semester": "2",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": -199.97132240996473,
+      "y": -3.386770380457821,
+      "z": 200
+    }
+  },
+  "THTR 102": {
+    "course_code": "THTR 102",
+    "course_name": "Acting Fundamentals",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [],
+    "prerequisites_description": {},
+    "corequisites": [],
+    "course_description": "Developing acting skills in a studio environment. Work with improvisation comedy and drama, scene study based on known contemporary and classical plays, and basic theater exercises that develop physical skills for character development and performance endurance. Emphasis on vocal skills using presentation exercises and theatrical audition techniques will be developed through the class.",
+    "course_link": "https://catalog.njit.edu/search/?P=THTR%20102",
+    "track": "track_1",
+    "year": "1",
+    "semester": "2",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": 3.386770380457897,
+      "y": -199.97132240996473,
+      "z": 200
+    }
+  },
+  "MGMT 390": {
+    "course_code": "MGMT 390",
+    "course_name": "Principles of Business",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prequisites": [],
+    "prerequisites_description": {},
+    "corequisites": [],
+    "course_description": "This course explores strategies that allow companies to grow and compete in today's global marketplace, along with skills you will need to turn ideas into action for success in business. You will get an overview of key business processes, and an understanding of how they work together. Learning will be reinforced by real time case studies. A comprehensive project-based learning exercise will allow you to act as a management consultant and relate what you cover in class to a real company.",
+    "course_link": "https://catalog.njit.edu/search/?P=MGMT%20390",
+    "track": "track_1",
+    "year": "2",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0
+  },
+  "or Social Science Elective": {
+    "course_link": "https://catalog.njit.edu/search/?P=or%20Social%20Science%20Elective",
+    "track": "track_1",
+    "year": "2",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": 188.45026067988636,
+      "y": -66.98133508435677,
+      "z": 400
+    }
+  },
+  "History and Humanities GER 200 level": {
+    "course_link": "https://catalog.njit.edu/undergraduate/academic-policies-procedures/general-education-requirements/ger-200-level/",
+    "track": "track_1",
+    "year": "2",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": 121.93736834660052,
+      "y": 158.5284775701371,
+      "z": 400
+    }
+  },
+  "R088 259": {
+    "course_link": "https://catalog.njit.edu/search/?P=R088%20259",
+    "track": "track_1",
+    "year": "2",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0
+  },
+  "R088 260": {
+    "course_link": "https://catalog.njit.edu/search/?P=R088%20260",
+    "track": "track_1",
+    "year": "2",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0
+  },
+  "R088 467": {
+    "course_link": "https://catalog.njit.edu/search/?P=R088%20467",
+    "track": "track_1",
+    "year": "2",
+    "semester": "1",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0
+  },
+  "History and Humanities GER 300+ level": {
+    "course_link": "https://catalog.njit.edu/undergraduate/academic-policies-procedures/general-education-requirements/ger-300-level/",
+    "track": "track_1",
+    "year": "2",
+    "semester": "2",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": 107.08764353858517,
+      "y": 168.91487975117207,
+      "z": 1000
+    }
+  },
+  "R088 103": {
+    "course_link": "https://catalog.njit.edu/search/?P=R088%20103",
+    "track": "track_1",
+    "year": "2",
+    "semester": "2",
+    "complete path": [],
+    "on_dependant_courses_count": 0,
+    "dependency_count": 0,
+    "location": {
+      "x": -170.88941482278653,
+      "y": -103.90768932819931,
+      "z": 600
+    }
+  },
+  "THTR 315": {
+    "course_code": "THTR 315",
+    "course_name": "Theatre History II",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "ENGL 102",
+      [
+        "History and Humanities GER 200 level course"
+      ]
+    ],
+    "prerequisites_description": {
+      "ENGL 102": "C",
+      "History and Humanities GER 200 level course": "C"
+    },
+    "corequisites": [],
+    "course_description": "Study of Euro-American theatre history from post-Renaissance Europe to present. Dramatic literature will be related to the historical events that reflect theatrical style, political movements, and technical advancements in society. This course satisfies the three credit 300 GER in History and Humanities.",
+    "course_link": "https://catalog.njit.edu/search/?P=THTR%20315",
+    "track": "track_1",
+    "year": "2",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "ENGL 100",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 101",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 102",
+        "destination": "THTR 315",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "History and Humanities GER 200 level course",
+        "destination": "THTR 315",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 5,
+    "dependency_count": 0,
+    "location": {
+      "x": 103.90768932819925,
+      "y": -170.8894148227866,
+      "z": 600
+    }
+  },
+  "THTR 310": {
+    "course_code": "THTR 310",
+    "course_name": "Theatre History I",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "ENGL 102",
+      [
+        "History and Humanities GER 200 level course"
+      ]
+    ],
+    "prerequisites_description": {
+      "ENGL 102": "C",
+      "History and Humanities GER 200 level course": "C"
+    },
+    "corequisites": [],
+    "course_description": "Study of Euro-American theater history from Greece and Rome through early post-Renaissance Europe. The course covers the dramatic literature of the times and how the socioeconomic influences reflect the theatrical style, community interaction, and the technical uses of stage devices. This course satisfies the three credit 300 GER in History and Humanities.",
+    "course_link": "https://catalog.njit.edu/search/?P=THTR%20310",
+    "track": "track_1",
+    "year": "3",
+    "semester": "1",
+    "complete path": [
+      {
+        "source": "ENGL 100",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 101",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 102",
+        "destination": "THTR 310",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "History and Humanities GER 200 level course",
+        "destination": "THTR 310",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 5,
+    "dependency_count": 0,
+    "location": {
+      "x": 33.61400789901027,
+      "y": -197.15501128037621,
+      "z": 800
+    }
+  },
+  "THTR 365": {
+    "course_code": "THTR 365",
+    "course_name": "Principles of Playwriting",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "ENGL 102",
+      [
+        "History and Humanities GER 200 level course"
+      ]
+    ],
+    "prerequisites_description": {
+      "ENGL 102": "C",
+      "History and Humanities GER 200 level course": "C"
+    },
+    "corequisites": [],
+    "course_description": "The course objective is to write and rewrite three short plays during the semester. These new plays will have a first reading and a staged reading in the classroom, followed by analytical discussions about playwriting and the craft's applied techniques. Students will attend two professional plays and write subsequently one experience paper and one research paper; attend both campus shows for discussion and in-class  improvisational playwriting exercises. The original plays developed in class will be submitted by the student for playwriting competitions at the end of the semester. This course satisfies the three credit 300 GER in History and Humanities.",
+    "course_link": "https://catalog.njit.edu/search/?P=THTR%20365",
+    "track": "track_1",
+    "year": "3",
+    "semester": "2",
+    "complete path": [
+      {
+        "source": "ENGL 100",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 101",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 102",
+        "destination": "THTR 365",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "History and Humanities GER 200 level course",
+        "destination": "THTR 365",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 5,
+    "dependency_count": 0,
+    "location": {
+      "x": 168.91487975117207,
+      "y": -107.08764353858517,
+      "z": 1000
+    }
+  },
+  "HSS 407": {
+    "course_code": "HSS 407",
+    "course_name": "Humanities Senior Seminar - Theater",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "ENGL 102",
+      [
+        "6 credits at the 300-level History and Humanities GER"
+      ],
+      "senior standing"
+    ],
+    "prerequisites_description": {
+      "ENGL 102": "C",
+      "6 credits at the 300-level History and Humanities GER": "C"
+    },
+    "corequisites": [
+      "3 credits at the 300-level History and Humanities GER"
+    ],
+    "course_description": "The capstone seminars allow students the opportunity to work closely with an instructor in a specific area of the instructor's expertise. Students will be required to bring together interests and skills developed in previous courses. Students make in-depth oral and written presentations. A list of capstone seminars is published each semester in the course registration bulletin.",
+    "course_link": "https://catalog.njit.edu/search/?P=HSS%20407",
+    "track": "track_1",
+    "year": "4",
+    "semester": "1",
+    "complete path": [
+      {
+        "source": "ENGL 100",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 101",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 102",
+        "destination": "HSS 407",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "6 credits at the 300-level History and Humanities GER",
+        "destination": "HSS 407",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "senior standing",
+        "destination": "HSS 407",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "3 credits at the 300-level History and Humanities GER",
+        "destination": "HSS 407",
+        "relation": "corequisite"
+      }
+    ],
+    "on_dependant_courses_count": 7,
+    "dependency_count": 0,
+    "location": {
+      "x": 46.328039202539536,
+      "y": 194.56030628997263,
+      "z": 1200
+    }
+  },
+  "THTR 411": {
+    "course_code": "THTR 411",
+    "course_name": "Special Topics in Theatre",
+    "credits": 3,
+    "contact_hours": "3  (3;0;0)",
+    "prerequisites": [
+      "ENGL 102",
+      [
+        "History and Humanities GER 200 level course"
+      ]
+    ],
+    "prerequisites_description": {
+      "ENGL 102": "C",
+      "History and Humanities GER 200 level course": "C"
+    },
+    "corequisites": [],
+    "course_description": "This specialty course will feature a different aspect of theater each semester depending on the area of expertise of the instructor. Some examples: The course could cover playwriting, advanced playwriting, film writing, and musical theater techniques, advanced theater directing, auditioning skills, advanced acting or acting: history and practice.",
+    "course_link": "https://catalog.njit.edu/search/?P=THTR%20411",
+    "track": "track_1",
+    "year": "4",
+    "semester": "1",
+    "complete path": [
+      {
+        "source": "ENGL 100",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 101",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 102",
+        "destination": "THTR 411",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "History and Humanities GER 200 level course",
+        "destination": "THTR 411",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 5,
+    "dependency_count": 0,
+    "location": {
+      "x": -145.33014821392777,
+      "y": 137.40141200190698,
+      "z": 1200
+    }
+  },
+  "THTR 480": {
+    "course_code": "THTR 480",
+    "course_name": "Independent Theatre Practicum",
+    "credits": 2,
+    "contact_hours": "4  (0;0;4)",
+    "prerequisites": [
+      "ENGL 102",
+      [
+        "History and Humanities GER 200 level course"
+      ]
+    ],
+    "prerequisites_description": {
+      "ENGL 102": "C",
+      "History and Humanities GER 200 level course": "C"
+    },
+    "corequisites": [],
+    "course_description": "The core of this course is a supervised and assigned independent involvement in a main stage production, which is pre-approved by an instructor. The student will take a leadership role and participate in pre-production activities all the way through to the conclusion of production of the show. An ongoing journal of activities is required to be submitted at the end of the production process. The production work will be in one of the following areas: performance, dramaturge, stage management, design, props, public relations or other areas related directly to the designated main stage production.",
+    "course_link": "https://catalog.njit.edu/search/?P=THTR%20480",
+    "track": "track_1",
+    "year": "4",
+    "semester": "1",
+    "complete path": [
+      {
+        "source": "ENGL 100",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "placement-test score",
+        "destination": "ENGL 101",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 101",
+        "destination": "ENGL 102",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "ENGL 102",
+        "destination": "THTR 480",
+        "relation": "prerequisite"
+      },
+      {
+        "source": "History and Humanities GER 200 level course",
+        "destination": "THTR 480",
+        "relation": "prerequisite"
+      }
+    ],
+    "on_dependant_courses_count": 5,
+    "dependency_count": 0,
+    "location": {
+      "x": -191.6581874164674,
+      "y": -57.15889428806567,
+      "z": 1200
+    }
+  }
+}
