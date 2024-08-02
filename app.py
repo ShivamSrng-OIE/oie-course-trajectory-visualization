@@ -3,9 +3,6 @@ from components import sidebar, main_content
 import dash_bootstrap_components as dbc
 
 
-DEFAULT_COURSE_CATALOG = "computer_engineering"
-
-
 app = Dash(
   name=__name__,
   title="OIE Course Catalog Visualization",
@@ -15,8 +12,11 @@ app = Dash(
     dbc.themes.BOOTSTRAP
   ],
 )
-app._favicon = ("icon/njit.ico")
+app._favicon = (
+  "icon/njit.ico"
+)
 server = app.server
+
 
 app.layout = html.Div(
   [
@@ -29,4 +29,7 @@ app.layout = html.Div(
 
 
 if __name__ == "__main__":
-  app.run(debug=False, port=8050)
+  app.run(
+    debug=False, 
+    port=8050
+  )
