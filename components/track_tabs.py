@@ -1,10 +1,13 @@
-import os
 import json
 from time import sleep
 import dash_bootstrap_components as dbc
 from consts import CourseTrajectoryConsts
 from src.generate_3d_graph import Generate3DGraph
+from src.utils.database_handler import DatabaseHandler
 from dash import Input, Output, html, callback, State
+
+
+database_handler = DatabaseHandler()
 
 card = html.Div(
   children=[
@@ -107,26 +110,20 @@ def toggle_modal(n, is_open):
 )
 def update_tab_content(active_tab, course_catalog):
   if course_catalog is not None:
-    dict_tabs_cnt = {}
+    dict_tabs_cnt = database_handler.get_tracks_count_per_course()
     global last_camera_position
     last_camera_position = None
-    for course_name in os.listdir("data"):
-      track_cnt = 0
-      for track in os.listdir(f"data/{course_name}/"):
-        if track.startswith("track_"):
-          track_cnt += 1
-      dict_tabs_cnt[course_name] = track_cnt
     
     if int(active_tab.split("_")[-1]) > dict_tabs_cnt[course_catalog]:
       active_tab = "track_1"
       
-    all_tracks_information = {}
-    with open(f"data/{course_catalog}/all_tracks_information.json", "r") as file:
-      all_tracks_information = json.load(file)
+    all_tracks_information = database_handler.get_course_track_information(
+      course_name=course_catalog
+    )
     
-    course_catalog_info = {}
-    with open(f"data/{course_catalog}/course_catalog.json", "r") as file:
-      course_catalog_info = json.load(file)
+    course_catalog_info = database_handler.get_course_catalog_information(
+      course_name=course_catalog
+    )
 
     interactive_3d_graph_obj = Generate3DGraph(
       course_name=course_catalog,

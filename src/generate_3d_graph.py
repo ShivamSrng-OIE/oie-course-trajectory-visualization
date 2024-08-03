@@ -733,12 +733,6 @@ class Generate3DGraph(html.Div):
       ),
       clickmode='event',
     )
-
-    with open(f"data/{self.course_name}/{track}/{track}_specific_information.json", "w") as f:
-      f.write(json.dumps(self.all_tracks_course_information[track], indent=2))
-
-    fig.write_html(f"data/{self.course_name}/{track}/{track}_3d_course_graph.html")
-    fig.write_json(f"data/{self.course_name}/{track}/{track}_3d_course_graph.json")
     
     return fig
   
@@ -859,7 +853,6 @@ class Generate3DGraph(html.Div):
       for track in self.all_tracks_course_information:
         track_specific_figure.append(self.__create_course_trajectory(track))
       
-      self.__figures_to_html(figs=track_specific_figure, filename=f"data/{self.course_name}/index.html")
       return all_tracks_3d_graphs
     
     elif track:

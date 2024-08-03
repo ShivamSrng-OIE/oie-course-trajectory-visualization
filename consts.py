@@ -49,3 +49,33 @@ class CourseTrajectoryConsts:
     """
     
     return self.__perform_prechecks()
+
+
+class MondoDBConsts:
+  """
+  A class to store the constants for the MongoDB database
+  """
+  
+  def __init__(self) -> None:
+    self.config = config["MONGODB_CONSTS"]
+
+
+  def get_constants(self) -> dict:
+    """
+    Returns the constants for the MongoDB database
+    
+    Args:
+      - None
+    
+    Returns:
+      - dict: The constants for the MongoDB database
+    """
+    
+    username = self.config.get("username")
+    password = self.config.get("password")
+    cluster = self.config.get("cluster")
+    host = f"mongodb+srv://{username}:{password}@{cluster}.e00xjor.mongodb.net/"
+
+    return {
+      "host": host,
+    }

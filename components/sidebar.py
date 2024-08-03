@@ -1,6 +1,7 @@
-import os
 from dash import dcc, html, Input, Output, callback
+from src.utils.database_handler import DatabaseHandler
 
+course_catalog_information = DatabaseHandler().get_courses_catalog()
 
 layout = html.Div(
   [
@@ -30,8 +31,13 @@ layout = html.Div(
       children=[
         dcc.Dropdown(
           id="course-catalog-dropdown",
-          options=[{"label": course_name.replace("_", " ").title(), "value": course_name} for course_name in os.listdir("data")],
-          value="computer_engineering",
+          options=[
+            {
+              "label": str(course_name).replace("_", " ").title(), 
+              "value": course_name
+            } for course_name in course_catalog_information
+          ],
+          value=course_catalog_information[0],
           persistence=True,
           clearable=False,
           searchable=False,
