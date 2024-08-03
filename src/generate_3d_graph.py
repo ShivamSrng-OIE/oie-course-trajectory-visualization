@@ -722,9 +722,9 @@ class Generate3DGraph(html.Div):
       ),
       scene=dict(
         aspectmode='cube',
-        xaxis=dict(visible=False, range=[-3*self.radius_circle, 8*self.radius_circle], autorange=False),
-        yaxis=dict(visible=False, range=[-3*self.radius_circle, 8*self.radius_circle], autorange=False),
-        zaxis=dict(visible=False, range=[-3*self.radius_circle, 8*self.radius_circle], autorange=False),
+        xaxis=dict(visible=False, range=[-3*self.radius_circle, 15*self.radius_circle], autorange=False),
+        yaxis=dict(visible=False, range=[-3*self.radius_circle, 15*self.radius_circle], autorange=False),
+        zaxis=dict(visible=False, range=[-3*self.radius_circle, 15*self.radius_circle], autorange=False),
         camera=dict(
             eye=dict(x=1, y=1, z=1),  
             up=dict(x=0, y=0, z=1),  
