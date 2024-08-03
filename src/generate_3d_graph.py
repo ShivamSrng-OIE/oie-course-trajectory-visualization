@@ -4,6 +4,7 @@ import numpy as np
 from dash import dcc, html
 import plotly.graph_objects as go
 from warnings import filterwarnings
+import dash_bootstrap_components as dbc
 from consts import CourseTrajectoryConsts
 
 
@@ -378,7 +379,7 @@ class Generate3DGraph(html.Div):
           mode='text',
           showlegend=False,
           textposition='middle center',
-          textfont=dict(size=14, color='black', family="Arial", weight="bold"),
+          textfont=dict(size=12, color='black', family="Arial", weight="bold"),
           hoverinfo='skip'  
         ))
 
@@ -409,7 +410,7 @@ class Generate3DGraph(html.Div):
               customdata=[course],
               hoverinfo='text',  
               marker=dict(size=self.special_marker_size, color=course_colors[course]),
-              textfont=dict(size=14, color='black', family="Arial", weight="bold"),
+              textfont=dict(size=12, color='black', family="Arial", weight="bold"),
               textposition='top center',
               hovertext=course_desc + f"<br><br>Dependencies: {self.all_tracks_course_information[track][course]['dependency_count']}",
               name=f"{course}-{course_name}" if course_name else course
@@ -424,7 +425,7 @@ class Generate3DGraph(html.Div):
               mode='markers+text',
               hoverinfo='text',  
               marker=dict(size=self.marker_size, color=course_colors[course]),
-              textfont=dict(size=14, color='black', family="Arial", weight="bold"),
+              textfont=dict(size=12, color='black', family="Arial", weight="bold"),
               textposition='top center',
               hovertext=course_desc,
               name=f"{course}-{course_name}" if course_name else course
@@ -523,6 +524,7 @@ class Generate3DGraph(html.Div):
               mode='lines',
               line=dict(color='black', width=2, dash='dash'),
               name=f"Year: {year}, Semester: {semester}",
+              showlegend=False,
               hoverinfo='skip'  
           ))
           fig.add_trace(go.Scatter3d(
@@ -532,7 +534,7 @@ class Generate3DGraph(html.Div):
           text="Pre-Knowledge Courses",
           mode='text',
           showlegend=False,
-          textfont=dict(size=14, color='black', family="Arial", weight="bold"),
+          textfont=dict(size=12, color='black', family="Arial", weight="bold"),
           textposition='middle center',
           hoverinfo='skip'  
       ))
@@ -561,7 +563,8 @@ class Generate3DGraph(html.Div):
               hoverinfo='text',  
               hovertext=course_desc + f"<br><br>Dependencies: {self.all_tracks_course_information[prereq]['dependency_count']}",
               marker=dict(size=self.special_marker_size, color='#000000'),
-              textfont=dict(size=14, color='black', family="Arial", weight="bold"),
+              textfont=dict(size=12, color='black', family="Arial", weight="bold"),
+              showlegend=False,
               name=f"{prereq}-{course_name}" if course_name else prereq
           ))
       else:
@@ -575,7 +578,8 @@ class Generate3DGraph(html.Div):
               hoverinfo='text', 
               hovertext=course_desc,
               marker=dict(size=self.marker_size, color='#000000'),
-              textfont=dict(size=14, color='black', family="Arial", weight="bold"),
+              showlegend=False,
+              textfont=dict(size=12, color='black', family="Arial", weight="bold"),
               name=f"{prereq}-{course_name}" if course_name else prereq
           ))
 
@@ -707,12 +711,15 @@ class Generate3DGraph(html.Div):
     #   fig=fig,
     #   courses=courses
     # )
-
-    track_name = track.replace("_", " ").title()
+    
     course_name = self.course_name.replace('_', ' ').title()
     fig.update_layout(
       # updatemenus=updatemenus,
+      # paper_bgcolor='lightgrey',
       margin=dict(l=0, r=0, t=0, b=0),
+      legend=dict(
+        font=dict(size=11),
+      ),
       scene=dict(
         aspectmode='cube',
         xaxis=dict(visible=False, range=[-3*self.radius_circle, 8*self.radius_circle], autorange=False),
@@ -760,6 +767,7 @@ class Generate3DGraph(html.Div):
       - None
     """
     
+    colored_graph = go.Figure(course_graph)
     for i in range(len(course_graph["data"])):
       if "customdata" in course_graph["data"][i]:
         if course_graph["data"][i]["customdata"] and "edge" in course_graph["data"][i]["customdata"][0]:
@@ -770,22 +778,62 @@ class Generate3DGraph(html.Div):
     
     app.layout = html.Div(
       [
-        dcc.Graph(
-          id=f"3d_course_graph",
-          figure=course_graph,
-          style={
-            "height": "100%"
-          }
-        ),
         html.Div(
-          id='click-data'
+          dcc.Graph(
+            id=f"3d_course_graph",
+            figure=colored_graph,
+            style={
+              "height": "100%",
+            }
+          ),
+          style={
+            "position": "absolute",
+            "height": "92%",
+            "width": "98%",
+            "border-radius": "1.2rem",
+            "overflow": "hidden",
+          },
+        ),
+        dbc.Modal(
+          children=[
+            dcc.Graph(
+              id=f"3d_course_graph",
+              figure=course_graph,
+              style={
+                "height": "100%"
+              }
+            ),
+            html.Div(
+              id='click-data'
+            ),
+          ],
+          id="modal-fs",
+          fullscreen=True,
+        ),
+        dbc.Button(
+          children=[
+            "Open in fullscreen",
+          ],
+          title="Provide greater control with interactions on 3D graph. Press 'Esc' to exit fullscreen.",
+          style={
+            "bottom": "0.5rem",
+            "position": "absolute",
+            "margin": "0.8rem 0.6rem",
+            "border": "1.5px solid black",
+            "border-radius": "1.2rem",
+            "font-weight": "bold",
+            "background": "linear-gradient(to right, #f12711, #a562f8)",
+            "color": "black"
+          },
+          id="open-fs",
         ),
         dcc.Store(id="camera", storage_type="session"),
         dcc.Store(id='click-count', data={}, storage_type="session"),
       ],
       style={
         "height": "100%",
-        "overflow": "hidden",
+        # "overflow": "hidden",
+        # "background-color": "white",
         "border-radius": "1.2rem",
       }
     )

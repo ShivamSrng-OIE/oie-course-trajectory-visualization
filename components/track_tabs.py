@@ -2,9 +2,9 @@ import os
 import json
 from time import sleep
 import dash_bootstrap_components as dbc
-from src.generate_3d_graph import Generate3DGraph
-from dash import Input, Output, html, callback, State, dcc
 from consts import CourseTrajectoryConsts
+from src.generate_3d_graph import Generate3DGraph
+from dash import Input, Output, html, callback, State
 
 card = html.Div(
   children=[
@@ -33,7 +33,6 @@ card = html.Div(
       style={
         "width": "100%",
         "height": "85vh",
-        "overflow": "hidden",
         "background": "#1E1F20",
         "border": "1px solid #131314",
         "border-radius": "1.2rem",
@@ -89,6 +88,16 @@ card = html.Div(
 )
   
 last_camera_position = None
+
+@callback(
+    Output("modal-fs", "is_open"),
+    Input("open-fs", "n_clicks"),
+    State("modal-fs", "is_open"),
+)
+def toggle_modal(n, is_open):
+    if n:
+        return not is_open
+    return is_open
 
 @callback(
   Output("card-tabs", "children"),
