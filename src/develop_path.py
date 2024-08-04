@@ -1,9 +1,8 @@
-import os
 import numpy as np
-import  plotly.io as pio
 import plotly.graph_objects as go
 from warnings import filterwarnings
 from consts import CourseTrajectoryConsts
+
 
 filterwarnings("ignore")
 
@@ -569,7 +568,7 @@ class DevelopPath:
         borderwidth=1,
         yanchor="top",
         xanchor="right",
-        y=0.85,
+        y=0.80,
         x=0.99,
       ),
       scene=dict(
@@ -676,7 +675,7 @@ class DevelopPath:
         borderwidth=1,
         yanchor="top",
         xanchor="right",
-        y=0.85,
+        y=0.80,
         x=0.99,
       ),
       scene=dict(

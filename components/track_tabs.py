@@ -1,10 +1,12 @@
+import dash
 from time import sleep
 import dash_bootstrap_components as dbc
 from src.develop_path import DevelopPath
 from consts import CourseTrajectoryConsts
 from src.generate_3d_graph import Generate3DGraph
 from src.utils.database_handler import DatabaseHandler
-from dash import Input, Output, html, callback, State
+from dash import Input, Output, html, callback, State, ALL
+from src.pre_co_requisite_highlight import PreCoRequisiteHighlight
 
 
 database_handler = DatabaseHandler()
@@ -157,9 +159,11 @@ def update_tab_content(active_tab, course_catalog):
         interactive_3d_graph,
     ]
 
+
 course_trajectory_consts = CourseTrajectoryConsts().get_course_trajectory_consts()
 color_for_corequisites = course_trajectory_consts["color_for_corequisites"]
 color_for_prerequisites = course_trajectory_consts["color_for_prerequisites"]
+
 
 @callback(
   Output("path-to", "value"),
@@ -176,8 +180,10 @@ color_for_prerequisites = course_trajectory_consts["color_for_prerequisites"]
   Input("reset-button", "n_clicks"),
   State("course-catalog-store", "data"),
   Input("card-tabs", "active_tab"),
+  Input({"type": "year_sem_top_btn", "index": ALL}, "n_clicks"),
+  Input({"type": "year_sem_bottom_btn", "index": ALL}, "n_clicks"),
 )
-def update_figure(clickData, fig, click_count, camera_data, subject, n_clicks_submit_btn, n_clicks_reset_btn ,course_catalog, active_tab):
+def update_figure(clickData, fig, click_count, camera_data, subject, n_clicks_submit_btn, n_clicks_reset_btn ,course_catalog, active_tab, n_clicks_top_btn, n_clicks_bottom_btn):
   if n_clicks_reset_btn:
     click_count = {}
     fig = DevelopPath(
@@ -195,7 +201,7 @@ def update_figure(clickData, fig, click_count, camera_data, subject, n_clicks_su
     )
     return "", click_count, fig
   
-  if subject is not None:
+  if subject is not None and subject != "":
     new_fig = DevelopPath(
       course_name=course_catalog,
       course_catalog=database_handler.get_course_catalog_information(
@@ -210,12 +216,38 @@ def update_figure(clickData, fig, click_count, camera_data, subject, n_clicks_su
       last_camera_position=last_camera_position,
     )
     if new_fig is not None:
-      return "", click_count, new_fig
+      return subject, click_count, new_fig
     else:
       return "", click_count, fig
-  
+
   else:
-    fig, click_count = highlight_course_node(clickData, fig, click_count, camera_data)
+
+    ctx = dash.callback_context
+    if not ctx.triggered:
+      return "", click_count, fig
+    
+    button_id = ctx.triggered[0]['prop_id'].split('.')[0]
+    button_index = eval(button_id)['index']
+    button_id = button_index.split("_")
+    direction, year, semester = button_id[0], button_id[2], button_id[-1]
+
+    print(f"direction: {direction}, year: {year}, semester: {semester}")
+    fig = PreCoRequisiteHighlight(
+      course_name=course_catalog,
+      course_catalog=database_handler.get_course_catalog_information(
+        course_name=course_catalog
+      ),
+      all_tracks_course_information=database_handler.get_course_track_information(
+        course_name=course_catalog
+      )
+    ).run(
+      track=active_tab,
+      year=year,
+      semester=semester,
+      direction=direction,
+      last_camera_position=last_camera_position,
+    )
+    
     return "", click_count, fig
 
 

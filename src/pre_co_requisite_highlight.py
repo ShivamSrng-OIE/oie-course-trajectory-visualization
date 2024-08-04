@@ -1,20 +1,15 @@
-import json
-import dash
 import numpy as np
-from dash import dcc, html
 import plotly.graph_objects as go
 from warnings import filterwarnings
-import dash_bootstrap_components as dbc
 from consts import CourseTrajectoryConsts
 
 
 filterwarnings("ignore")
-app = dash.Dash(__name__)
 
 
-class Generate3DGraph(html.Div):
+class PreCoRequisiteHighlight:
   """
-  The Generate3DGraph class is used to generate a 3d graph of the course catalogs of different departments.
+  The PreCoRequisiteHighlight class is used to highlight the prerequisites and corequisites of a course.
   """
   
 
@@ -23,7 +18,7 @@ class Generate3DGraph(html.Div):
                course_catalog: dict,
                all_tracks_course_information: dict) -> None:
     """
-    Initialize the Generate3DGraph class.
+    Initialize the PreCoRequisiteHighlight class.
     
     Args:
       - course_name (str): The name of the course.
@@ -33,7 +28,7 @@ class Generate3DGraph(html.Div):
     Returns:
       - None
     """
-    self.last_camera_position = None
+    
     self.course_name = course_name
     self.course_catalog = course_catalog
     self.all_tracks_course_information = all_tracks_course_information
@@ -52,7 +47,6 @@ class Generate3DGraph(html.Div):
     """
     
     course_trajectory_consts = CourseTrajectoryConsts().get_course_trajectory_consts()
-
     self.z_level = course_trajectory_consts["z_level"]
     self.left_shift = course_trajectory_consts["left_shift"]
     self.z_increment = course_trajectory_consts["z_increment"]
@@ -82,9 +76,11 @@ class Generate3DGraph(html.Div):
     semester_colors = {}
     cnt = 0
     for year in courses_in_year:
-      semester_colors[year] = {}
+      if year == "extra_course_related_info":
+        continue
+      semester_colors[int(year)] = {}
       for semester in courses_in_year[year]:
-        semester_colors[year][semester] = f"hsl({cnt * (360 // (len(courses_in_year) * len(courses_in_year[year])))}, 70%, 50%)"
+        semester_colors[int(year)][int(semester)] = f"hsl({cnt * (360 // (len(courses_in_year) * len(courses_in_year[year])))}, 70%, 50%)"
         cnt += 1
     return semester_colors
            
@@ -122,182 +118,6 @@ class Generate3DGraph(html.Div):
     return "<br>".join(lines)
   
 
-  def __create_update_menu(self,
-                           fig: go.Figure,
-                           courses: list) -> list:
-    """
-    Create an update menu for the 3D graph.
-    
-    Args:
-      - fig (go.Figure): The 3D graph.
-      - courses (list): The list of courses.
-      
-    Returns:
-      - list: The list of update menus.
-    """
-
-    args_hide = [{"visible": []}]
-    for i in range(len(fig.data)):
-      if str(fig.data[i].uid).startswith("inbetween_edges_prerequisites") or str(fig.data[i].uid).startswith("inbetween_edges_corequisites"):
-        args_hide[0]["visible"].append(False)
-      else:
-        args_hide[0]["visible"].append(True)
-
-    buttons = [
-      dict(
-        args=[{"visible": [True] * len(fig.data)}],
-        label="Show All Edges",
-        method="update"
-      ),
-      dict(
-        args=args_hide,
-        label="Hide All Edges",
-        method="update"
-      )
-    ]
-
-    button_groups_for_different_year_semester = {}
-    pre_co_reqs_button_groups_for_different_year_semester = {}
-
-    for year in courses:
-      if year == "extra_course_related_info":
-        continue
-      button_groups_for_different_year_semester[year] = {}
-      pre_co_reqs_button_groups_for_different_year_semester[year] = {}
-
-      for semester in courses[year]:
-        button_groups_for_different_year_semester[year][semester] = []
-        pre_co_reqs_button_groups_for_different_year_semester[year][semester] = []
-
-        args = [{"visible": [True] * len(fig.data)}]
-        for i in range(len(fig.data)):
-          if str(fig.data[i].uid).startswith("inbetween_edges_prerequisites") or str(fig.data[i].uid).startswith("inbetween_edges_corequisites"):
-            if self.complete_path_from_start:
-              fig_year = int(str(fig.data[i].uid).split("_")[-2])
-              fig_semester = int(str(fig.data[i].uid).split("_")[-1])
-
-              if str(fig.data[i].uid).endswith(f"{year}_{semester}") or (fig_year < int(year)):
-                args[0]["visible"][i] = True
-              elif str(fig.data[i].uid).endswith(f"{year}_{semester}") or (fig_year == int(year) and fig_semester <= int(semester)):
-                args[0]["visible"][i] = True
-              else:
-                args[0]["visible"][i] = False
-            else:
-              if str(fig.data[i].uid).endswith(f"{year}_{semester}"):
-                args[0]["visible"][i] = True
-              else:
-                args[0]["visible"][i] = False
-          else:
-            args[0]["visible"][i] = True
-        
-        label = f"Year: {year}, Semester: {semester}"
-        if int(semester) == 3:
-          label = f"Year: {year}, Summer"
-          
-        button_groups_for_different_year_semester[year][semester].append(
-          dict(
-            args=args,
-            label=label,
-            method="update"
-          )
-        )
-
-        pre_co_reqs_args = [{"visible": [True] * len(fig.data)}]
-        for i in range(len(fig.data)):
-          if str(fig.data[i].uid).startswith("inbetween_edges_prerequisites") or str(fig.data[i].uid).startswith("inbetween_edges_corequisites"):
-            target_year, target_semester = 0, 0
-            if str(fig.data[i].uid).split("_")[-4] != "":
-              target_year = int(str(fig.data[i].uid).split("_")[-4])
-            if str(fig.data[i].uid).split("_")[-3] != "":
-              target_semester = int(str(fig.data[i].uid).split("_")[-3])
-
-            if self.complete_path_to_top:
-              if target_year and target_semester and int(year) < target_year:
-                pre_co_reqs_args[0]["visible"][i] = True
-              elif target_year and target_semester and int(year) == target_year and int(semester) <= target_semester:
-                pre_co_reqs_args[0]["visible"][i] = True
-              else:
-                pre_co_reqs_args[0]["visible"][i] = False
-            else:
-              if target_year and target_semester and int(year) == target_year and int(semester) == target_semester:
-                pre_co_reqs_args[0]["visible"][i] = True
-              else:
-                pre_co_reqs_args[0]["visible"][i] = False
-          else:
-            pre_co_reqs_args[0]["visible"][i] = True
-
-        label = f"PC Year: {year}, Semester: {semester}"
-        if int(semester) == 3:
-          label = f"PC Year: {year}, Summer"
-        
-        pre_co_reqs_button_groups_for_different_year_semester[year][semester].append(
-          dict(
-            args=pre_co_reqs_args,
-            label=label,
-            method="update"
-          )
-        )
-
-    
-    y = 1.1
-    x = 0.1
-    updatemenus = []
-    for button in buttons:
-      updatemenus.append(
-        dict(
-          font=dict(color='black', family="Arial", weight="bold"),
-          type="buttons",
-          direction="left",
-          buttons=[button],
-          pad={"r": 10, "t": 10},
-          showactive=True,
-          x=x, 
-          y=y, 
-        )
-      )
-      x += 0.11
-    y -= 0.07
-
-    for i, year in enumerate(button_groups_for_different_year_semester):
-      x = 0.1
-      for semester in button_groups_for_different_year_semester[year]:
-        updatemenus.append(
-          dict(
-            font=dict(color='black', family="Arial", weight="bold"),
-            type="buttons",
-            direction="left",
-            buttons=button_groups_for_different_year_semester[year][semester],
-            pad={"r": 10, "t": 10},
-            showactive=True,
-            x=x, 
-            y=y, 
-          )
-        )
-        x += 0.11
-      y -= 0.05
-    
-    y -= 0.02
-    for i, year in enumerate(pre_co_reqs_button_groups_for_different_year_semester):
-      x = 0.1
-      for semester in pre_co_reqs_button_groups_for_different_year_semester[year]:
-        updatemenus.append(
-          dict(
-            font=dict(color='black', family="Arial", weight="bold"),
-            type="buttons",
-            direction="left",
-            buttons=pre_co_reqs_button_groups_for_different_year_semester[year][semester],
-            pad={"r": 10, "t": 10},
-            showactive=True,
-            x=x, 
-            y=y, 
-          )
-        )
-        x += 0.11
-      y -= 0.05
-
-    return updatemenus
-
-
   def __create_circle(self,
                       n_points: int,
                       z_level: int) -> list[int]:
@@ -319,7 +139,7 @@ class Generate3DGraph(html.Div):
       endpoint=False
     )
     x = self.radius_circle * np.cos(theta)
-    y = self.radius_circle * np.sin(theta)
+    y = self.radius_circle * np.sin(theta) 
     z = np.full_like(x, z_level)
     
     return x, y, z
@@ -333,150 +153,38 @@ class Generate3DGraph(html.Div):
     return x.tolist(), y.tolist(), z.tolist()
   
 
-  def __create_button_group_for_year_semester(self,
-                                              courses: dict) -> dict:
+  def __grayed_out_graph(self,
+                         courses_in_year: dict) -> dict:
     """
-    Create a button group for year and semester.
+    Assign colors to courses based on their semester.
     
     Args:
-      - courses (dict): The courses.
+      - courses_in_year (dict): The courses in a year.
     
     Returns:
-      - dict: The button group for year and semester.
+      - dict: The dictionary with the course colors.
     """
 
-    buttons_from_bottom = [
-      html.P(
-        children=["Prerequisites and Corequisites from Bottom"],
-        style={
-          "font-size": "13px",
-          "background-image": "linear-gradient(to right, #f12711, #a562f8)",
-          "color": "transparent",
-          "background-clip": "text",
-          "font-weight": "bold",
-          "margin-bottom": "0.3rem",
-        }
-      ),
-    ]
-    buttons_from_top = [
-      html.P(
-        children=["Prerequisites and Corequisites from Top"],
-        style={
-          "font-size": "13px",
-          "background-image": "linear-gradient(to right, #f12711, #a562f8)",
-          "color": "transparent",
-          "font-weight": "bold",
-          "background-clip": "text",
-          "margin-bottom": "0.3rem",
-        }
-      ),
-    ]
-
-    buttons_from_bottom.extend(
-      [
-        html.Div(
-          children=[
-            html.P(
-              children=[f"Year: {year}"],
-              style={
-              "font-size": "13px",
-                "color": "black",
-                "font-weight": "bold",
-                "margin-bottom": "0rem", 
-              }
-            ),
-            html.Div(
-              children=[
-                html.Button(
-                  className="btn",
-                  children=[f"Semester: {semester}"],
-                  id={"type": "year_sem_bottom_btn", "index": f"bottom_year_{year}_semester_{semester}"},
-                  name=f"year_{year}_semester_{semester}",
-                  style={
-                    "width": "50%",
-                    "font-size": "13px",
-                    "padding": "0.5rem 0.6rem",
-                    "border": "1px solid black",
-                    "border-radius": "1.2rem",
-                    "background": "#131314",
-                    "color": "white",
-                    "margin-left": "0.5rem",
-                  }
-                ) for sem_idx, semester in enumerate(courses[year], start=1)
-              ],
-              style={
-                "display": "flex",
-                "flex-direction": "row",
-              }
-            ),
-          ],
-          style={
-            "display": "flex",
-            "align-items": "center",
-            "flex-direction": "row",
-            "margin-bottom": "0.5rem",
-          }
-        ) for yr_idx, year in enumerate(courses, start=1) if year != "extra_course_related_info"
-      ] 
-    )
-
-    buttons_from_top.extend(
-      [
-        html.Div(
-          children=[
-            html.P(
-              children=[f"Year: {year}"],
-              style={
-              "font-size": "13px",
-                "color": "black",
-                "font-weight": "bold",
-                "margin-bottom": "0rem", 
-              }
-            ),
-            html.Div(
-              children=[
-                html.Button(
-                  children=[f"Semester: {semester}"],
-                  id={"type": "year_sem_top_btn", "index": f"top_year_{year}_semester_{semester}"},
-                  name=f"year_{year}_semester_{semester}",
-                  style={
-                    "width": "50%",
-                    "font-size": "13px",
-                    "padding": "0.5rem 0.6rem",
-                    "border": "1px solid black",
-                    "border-radius": "1.2rem",
-                    "background": "#131314",
-                    "color": "white",
-                    "margin-left": "0.5rem",
-                  }
-                ) for semester in courses[year]
-              ],
-              style={
-                "display": "flex",
-                "flex-direction": "row",
-              }
-            ),
-          ],
-          style={
-            "display": "flex",
-            "align-items": "center",
-            "flex-direction": "row",
-            "margin-bottom": "0.5rem",
-          }
-        ) for year in courses if year != "extra_course_related_info"
-      ] 
-    )
-
-    return buttons_from_bottom, buttons_from_top
+    semester_colors = {}
+    cnt = 0
+    for year in courses_in_year:
+      semester_colors[year] = {}
+      for semester in courses_in_year[year]:
+        semester_colors[year][semester] = "gray"
+        cnt += 1
+    return semester_colors
   
 
-  def __create_course_trajectory(self,
-                                 track: str) -> go.Figure:
+  def __perform_highlight_to_target(self,
+                                    track: str,
+                                    last_camera_position: dict) -> go.Figure:
     """
     Create a 3D graph of the course trajectory for a particular track.
     
     Args:
       - track (str): The track for which the course trajectory is to be generated.
+      - target_course (str): The target course.
+      - path_to_target (list): The path to the target course.
 
     Returns:
       - go.Figure: The 3D graph of the course trajectory.
@@ -484,7 +192,12 @@ class Generate3DGraph(html.Div):
 
     courses = self.course_catalog[track]
     fig = go.Figure()
-    semester_colors = self.__dynamic_color_choice_for_semester(courses)
+    semester_colors = self.__grayed_out_graph(
+      courses_in_year=courses
+    )
+    colored_semester = self.__dynamic_color_choice_for_semester(
+      courses_in_year=courses
+    )
     course_positions, course_colors = {}, {}
     
     taught_courses = set()
@@ -538,6 +251,7 @@ class Generate3DGraph(html.Div):
           if course in self.all_tracks_course_information[track] and self.all_tracks_course_information[track][course]["dependency_count"] >= self.critical_courses_threshold:
             critical_course_cnt += 1
             fig.add_trace(go.Scatter3d(
+              uid=f"course_{year}_{semester}_{course}",
               x=[x[i]],
               y=[y[i]],
               z=[z[i]],
@@ -553,6 +267,7 @@ class Generate3DGraph(html.Div):
             ))
           else:
             fig.add_trace(go.Scatter3d(
+              uid=f"course_{year}_{semester}_{course}",
               x=[x[i]],
               y=[y[i]],
               z=[z[i]],
@@ -690,6 +405,7 @@ class Generate3DGraph(html.Div):
       if prereq in self.all_tracks_course_information and self.all_tracks_course_information[prereq]["dependency_count"] >= self.critical_courses_threshold:
           critical_course_cnt += 1
           fig.add_trace(go.Scatter3d(
+              uid=f"course_{year}_{semester}_{prereq}",
               x=[x],
               y=[y],
               z=[z],
@@ -698,13 +414,14 @@ class Generate3DGraph(html.Div):
               mode='markers+text',
               hoverinfo='text',  
               hovertext=course_desc + f"<br><br>Dependencies: {self.all_tracks_course_information[prereq]['dependency_count']}",
-              marker=dict(size=self.special_marker_size, color='#000000'),
+              marker=dict(size=self.special_marker_size, color='gray'),
               textfont=dict(size=12, color='black', family="Arial", weight="bold"),
               showlegend=False,
               name=f"{prereq}-{course_name}" if course_name else prereq
           ))
       else:
           fig.add_trace(go.Scatter3d(
+              uid=f"course_{year}_{semester}_{prereq}",
               x=[x],
               y=[y],
               z=[z],
@@ -713,7 +430,7 @@ class Generate3DGraph(html.Div):
               mode='markers+text',
               hoverinfo='text', 
               hovertext=course_desc,
-              marker=dict(size=self.marker_size, color='#000000'),
+              marker=dict(size=self.marker_size, color='gray'),
               showlegend=False,
               textfont=dict(size=12, color='black', family="Arial", weight="bold"),
               name=f"{prereq}-{course_name}" if course_name else prereq
@@ -839,65 +556,41 @@ class Generate3DGraph(html.Div):
                     line=dict(color=self.color_for_corequisites, width=2),  
                     hoverinfo='skip'  
                   ))
-    
-    for edge_trace in edge_traces:
-      fig.add_trace(edge_trace)
-    
-    # updatemenus = self.__create_update_menu(
-    #   fig=fig,
-    #   courses=courses
-    # )
-    
-    course_name = self.course_name.replace('_', ' ').title()
+
+    fig.add_traces(edge_traces)
+
+    for data in fig.data:
+      if str(data.uid).startswith("course"):
+        fig_year, fig_semester = str(data.uid).split("_")[1], str(data.uid).split("_")[2]
+        if int(fig_year) == int(self.year) and int(fig_semester) == int(self.semester):
+          data.marker.color = colored_semester[int(fig_year)][int(fig_semester)]
+
+      if str(data.uid).startswith("inbetween_edges"):
+        fig_year, fig_semester = str(data.uid).split("_")[-2], str(data.uid).split("_")[-1]
+
+        if self.direction == "bottom":
+          bool_comparision = int(fig_year) < int(self.year)
+          nested_bool_comparision = int(fig_year) == int(self.year) and int(fig_semester) <= int(self.semester)
+        elif self.direction == "top":
+          bool_comparision = int(fig_year) > int(self.year)
+          nested_bool_comparision = int(fig_year) == int(self.year) and int(fig_semester) >= int(self.semester)
+
+        if str(data.uid).endswith(f"{self.year}_{self.semester}") or bool_comparision:
+          data.visible = True
+          data.line.width = 5
+        elif nested_bool_comparision:
+          data.visible = True
+          data.line.width = 5
+        else:
+          data.visible = False
+          data.line.width = 0
+
+
     fig.update_layout(
       margin=dict(l=0, r=0, t=0, b=0),
-      legend=dict(
-        font=dict(size=11),
-        yanchor="top",
-        xanchor="right",
-        y=0.99,
-        x=0.99,
-      ),
-      scene=dict(
-        aspectmode='cube',
-        xaxis=dict(visible=False, range=[-3*self.radius_circle, 15*self.radius_circle], autorange=False),
-        yaxis=dict(visible=False, range=[-3*self.radius_circle, 15*self.radius_circle], autorange=False),
-        zaxis=dict(visible=False, range=[-3*self.radius_circle, 15*self.radius_circle], autorange=False),
-        camera=dict(
-            eye=dict(x=1, y=1, z=1),  
-            up=dict(x=0, y=0, z=1),  
-            projection=dict(type='orthographic')
-        ),
-      ),
-      clickmode='event',
-    )
-    
-    return fig
-
-
-  def __interactive_dash_app(self,
-                             track: str,
-                             course_graph: go.Figure,
-                             list_of_courses_dropdownmenuitem: list) -> None:
-    """
-    Create an interactive Dash app for the 3D course graph.
-
-    Args:
-      - course_graph (go.Figure): The course graph.
-      - list_of_courses_dropdownmenuitem (list): The list of courses for the dropdown menu.
-    
-    Returns:
-      - None
-    """
-    
-    colored_graph = go.Figure(course_graph)
-    courses = self.course_catalog[track]
-    buttons_from_bottom, button_from_top = self.__create_button_group_for_year_semester(courses)
-
-    course_graph.update_layout(
       title=dict(
-        text=f"Interactive Course Trajectory for {self.course_name.replace('_', ' ').title()}, {self.track.replace('_', ' ').title()}", 
-        font=dict(size=26, color="black", family="Arial", weight="bold"),
+        text=f"Interactive Course Trajectory for {self.course_name.replace('_', ' ').title()}, {self.track.replace('_', ' ').title()}",
+        font=dict(size=26, color="black", weight="bold"),
         y=0.98,
         x=0.5,
       ),
@@ -914,219 +607,41 @@ class Generate3DGraph(html.Div):
         y=0.80,
         x=0.99,
       ),
+      scene=dict(
+        aspectmode='cube',
+        xaxis=dict(visible=False, range=[-3*self.radius_circle, 15*self.radius_circle], autorange=False),
+        yaxis=dict(visible=False, range=[-3*self.radius_circle, 15*self.radius_circle], autorange=False),
+        zaxis=dict(visible=False, range=[-3*self.radius_circle, 15*self.radius_circle], autorange=False),
+        camera=last_camera_position
+      ),
     )
-    for i in range(len(course_graph["data"])):
-      if "customdata" in course_graph["data"][i]:
-        if course_graph["data"][i]["customdata"] and "edge" in course_graph["data"][i]["customdata"][0]:
-          course_graph["data"][i]["visible"] = False
-          course_graph["data"][i]["line"]["color"] = "gray"
-        elif "customdata" in course_graph["data"][i] and course_graph["data"][i]["customdata"] and course_graph["data"][i]["customdata"][0] not in self.all_tracks_course_information:
-          course_graph["data"][i]["marker"]["color"] = "gray"
     
-    app.layout = html.Div(
-      [
-        html.Div(
-          dcc.Graph(
-            id=f"3d_course_graph",
-            figure=colored_graph,
-            style={
-              "height": "100%",
-            }
-          ),
-          style={
-            "position": "absolute",
-            "height": "92%",
-            "width": "98%",
-            "border-radius": "1.2rem",
-            "overflow": "hidden",
-          },
-        ),
-        dbc.Modal(
-          children=[
-            dcc.Graph(
-              id=f"3d_course_graph",
-              figure=course_graph,
-              style={
-                "width": "100%",
-                "height": "100%",
-                "position": "absolute",
-              }
-            ),
-            html.Div(
-              children=[
-                html.Div(
-                  children=[
-                    html.P(
-                      children=["Enter a course to develop a path to it:"],
-                      style={
-                        "font-size": "13px",
-                        "background-image": "linear-gradient(to right, #f12711, #a562f8)",
-                        "color": "transparent",
-                        "background-clip": "text",
-                        "font-weight": "bold",
-                        "margin-bottom": "0rem",
-                      }
-                    ),
-                    dbc.Input(
-                      id="path-to",
-                      type="text",
-                      placeholder="Enter course (reset to clear)",
-                      style={
-                        "width": "100%",
-                        "font-size": "13px",
-                        "border": "1px solid black",
-                        "border-radius": "1.2rem",
-                      }
-                    ),
-                    html.Div(
-                      children=[
-                        dbc.Button(
-                          id="path-to-button",
-                          children=["Develop Path"],
-                          style={
-                            "width": "30%",
-                            "font-size": "13px",
-                            "padding": "0.5rem 0.6rem",
-                            "border": "1px solid black",
-                            "border-radius": "1.2rem",
-                            "background": "#131314",
-                            "color": "white",
-                          }
-                        ),
-                        dbc.Button(
-                          id="reset-button",
-                          children=["Reset"],
-                          style={
-                            "width": "30%",
-                            "font-size": "13px",
-                            "padding": "0.5rem 0.6rem",
-                            "border": "1px solid black",
-                            "border-radius": "1.2rem",
-                            "background": "#131314",
-                            "color": "white",
-                          }
-                        )
-                      ],
-                      style={
-                        "margin-top": "0.5rem",
-                        "display": "flex",
-                        "flex-direction": "row",
-                        "justify-content": "space-between",
-                      }
-                    ),
-                    html.Div(
-                      children=[button for button in buttons_from_bottom],
-                      style={
-                        "margin-top": "1rem",
-                      }
-                    ),
-                    html.Div(
-                      children=[button for button in button_from_top],
-                      style={
-                        "margin-top": "1rem",
-                      }
-                    ),
-                  ],
-                )
-              ],
-              style={
-                "position": "absolute",
-                "top": "37%",
-                "right": "0",
-                "height": "50%",
-                "width": "20.5%",
-                "padding": "0 0.5rem",
-              },
-            ),
-            html.Div(
-              id='click-data'
-            ),
-          ],
-          id="modal-fs",
-          fullscreen=True,
-        ),
-        dbc.Button(
-          children=[
-            "Open in fullscreen",
-          ],
-          title="Provide more information and control over interactions on 3D graph. Press 'Esc' to exit fullscreen.",
-          style={
-            "bottom": "0.5rem",
-            "position": "absolute",
-            "margin": "0.8rem 0.6rem",
-            "border": "1.5px solid black",
-            "border-radius": "1.2rem",
-            "font-weight": "bold",
-            "background": "linear-gradient(to right, #f12711, #a562f8)",
-            "color": "black"
-          },
-          id="open-fs",
-        ),
-        dcc.Store(id="camera", storage_type="session"),
-        dcc.Store(id='click-count', data={}, storage_type="session"),
-      ],
-      style={
-        "height": "100%",
-        "border-radius": "1.2rem",
-      }
-    )
-
-    return app.layout
-
-
-  def __generate_courses_information_for_track(self,
-                                               track: str) -> list:
-    """
-    Generate the course information for a particular track.
-    
-    Args:
-      - track (str): The track for which the course information is to be generated.
-    
-    Returns:
-      - list: The list of courses for the track.
-    """
-
-    list_of_courses_dropdownmenuitem = []
-    
-    for year in self.course_catalog[track]:
-      if year == "extra_course_related_info":
-        continue
-      for semester in self.course_catalog[track][year]:
-        list_of_courses_dropdownmenuitem.append(dbc.DropdownMenuItem(f"Year: {year}, Semester: {semester}", header=True))
-        for course in self.course_catalog[track][year][semester]:
-          list_of_courses_dropdownmenuitem.append(dbc.DropdownMenuItem(course))
-      list_of_courses_dropdownmenuitem.append(dbc.DropdownMenuItem(divider=True))
-
-    return list_of_courses_dropdownmenuitem
-  
+    return fig
 
   def run(self,
-          track=None) -> None:
+          track: str,
+          year: int,
+          semester: int,
+          direction: str,
+          last_camera_position: dict) -> go.Figure:
     """
-    Generate a 3d graph of the course catalog.
+    Perform the highlighting of the prerequisites and corequisites.
     
     Args:
-      - None
+      - track (str): The track for which the course trajectory is to be generated.
+      - year (int): The year.
+      - semester (int): The semester.
+      - direction (str): The direction.
+      - last_camera_position (dict): The last camera position.
     
     Returns:
-      - None
+      - go.Figure: The 3D graph of the course trajectory.
     """
 
-    if track is None:
-      all_tracks_3d_graphs = {}
-      track_specific_figure = []
-
-      for track in self.all_tracks_course_information:
-        track_specific_figure.append(self.__create_course_trajectory(track))
-      
-      return all_tracks_3d_graphs
-    
-    elif track:
-      self.track = track
-      course_graph = self.__create_course_trajectory(track)
-      list_of_courses_dropdownmenuitem = self.__generate_courses_information_for_track(track)
-      return self.__interactive_dash_app(
-        track=track,
-        course_graph=course_graph,
-        list_of_courses_dropdownmenuitem=list_of_courses_dropdownmenuitem
-      )
+    self.track = track
+    self.year, self.semester, self.direction = year, semester, direction
+    fig = self.__perform_highlight_to_target(
+      track=track,
+      last_camera_position=last_camera_position
+    )
+    return fig
