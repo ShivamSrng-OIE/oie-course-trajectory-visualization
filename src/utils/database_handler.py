@@ -86,7 +86,7 @@ class DatabaseHandler:
     for idx, course in enumerate(self.courses_catalog_db[course_name].find(), start=1):
       del course["_id"]
       course_catalog[f"track_{idx}"] = course
-    
+
     return course_catalog
   
 
@@ -111,5 +111,3 @@ class DatabaseHandler:
       all_tracks_in_course_information[f"track_{idx}"] = track
     
     return all_tracks_in_course_information
-    
-

@@ -1,6 +1,6 @@
-import json
 from time import sleep
 import dash_bootstrap_components as dbc
+from src.develop_path import DevelopPath
 from consts import CourseTrajectoryConsts
 from src.generate_3d_graph import Generate3DGraph
 from src.utils.database_handler import DatabaseHandler
@@ -162,16 +162,61 @@ color_for_corequisites = course_trajectory_consts["color_for_corequisites"]
 color_for_prerequisites = course_trajectory_consts["color_for_prerequisites"]
 
 @callback(
+  Output("path-to", "value"),
   Output('click-count', 'data'),
   Output('3d_course_graph', 'figure'),
+  
   Input('3d_course_graph', 'clickData'),
   Input('3d_course_graph', 'figure'),
   Input('click-count', 'data'),
   State("camera", "data"),
+
+  State("path-to", "value"),
+  Input("path-to-button", "n_clicks"),
+  Input("reset-button", "n_clicks"),
+  State("course-catalog-store", "data"),
+  Input("card-tabs", "active_tab"),
 )
-def update_figure(clickData, fig, click_count, camera_data):
-  fig, click_count = highlight_course_node(clickData, fig, click_count, camera_data)
-  return click_count, fig
+def update_figure(clickData, fig, click_count, camera_data, subject, n_clicks_submit_btn, n_clicks_reset_btn ,course_catalog, active_tab):
+  if n_clicks_reset_btn:
+    click_count = {}
+    fig = DevelopPath(
+      course_name=course_catalog,
+      course_catalog=database_handler.get_course_catalog_information(
+        course_name=course_catalog
+      ),
+      all_tracks_course_information=database_handler.get_course_track_information(
+        course_name=course_catalog
+      )
+    ).run(
+      track=active_tab,
+      target_course="None",
+      last_camera_position=last_camera_position,
+    )
+    return "", click_count, fig
+  
+  if subject is not None:
+    new_fig = DevelopPath(
+      course_name=course_catalog,
+      course_catalog=database_handler.get_course_catalog_information(
+        course_name=course_catalog
+      ),
+      all_tracks_course_information=database_handler.get_course_track_information(
+        course_name=course_catalog
+      )
+    ).run(
+      track=active_tab,
+      target_course=subject,
+      last_camera_position=last_camera_position,
+    )
+    if new_fig is not None:
+      return "", click_count, new_fig
+    else:
+      return "", click_count, fig
+  
+  else:
+    fig, click_count = highlight_course_node(clickData, fig, click_count, camera_data)
+    return "", click_count, fig
 
 
 @callback(

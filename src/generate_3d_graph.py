@@ -368,7 +368,6 @@ class Generate3DGraph(html.Div):
           semester_elevation[year] = {}
 
         semester_elevation[year][semester] = z_level
-        # x, y, z = self.__create_circle(n_courses, z_level)
         course_colors.update({course: semester_colors[year][semester] for course in courses_in_semester})
             
         fig.add_trace(go.Scatter3d(
@@ -714,11 +713,13 @@ class Generate3DGraph(html.Div):
     
     course_name = self.course_name.replace('_', ' ').title()
     fig.update_layout(
-      # updatemenus=updatemenus,
-      # paper_bgcolor='lightgrey',
       margin=dict(l=0, r=0, t=0, b=0),
       legend=dict(
         font=dict(size=11),
+        yanchor="top",
+        xanchor="right",
+        y=0.99,
+        x=0.99,
       ),
       scene=dict(
         aspectmode='cube',
@@ -735,33 +736,45 @@ class Generate3DGraph(html.Div):
     )
     
     return fig
-  
-
-  def __figures_to_html(self, figs, filename="dashboard.html") -> None:
-    with open(filename, 'w', encoding="utf-8") as dashboard:
-      dashboard.write("<html><head></head><body>" + "\n")
-      for idx, fig in enumerate(figs):
-        inner_html = fig.to_html().split('<body>')[1].split('</body>')[0]
-        dashboard.write(inner_html + "\n")
-        
-        if idx < len(figs) - 1:
-          dashboard.write("<hr style='height:3px;border:none;color:#333;background-color:#333;'>\n")
-      dashboard.write("</body></html>" + "\n")
 
 
   def __interactive_dash_app(self,
-                             course_graph: go.Figure) -> None:
+                             course_graph: go.Figure,
+                             list_of_courses_dropdownmenuitem: list) -> None:
     """
     Create an interactive Dash app for the 3D course graph.
 
     Args:
       - course_graph (go.Figure): The course graph.
+      - list_of_courses_dropdownmenuitem (list): The list of courses for the dropdown menu.
     
     Returns:
       - None
     """
     
     colored_graph = go.Figure(course_graph)
+
+    course_graph.update_layout(
+      title=dict(
+        text=f"Interactive Course Trajectory for {self.course_name.replace('_', ' ').title()}, {self.track.replace('_', ' ').title()}", 
+        font=dict(size=26, color="black", family="Arial", weight="bold"),
+        y=0.98,
+        x=0.5,
+      ),
+      legend=dict(
+        title=dict(
+          text=f"Legend: {self.track.replace('_', ' ').title()} Courses", 
+          font=dict(size=16, weight="bold"),
+        ),
+        font=dict(size=11),
+        bordercolor="black",
+        borderwidth=1,
+        yanchor="top",
+        xanchor="right",
+        y=0.85,
+        x=0.99,
+      ),
+    )
     for i in range(len(course_graph["data"])):
       if "customdata" in course_graph["data"][i]:
         if course_graph["data"][i]["customdata"] and "edge" in course_graph["data"][i]["customdata"][0]:
@@ -794,8 +807,82 @@ class Generate3DGraph(html.Div):
               id=f"3d_course_graph",
               figure=course_graph,
               style={
-                "height": "100%"
+                "width": "100%",
+                "height": "100%",
+                "position": "absolute",
               }
+            ),
+            html.Div(
+              children=[
+                html.Div(
+                  children=[
+                    html.P(
+                      children=["Enter a course to develop a path to it:"],
+                      style={
+                        "font-size": "13px",
+                        "color": "black",
+                        "font-weight": "bold",
+                        "margin-bottom": "0rem",
+                      }
+                    ),
+                    dbc.Input(
+                      id="path-to",
+                      type="text",
+                      placeholder="Enter course (reset to clear)",
+                      style={
+                        "width": "100%",
+                        "font-size": "13px",
+                        "border": "1px solid black",
+                        "border-radius": "1.2rem",
+                      }
+                    ),
+                    html.Div(
+                      children=[
+                        dbc.Button(
+                          id="path-to-button",
+                          children=["Develop Path"],
+                          style={
+                            "width": "30%",
+                            "font-size": "13px",
+                            "padding": "0.5rem 0.6rem",
+                            "border": "1px solid black",
+                            "border-radius": "1.2rem",
+                            "background": "#131314",
+                            "color": "white",
+                          }
+                        ),
+                        dbc.Button(
+                          id="reset-button",
+                          children=["Reset"],
+                          style={
+                            "width": "30%",
+                            "font-size": "13px",
+                            "padding": "0.5rem 0.6rem",
+                            "border": "1px solid black",
+                            "border-radius": "1.2rem",
+                            "background": "#131314",
+                            "color": "white",
+                          }
+                        )
+                      ],
+                      style={
+                        "margin-top": "0.5rem",
+                        "display": "flex",
+                        "flex-direction": "row",
+                        "justify-content": "space-between",
+                      }
+                    )
+                  ],
+                )
+              ],
+              style={
+                "position": "absolute",
+                "top": "47%",
+                "right": "0",
+                "height": "50%",
+                "width": "20.5%",
+                "padding": "0 0.5rem",
+              },
             ),
             html.Div(
               id='click-data'
@@ -808,7 +895,7 @@ class Generate3DGraph(html.Div):
           children=[
             "Open in fullscreen",
           ],
-          title="Provide greater control with interactions on 3D graph. Press 'Esc' to exit fullscreen.",
+          title="Provide more information and control over interactions on 3D graph. Press 'Esc' to exit fullscreen.",
           style={
             "bottom": "0.5rem",
             "position": "absolute",
@@ -826,13 +913,38 @@ class Generate3DGraph(html.Div):
       ],
       style={
         "height": "100%",
-        # "overflow": "hidden",
-        # "background-color": "white",
         "border-radius": "1.2rem",
       }
     )
 
     return app.layout
+
+
+  def __generate_courses_information_for_track(self,
+                                               track: str) -> list:
+    """
+    Generate the course information for a particular track.
+    
+    Args:
+      - track (str): The track for which the course information is to be generated.
+    
+    Returns:
+      - list: The list of courses for the track.
+    """
+
+    list_of_courses_dropdownmenuitem = []
+    
+    for year in self.course_catalog[track]:
+      if year == "extra_course_related_info":
+        continue
+      for semester in self.course_catalog[track][year]:
+        list_of_courses_dropdownmenuitem.append(dbc.DropdownMenuItem(f"Year: {year}, Semester: {semester}", header=True))
+        for course in self.course_catalog[track][year][semester]:
+          list_of_courses_dropdownmenuitem.append(dbc.DropdownMenuItem(course))
+      list_of_courses_dropdownmenuitem.append(dbc.DropdownMenuItem(divider=True))
+
+    return list_of_courses_dropdownmenuitem
+  
 
   def run(self,
           track=None) -> None:
@@ -856,7 +968,10 @@ class Generate3DGraph(html.Div):
       return all_tracks_3d_graphs
     
     elif track:
+      self.track = track
       course_graph = self.__create_course_trajectory(track)
+      list_of_courses_dropdownmenuitem = self.__generate_courses_information_for_track(track)
       return self.__interactive_dash_app(
-        course_graph=course_graph
+        course_graph=course_graph,
+        list_of_courses_dropdownmenuitem=list_of_courses_dropdownmenuitem
       )
