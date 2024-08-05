@@ -215,7 +215,6 @@ def update_figure(clickData, fig, click_count, camera_data, subject, n_clicks_su
       last_camera_position=last_camera_position,
     )
     if new_fig is not None:
-      print("New fig is not None")
       return complete_detailed_path, subject, click_count, new_fig, 0
     else:
       return "", "", click_count, fig, 0
