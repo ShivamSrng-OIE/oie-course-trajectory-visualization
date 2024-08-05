@@ -1,4 +1,5 @@
 import numpy as np
+from dash import html
 import plotly.graph_objects as go
 from warnings import filterwarnings
 from consts import CourseTrajectoryConsts
@@ -549,39 +550,45 @@ class DevelopPath:
                     hoverinfo='skip'  
                   ))
 
+    for edge_trace in edge_traces:
+      fig.add_trace(edge_trace)
+
+    for i in range(len(fig["data"])):
+      if "customdata" in fig["data"][i]:
+        if fig["data"][i]["customdata"] and "edge" in fig["data"][i]["customdata"][0]:
+          fig["data"][i]["visible"] = False
+          fig["data"][i]["line"]["color"] = "gray"
+        elif "customdata" in fig["data"][i] and fig["data"][i]["customdata"] and fig["data"][i]["customdata"][0] not in self.all_tracks_course_information:
+          fig["data"][i]["marker"]["color"] = "gray"
+
     if target_course == "None":
       fig.update_layout(
-      margin=dict(l=0, r=0, t=0, b=0),
-      title=dict(
-        text=f"Interactive Course Trajectory for {self.course_name.replace('_', ' ').title()}, {self.track.replace('_', ' ').title()}",
-        font=dict(size=26, color="black", weight="bold"),
-        y=0.98,
-        x=0.5,
-      ),
-      legend=dict(
+        margin=dict(l=0, r=0, t=0, b=0),
         title=dict(
-          text=f"Legend: {self.track.replace('_', ' ').title()} Courses", 
-          font=dict(size=16, weight="bold"),
+          text=f"Interactive Course Trajectory for {self.course_name.replace('_', ' ').title()}, {self.track.replace('_', ' ').title()}",
+          font=dict(size=26, color="black", weight="bold"),
+          y=0.98,
+          x=0.5,
         ),
-        font=dict(size=11),
-        bordercolor="black",
-        borderwidth=1,
-        yanchor="top",
-        xanchor="right",
-        y=0.80,
-        x=0.99,
-      ),
-      scene=dict(
-        aspectmode='cube',
-        xaxis=dict(visible=False, range=[-3*self.radius_circle, 15*self.radius_circle], autorange=False),
-        yaxis=dict(visible=False, range=[-3*self.radius_circle, 15*self.radius_circle], autorange=False),
-        zaxis=dict(visible=False, range=[-3*self.radius_circle, 15*self.radius_circle], autorange=False),
-        camera=last_camera_position
-      ),
-    )
+        legend=dict(
+          title=dict(
+            text=f"Legend: {self.track.replace('_', ' ').title()} Courses", 
+            font=dict(size=16, weight="bold"),
+          ),
+          font=dict(size=11),
+        ),
+        scene=dict(
+          aspectmode='cube',
+          xaxis=dict(visible=False, range=[-3*self.radius_circle, 15*self.radius_circle], autorange=False),
+          yaxis=dict(visible=False, range=[-3*self.radius_circle, 15*self.radius_circle], autorange=False),
+          zaxis=dict(visible=False, range=[-3*self.radius_circle, 15*self.radius_circle], autorange=False),
+          camera=last_camera_position
+        ),
+      )
       return fig
     
     already_in_legend = set()
+    modified_path_to_target = {}
     for i in range(len(path_to_target)):
       source = path_to_target[i]["source"]
       destination = path_to_target[i]["destination"]
@@ -605,7 +612,37 @@ class DevelopPath:
           destination_course_desc = self.__add_intermediate_br_tags(self.all_tracks_course_information[track][destination]["course_description"])
         if "course_name" in self.all_tracks_course_information[track][destination]:
           destination_course_name = self.all_tracks_course_information[track][destination]["course_name"]
-      
+
+      source_data = {
+        "source": source,
+        "source_course_name": source_course_name,
+        "relation": relation,
+        "year": int(self.all_tracks_course_information[track][source]["year"]) if source in self.all_tracks_course_information[track] else 0,
+        "semester": int(self.all_tracks_course_information[track][source]["semester"]) if source in self.all_tracks_course_information[track] else 0,
+      }
+      if source_data["year"] not in modified_path_to_target:
+        modified_path_to_target[source_data["year"]] = {}
+      if source_data["semester"] not in modified_path_to_target[source_data["year"]]:
+        modified_path_to_target[source_data["year"]][source_data["semester"]] = []
+      if source_data not in modified_path_to_target[source_data["year"]][source_data["semester"]]:
+        modified_path_to_target[source_data["year"]][source_data["semester"]].append(source_data)
+      modified_path_to_target[source_data["year"]] = dict(sorted(modified_path_to_target[source_data["year"]].items()))
+
+      destination_data = {
+        "destination": destination,
+        "destination_course_name": destination_course_name,
+        "relation": relation,
+        "year": int(self.all_tracks_course_information[track][destination]["year"]) if destination in self.all_tracks_course_information[track] else 0,
+        "semester": int(self.all_tracks_course_information[track][destination]["semester"]) if destination in self.all_tracks_course_information[track] else 0,
+      }
+      if destination_data["year"] not in modified_path_to_target:
+        modified_path_to_target[destination_data["year"]] = {}
+      if destination_data["semester"] not in modified_path_to_target[destination_data["year"]]:
+        modified_path_to_target[destination_data["year"]][destination_data["semester"]] = []
+      if destination_data not in modified_path_to_target[destination_data["year"]][destination_data["semester"]]:
+        modified_path_to_target[destination_data["year"]][destination_data["semester"]].append(destination_data)
+      modified_path_to_target[destination_data["year"]] = dict(sorted(modified_path_to_target[destination_data["year"]].items()))
+
       if source not in already_in_legend:
         already_in_legend.add(source)
         fig.add_trace(go.Scatter3d(
@@ -614,6 +651,7 @@ class DevelopPath:
           z=[z0],
           mode='markers+text',
           hoverinfo='text', 
+          showlegend=False,
           hovertext=source_course_desc,
           marker=dict(size=self.marker_size, color='red'),
           textfont=dict(size=12, color='black', weight="bold"),
@@ -629,6 +667,7 @@ class DevelopPath:
           mode='markers+text',
           hoverinfo='text', 
           hovertext=destination_course_desc,
+          showlegend=False,
           marker=dict(size=self.marker_size, color='red'),
           textfont=dict(size=12, color='black', weight="bold"),
           name=f"{destination}-{destination_course_name}" if destination_course_name else destination
@@ -657,6 +696,55 @@ class DevelopPath:
           hoverinfo='skip'  
         ))
 
+    modified_path_to_target = dict(sorted(modified_path_to_target.items()))
+    complete_path_sorted = []
+    for year in modified_path_to_target:
+      if year == 0:
+        year_name = "Pre-Knowledge Courses"
+        complete_path_sorted.append(
+          html.P(
+            children=[year_name],
+            style={"font-size": "0.8rem", "font-weight": "bold", "color": "black", "margin": "0rem"}
+          )
+        )
+        for course_data in modified_path_to_target[year][0]:
+          course_code = course_data["source"] if "source" in course_data else course_data["destination"]
+          course_name = course_data["source_course_name"] if "source_course_name" in course_data else course_data["destination_course_name"]
+          complete_path_sorted.append(
+            html.P(
+              children=[f"{course_code.upper()} {course_name.upper()}"],
+              style={"font-size": "0.7rem", "color": "black", "margin": "0rem"}
+            )
+          )
+      else:
+        year_name = f"Year {year}"
+        complete_path_sorted.append(
+          html.P(
+            children=[year_name],
+            style={"font-size": "0.8rem", "font-weight": "bold", "color": "black", "margin": "0rem"}
+          )
+        )
+        for semester in modified_path_to_target[year]:
+          if semester != 0:
+            semester_name = f"Semester {semester}"
+          
+          if semester_name not in complete_path_sorted:
+            complete_path_sorted.append(
+              html.P(
+                children=[semester_name],
+                style={"font-size": "0.8rem", "font-weight": "bold", "color": "black", "margin": "0rem"}
+              )
+            )
+          for course_data in modified_path_to_target[year][semester]:
+            course_code = course_data["source"] if "source" in course_data else course_data["destination"]
+            course_name = course_data["source_course_name"] if "source_course_name" in course_data else course_data["destination_course_name"]
+            complete_path_sorted.append(
+              html.P(
+                children=[f"{course_code.upper()}: {course_name.upper()}"],
+                style={"font-size": "0.7rem", "color": "black", "margin": "0rem"}
+              )
+            )
+
     fig.update_layout(
       margin=dict(l=0, r=0, t=0, b=0),
       title=dict(
@@ -671,12 +759,6 @@ class DevelopPath:
           font=dict(size=16, weight="bold"),
         ),
         font=dict(size=11),
-        bordercolor="black",
-        borderwidth=1,
-        yanchor="top",
-        xanchor="right",
-        y=0.80,
-        x=0.99,
       ),
       scene=dict(
         aspectmode='cube',
@@ -687,7 +769,7 @@ class DevelopPath:
       ),
     )
 
-    return fig
+    return fig, complete_path_sorted
   
 
   def run(self,
@@ -708,7 +790,9 @@ class DevelopPath:
     if target_course not in self.all_tracks_course_information[track] and target_course != "None":
       print(f"Target course {target_course} not found in the track {track}")
       return None
+    
     else:
+
       self.track = track
       if target_course != "None":
         path_to_target = self.all_tracks_course_information[track][target_course]["complete_path"]
