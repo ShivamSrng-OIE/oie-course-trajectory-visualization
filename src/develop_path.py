@@ -710,12 +710,16 @@ class DevelopPath:
         for course_data in modified_path_to_target[year][0]:
           course_code = course_data["source"] if "source" in course_data else course_data["destination"]
           course_name = course_data["source_course_name"] if "source_course_name" in course_data else course_data["destination_course_name"]
-          complete_path_sorted.append(
-            html.P(
+          if html.P(
               children=[f"{course_code.upper()} {course_name.upper()}"],
               style={"font-size": "0.7rem", "color": "black", "margin": "0rem"}
+            ) not in complete_path_sorted:
+            complete_path_sorted.append(
+              html.P(
+                children=[f"{course_code.upper()} {course_name.upper()}"],
+                style={"font-size": "0.7rem", "color": "black", "margin": "0rem"}
+              )
             )
-          )
       else:
         year_name = f"Year {year}"
         complete_path_sorted.append(
@@ -738,12 +742,16 @@ class DevelopPath:
           for course_data in modified_path_to_target[year][semester]:
             course_code = course_data["source"] if "source" in course_data else course_data["destination"]
             course_name = course_data["source_course_name"] if "source_course_name" in course_data else course_data["destination_course_name"]
-            complete_path_sorted.append(
-              html.P(
+            if html.P(
                 children=[f"{course_code.upper()}: {course_name.upper()}"],
                 style={"font-size": "0.7rem", "color": "black", "margin": "0rem"}
+              ) not in complete_path_sorted:
+              complete_path_sorted.append(
+                html.P(
+                  children=[f"{course_code.upper()}: {course_name.upper()}"],
+                  style={"font-size": "0.7rem", "color": "black", "margin": "0rem"}
+                )
               )
-            )
 
     fig.update_layout(
       margin=dict(l=0, r=0, t=0, b=0),
