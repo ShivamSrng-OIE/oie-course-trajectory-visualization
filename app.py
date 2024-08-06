@@ -15,7 +15,7 @@ app = Dash(
 app._favicon = (
   "icon/njit.ico"
 )
-server = app.server
+# server = app.server
 
 
 app.layout = html.Div(
@@ -27,8 +27,9 @@ app.layout = html.Div(
   className="indexpage-main-layout",
 )
 
+# reduce the size of pre-knowledge courses tower and shift all its circles
 
 if __name__ == "__main__":
   app.run(
-    debug=False,
+    debug=True,
   )

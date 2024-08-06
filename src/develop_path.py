@@ -119,6 +119,7 @@ class DevelopPath:
   
 
   def __create_circle(self,
+                      tower: str,
                       n_points: int,
                       z_level: int) -> list[int]:
     """
@@ -132,14 +133,19 @@ class DevelopPath:
       - list[int]: The list of points in the circle.
     """
 
+    if tower == "pre-knowledge":
+      radius = self.radius_circle / 2
+    else:
+      radius = self.radius_circle
+
     theta = np.linspace(
       start=0,
       stop=2*np.pi, 
       num=n_points,
       endpoint=False
     )
-    x = self.radius_circle * np.cos(theta)
-    y = self.radius_circle * np.sin(theta) 
+    x = radius * np.cos(theta)
+    y = radius * np.sin(theta) 
     z = np.full_like(x, z_level)
     
     return x, y, z
@@ -278,7 +284,7 @@ class DevelopPath:
             ))
 
         if critical_course_cnt >= self.critical_courses_threshold_circle:
-          circle_x, circle_y, circle_z = self.__create_circle(100, z_level)
+          circle_x, circle_y, circle_z = self.__create_circle("", 100, z_level)
           fig.add_trace(go.Scatter3d(
             x=circle_x,
             y=circle_y,
@@ -289,7 +295,7 @@ class DevelopPath:
             hoverinfo='skip'  
           ))
         else:
-          circle_x, circle_y, circle_z = self.__create_circle(100, z_level)
+          circle_x, circle_y, circle_z = self.__create_circle("", 100, z_level)
           fig.add_trace(go.Scatter3d(
             x=circle_x,
             y=circle_y,
@@ -325,20 +331,111 @@ class DevelopPath:
                   for prereq in item:
                     if isinstance(prereq, list):
                       for sub_prereq in prereq:
-                        if sub_prereq not in taught_courses and sub_prereq not in unique_prereqs:
-                          unique_prereqs.append(sub_prereq)
-                          unique_prereqs_complete_info.append([sub_prereq, int(year), int(semester), semester_elevation[year][semester]])
-                    elif prereq not in taught_courses and prereq not in unique_prereqs:
+                        if sub_prereq not in taught_courses:
+                          if sub_prereq not in unique_prereqs:
+                            unique_prereqs.append(sub_prereq)
+                            unique_prereqs_complete_info.append([sub_prereq, int(year), int(semester), semester_elevation[year][semester]])
+                          elif sub_prereq in unique_prereqs:
+                            index = unique_prereqs.index(sub_prereq)
+                            already_present_prereq, already_present_year, already_present_semester, already_present_semester_elevation = unique_prereqs_complete_info[index]
+                            if already_present_year > int(year):
+                              unique_prereqs_complete_info[index] = [sub_prereq, int(year), int(semester), semester_elevation[year][semester]]
+                            elif already_present_year == int(year) and already_present_semester > int(semester):
+                              unique_prereqs_complete_info[index] = [sub_prereq, int(year), int(semester), semester_elevation[year][semester]]
+
+                    elif prereq not in taught_courses:
+                      if prereq not in unique_prereqs:
                         unique_prereqs.append(prereq)
                         unique_prereqs_complete_info.append([prereq, int(year), int(semester), semester_elevation[year][semester]])
+                      elif prereq in unique_prereqs:
+                        index = unique_prereqs.index(prereq)
+                        already_present_prereq, already_present_year, already_present_semester, already_present_semester_elevation = unique_prereqs_complete_info[index]
+                        if already_present_year > int(year):
+                          unique_prereqs_complete_info[index] = [prereq, int(year), int(semester), semester_elevation[year][semester]]
+                        elif already_present_year == int(year) and already_present_semester > int(semester):
+                          unique_prereqs_complete_info[index] = [prereq, int(year), int(semester), semester_elevation[year][semester]]
                 else:
-                  if item not in taught_courses and item not in unique_prereqs:
-                    unique_prereqs.append(item)
-                    unique_prereqs_complete_info.append([item, int(year), int(semester), semester_elevation[year][semester]])
+                  if item not in taught_courses:
+                    if item not in unique_prereqs:
+                      unique_prereqs.append(item)
+                      unique_prereqs_complete_info.append([item, int(year), int(semester), semester_elevation[year][semester]])
+                    elif item in unique_prereqs:
+                      index = unique_prereqs.index(item)
+                      already_present_item, already_present_year, already_present_semester, already_present_semester_elevation = unique_prereqs_complete_info[index]
+                      if already_present_year > int(year):
+                        unique_prereqs_complete_info[index] = [item, int(year), int(semester), semester_elevation[year][semester]]
+                      elif already_present_year == int(year) and already_present_semester > int(semester):
+                        unique_prereqs_complete_info[index] = [item, int(year), int(semester), semester_elevation[year][semester]]
             else:
-              if prerequisites_data not in taught_courses and prerequisites_data not in unique_prereqs:
-                unique_prereqs.append(prerequisites_data)
-                unique_prereqs_complete_info.append([prerequisites_data, int(year), int(semester), semester_elevation[year][semester]])
+              if prerequisites_data not in taught_courses:
+                if prerequisites_data not in unique_prereqs:
+                  unique_prereqs.append(prerequisites_data)
+                  unique_prereqs_complete_info.append([prerequisites_data, int(year), int(semester), semester_elevation[year][semester]])
+                elif prerequisites_data in unique_prereqs:
+                  index = unique_prereqs.index(prerequisites_data)
+                  already_present_prerequisites_data, already_present_year, already_present_semester, already_present_semester_elevation = unique_prereqs_complete_info[index]
+                  if already_present_year > int(year):
+                    unique_prereqs_complete_info[index] = [prerequisites_data, int(year), int(semester), semester_elevation[year][semester]]
+                  elif already_present_year == int(year) and already_present_semester > int(semester):
+                    unique_prereqs_complete_info[index] = [prerequisites_data, int(year), int(semester), semester_elevation[year][semester]]
+
+          if 'corequisites' in details:
+            prerequisites_data = details['corequisites']
+            if isinstance(prerequisites_data, list):
+              for item in prerequisites_data:
+                if isinstance(item, list):
+                  for prereq in item:
+                    if isinstance(prereq, list):
+                      for sub_prereq in prereq:
+                        if sub_prereq not in taught_courses:
+                          if sub_prereq not in unique_prereqs:
+                            unique_prereqs.append(sub_prereq)
+                            unique_prereqs_complete_info.append([sub_prereq, int(year), int(semester), semester_elevation[year][semester]])
+                          elif sub_prereq in unique_prereqs:
+                            index = unique_prereqs.index(sub_prereq)
+                            already_present_prereq, already_present_year, already_present_semester, already_present_semester_elevation = unique_prereqs_complete_info[index]
+                            if already_present_year > int(year):
+                              unique_prereqs_complete_info[index] = [sub_prereq, int(year), int(semester), semester_elevation[year][semester]]
+                            elif already_present_year == int(year) and already_present_semester > int(semester):
+                              unique_prereqs_complete_info[index] = [sub_prereq, int(year), int(semester), semester_elevation[year][semester]]
+
+                    elif prereq not in taught_courses:
+                      if prereq not in unique_prereqs:
+                        unique_prereqs.append(prereq)
+                        unique_prereqs_complete_info.append([prereq, int(year), int(semester), semester_elevation[year][semester]])
+                      elif prereq in unique_prereqs:
+                        index = unique_prereqs.index(prereq)
+                        already_present_prereq, already_present_year, already_present_semester, already_present_semester_elevation = unique_prereqs_complete_info[index]
+                        if already_present_year > int(year):
+                          unique_prereqs_complete_info[index] = [prereq, int(year), int(semester), semester_elevation[year][semester]]
+                        elif already_present_year == int(year) and already_present_semester > int(semester):
+                          unique_prereqs_complete_info[index] = [prereq, int(year), int(semester), semester_elevation[year][semester]]
+
+                else:
+                  if item not in taught_courses:
+                    if item not in unique_prereqs:
+                      unique_prereqs.append(item)
+                      unique_prereqs_complete_info.append([item, int(year), int(semester), semester_elevation[year][semester]])
+                    elif item in unique_prereqs:
+                      index = unique_prereqs.index(item)
+                      already_present_item, already_present_year, already_present_semester, already_present_semester_elevation = unique_prereqs_complete_info[index]
+                      if already_present_year > int(year):
+                        unique_prereqs_complete_info[index] = [item, int(year), int(semester), semester_elevation[year][semester]]
+                      elif already_present_year == int(year) and already_present_semester > int(semester):
+                        unique_prereqs_complete_info[index] = [item, int(year), int(semester), semester_elevation[year][semester]]
+
+            else:
+              if prerequisites_data not in taught_courses:
+                if prerequisites_data not in unique_prereqs:
+                  unique_prereqs.append(prerequisites_data)
+                  unique_prereqs_complete_info.append([prerequisites_data, int(year), int(semester), semester_elevation[year][semester]])
+                elif prerequisites_data in unique_prereqs:
+                  index = unique_prereqs.index(prerequisites_data)
+                  already_present_prerequisites_data, already_present_year, already_present_semester, already_present_semester_elevation = unique_prereqs_complete_info[index]
+                  if already_present_year > int(year):
+                    unique_prereqs_complete_info[index] = [prerequisites_data, int(year), int(semester), semester_elevation[year][semester]]
+                  elif already_present_year == int(year) and already_present_semester > int(semester):
+                    unique_prereqs_complete_info[index] = [prerequisites_data, int(year), int(semester), semester_elevation[year][semester]]
 
     unique_prereqs.sort()
     unique_prereqs_complete_info.sort(key=lambda x: x[0])
@@ -348,21 +445,15 @@ class DevelopPath:
 
     for i, prereq in enumerate(unique_prereqs):
       prerequisites_data, year, semester, semester_elevation = unique_prereqs_complete_info[i]
-      if unique_prereqs_complete_info[i][1] == 1 and unique_prereqs_complete_info[i][2] == 1:
-          semester_elevation = -self.z_increment
-          left_shift = 0
-      else:
-          semester_elevation = semester_elevation - 2* self.z_increment
-          left_shift = self.left_shift
       
-      x = external_radius * np.cos(2 * np.pi * i / len(unique_prereqs)) + left_shift
-      y = external_radius * np.sin(2 * np.pi * i / len(unique_prereqs))
+      x = (external_radius / 2) * np.cos(2 * np.pi * i / len(unique_prereqs)) + left_shift
+      y = (external_radius / 2) * np.sin(2 * np.pi * i / len(unique_prereqs))
       z = semester_elevation
       course_cnt += 1
 
       if [year, semester] not in already_present_semester_circle:
           already_present_semester_circle.append([year, semester])
-          circle_x, circle_y, circle_z = self.__create_circle(100, semester_elevation)
+          circle_x, circle_y, circle_z = self.__create_circle("pre-knowledge", 100, semester_elevation)
           fig.add_trace(go.Scatter3d(
               x=circle_x + left_shift,
               y=circle_y,
@@ -649,6 +740,7 @@ class DevelopPath:
           x=[x0],
           y=[y0],
           z=[z0],
+          customdata=[source],
           mode='markers+text',
           hoverinfo='text', 
           showlegend=False,
@@ -664,6 +756,7 @@ class DevelopPath:
           x=[x1],
           y=[y1],
           z=[z1],
+          customdata=[destination],
           mode='markers+text',
           hoverinfo='text', 
           hovertext=destination_course_desc,
@@ -679,6 +772,7 @@ class DevelopPath:
           y=[y0, y1],
           z=[z0, z1],
           mode='lines',
+          customdata=[f"edge_pre_{source}_{destination}"],
           showlegend=False,
           visible=True,
           line=dict(color=self.color_for_prerequisites, width=5),  
@@ -690,6 +784,7 @@ class DevelopPath:
           y=[y0, y1],
           z=[z0, z1],
           mode='lines',
+          customdata=[f"edge_coreq_{source}_{destination}"],
           showlegend=False,
           visible=True,
           line=dict(color=self.color_for_corequisites, width=5),  

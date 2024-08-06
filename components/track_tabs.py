@@ -91,6 +91,8 @@ card = html.Div(
 )
   
 last_camera_position = None
+last_click_data = None
+original_fig = None
 
 @callback(
     Output("modal-fs", "is_open"),
@@ -182,6 +184,8 @@ color_for_prerequisites = course_trajectory_consts["color_for_prerequisites"]
   Input("card-tabs", "active_tab"),
 )
 def update_figure(clickData, fig, click_count, camera_data, subject, n_clicks_submit_btn, n_clicks_reset_btn ,course_catalog, active_tab):
+  global last_click_data
+  global original_fig
 
   if n_clicks_reset_btn == 1:
     fig = DevelopPath(
@@ -200,7 +204,7 @@ def update_figure(clickData, fig, click_count, camera_data, subject, n_clicks_su
     
     return "", "", click_count, fig, 0
   
-  if subject is not None and subject != "":
+  if subject is not None and subject != "" and last_click_data == clickData:
     new_fig, complete_detailed_path = DevelopPath(
       course_name=course_catalog,
       course_catalog=database_handler.get_course_catalog_information(
@@ -219,6 +223,15 @@ def update_figure(clickData, fig, click_count, camera_data, subject, n_clicks_su
     else:
       return "", "", click_count, fig, 0
 
+  if subject is not None and subject != "" and last_click_data != clickData:
+    fig = original_fig
+    fig, click_count = highlight_course_node(clickData, fig, click_count, camera_data)
+    return "", "", click_count, fig, 0
+  
+  if clickData is None:
+    original_fig = fig
+  
+  last_click_data = clickData
   fig, click_count = highlight_course_node(clickData, fig, click_count, camera_data)
   return "", "", click_count, fig, 0
 
