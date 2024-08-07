@@ -15,7 +15,7 @@ app = Dash(
 app._favicon = (
   "icon/njit.ico"
 )
-server = app.server
+# server = app.server
 
 
 app.layout = html.Div(
@@ -29,5 +29,5 @@ app.layout = html.Div(
 
 if __name__ == "__main__":
   app.run(
-    debug=False,
+    debug=True,
   )
