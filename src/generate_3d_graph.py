@@ -733,82 +733,128 @@ class Generate3DGraph(html.Div):
               children=[
                 html.Div(
                   children=[
-                    html.P(
-                      children=["Enter a course to develop a path to it:"],
+                    html.Div(
+                      children=[
+                       html.P(
+                         children=[
+                          html.Div(
+                            children=[
+                              html.Img(
+                                src="assets/images/njit.png",
+                                style={
+                                  "width": "10%",
+                                  "height": "10%",
+                                  "border-radius": "50%",
+                                  "margin-right": "0.5rem",
+                                }
+                              ),
+                              "Hello, I am your virtual assistant, NJITBot. I can help you with:",
+                              html.Br(),
+                              "• Generating trajectories for specific course.",
+                              html.Br(),
+                              "• Provisioning the information about a course's prerequisites and corequisites.",
+                              html.Br(),
+                              "• Providing the course recommendation for a particular semester in a year. Along with that, you must provide information about your career goals or intrests and whether you want to have a track that is more focused on academics or industry/applied.",
+                              html.Br(),
+                              html.Br(),
+                              "Let me know what you would like to do!",
+                            ],
+                            style={
+                              "display": "flex",
+                              "flex-direction": "row",
+                              "justify-content": "flex-start",
+                              "color": "white",
+                              "margin": "0.5rem",
+                            }
+                          ),
+                         ],
+                         id="conversation-area",
+                         style={
+                            "font-size": "0.8rem",
+                            "color": "white",
+                            "height": "100%",
+                            "width": "100%",
+                            "color": "white",
+                            "padding": "0.25rem",
+                            "background": "#212121",
+                            "border-radius": "1.2rem",
+                         }
+                       )
+                      ],
                       style={
-                        "font-size": "0.8rem",
-                        "color": "black",
-                        "font-weight": "bold",
-                        "margin-bottom": "0.2rem",
-                      }
-                    ),
-                    dbc.Input(
-                      id="path-to",
-                      type="text",
-                      placeholder="Enter course (reset to clear)",
-                      style={
+                        "align-items": "center",
+                        "justify-content": "center",
+                        "height": "94.5%",
+                        "overflow-y": "scroll",
                         "width": "100%",
-                        "font-size": "0.8rem",
-                        "border": "1px solid black",
+                        "color": "white",
+                        "background": "#212121",
                         "border-radius": "1.2rem",
+                        "margin-bottom": "1rem",
                       }
                     ),
                     html.Div(
                       children=[
-                        dbc.Button(
-                          id="path-to-button",
-                          children=["Develop Path"],
+                        dbc.Input(
+                          type="text",
+                          id="user-input",
+                          placeholder="Search for a course...",
                           style={
-                            "width": "40%",
+                            "height": "100%",
+                            "width": "85%",
                             "font-size": "0.8rem",
-                            "padding": "0.3rem 0.6rem",
-                            "border": "1px solid black",
-                            "border-radius": "1.2rem",
-                            "background": "#131314",
                             "color": "white",
-                            "align-items": "center",
-                            "margin-right": "1rem",
-                          }
+                            "background": "#212121",
+                            "border-radius": "1.2rem",
+                            "margin-right": "0.2rem",
+                          },
                         ),
                         dbc.Button(
-                          id="reset-button",
-                          children=["Reset"],
+                          children=[
+                            html.Img(
+                              src=f"assets/images/upload.png",
+                              style={
+                                "height": "100%",
+                                "width": "100%",
+                              }
+                            )
+                          ],
+                          id="send-chat-button",
                           style={
-                            "width": "40%",
-                            "font-size": "0.8rem",
-                            "padding": "0.3rem 0.6rem",
-                            "border": "1px solid black",
-                            "border-radius": "1.2rem",
-                            "background": "#131314",
-                            "align-items": "center",
-                            "color": "white",
-                          }
-                        ),
+                            "height": "120%",
+                            "width": "15%",
+                            "border-radius": "50%",
+                            "background": "#1E1F20",
+                            "border": "1px solid #212121",
+                          },
+                        )
                       ],
                       style={
+                        "height": "4%",
+                        "width": "100%",
+                        "align-items": "center",
                         "display": "flex",
-                        "margin-top": "0.5rem",
                         "flex-direction": "row",
                       }
-                    ),
-                    html.P(
-                      id="complete-path-area",
-                      style={
-                        "color": "black",
-                        "margin": "0.5rem",
-                        "min-height": "wrap-content",
-                      }
-                    ),
+                    )
                   ],
-                )
+                  id="course-info",
+                  style={
+                    "width": "100%",
+                    "height": "100%",
+                    "background": "#1E1F20",
+                    "border-radius": "1.2rem",
+                    "padding": "1rem",
+                  },
+                ),
               ],
               style={
                 "position": "absolute",
                 "top": "0",
                 "left": "0",
                 "height": "100%",
-                "width": "17%",
-                "padding": "0.5rem 1rem",
+                "width": "21%",
+                "padding": "0.5rem 0.5rem",
                 "padding-top": "5.5rem",
               },
             ),

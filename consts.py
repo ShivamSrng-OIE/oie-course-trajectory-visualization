@@ -79,3 +79,45 @@ class MondoDBConsts:
     return {
       "host": host,
     }
+
+
+class GeminiConstants:
+  """
+  A class to store the constants for the Gemini API
+  """
+
+  def __init__(self) -> None:
+    self.config = config["GEMINI_CONSTS"]
+
+
+  def get_constants(self) -> dict:
+    """
+    Returns the constants for the Gemini API
+    
+    Args:
+      - None
+    
+    Returns:
+      - dict: The constants for the Gemini API
+    """
+    
+    api_key = self.config.get("api_key")
+    model_name = self.config.get("model_name")
+    model_temperture = self.config.getint("model_temperture")
+    prompt_for_advisor = self.config.get("prompt_for_advisor")
+    prompt_for_classifying_track = self.config.get("prompt_for_classifying_track")
+    prompt_for_extracting_track_info = self.config.get("prompt_for_extracting_track_info")
+    prompt_extracting_year_semester_information = self.config.get("prompt_extracting_year_semester_information")
+    prompt_for_initial_course_recommendation = self.config.get("prompt_for_initial_course_recommendation")
+
+    return {
+      "api_key": api_key,
+      "model_name": model_name,
+      "model_temperture": model_temperture,
+      "prompt_for_advisor": prompt_for_advisor,
+      "prompt_for_classifying_track": prompt_for_classifying_track,
+      "prompt_for_extracting_track_info": prompt_for_extracting_track_info,
+      "prompt_extracting_year_semester_information": prompt_extracting_year_semester_information,
+      "prompt_for_initial_course_recommendation": prompt_for_initial_course_recommendation,
+    }
+  
