@@ -3,6 +3,10 @@ import google.generativeai as genai
 
 
 class GeminiInterfacing:
+  """
+  This class is responsible for interfacing with the Google Gemini model.
+  """
+  
   def __init__(self) -> None:
     self.__initiliaze_gemini_model()
 

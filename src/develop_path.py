@@ -55,6 +55,7 @@ class DevelopPath:
     self.radius_circle = course_trajectory_consts["radius_circle"]
     self.special_marker_size = course_trajectory_consts["special_marker_size"]
     self.complete_path_to_top = course_trajectory_consts["complete_path_to_top"]
+    self.legend_max_char_limit = course_trajectory_consts["legend_max_char_limit"]
     self.color_for_corequisites = course_trajectory_consts["color_for_corequisites"]
     self.color_for_prerequisites = course_trajectory_consts["color_for_prerequisites"]
     self.complete_path_from_start = course_trajectory_consts["complete_path_from_start"]
@@ -121,16 +122,17 @@ class DevelopPath:
   def __create_circle(self,
                       tower: str,
                       n_points: int,
-                      z_level: int) -> list[int]:
+                      z_level: int) -> tuple:
     """
     Create a circle of points in 3D space.
      
     Args:
+      - tower (str): The tower type
       - n_points (int): The number of points in the circle.
       - z_level (int): The z-level of the circle.
        
     Returns:
-      - list[int]: The list of points in the circle.
+      - tuple: The x, y, and z coordinates of the circle.
     """
 
     if tower == "pre-knowledge":
@@ -151,7 +153,22 @@ class DevelopPath:
     return x, y, z
   
 
-  def __create_random_points_on_circle(self, z_level, num_points, angle_offset=0):
+  def __create_random_points_on_circle(self, 
+                                       z_level: int, 
+                                       num_points: int, 
+                                       angle_offset=0) -> tuple:
+    """
+    Create random points on a circle in 3D space.
+    
+    Args:
+      - z_level (int): The z-level of the circle.
+      - num_points (int): The number of points on the circle.
+      - angle_offset (int): The angle offset for the circle.
+    
+    Returns:
+      - tuple: The x, y, and z coordinates of the circle.
+    """
+    
     theta = np.linspace(0, 2 * np.pi, num_points) + angle_offset
     x = self.radius_circle * np.cos(theta)
     y = self.radius_circle * np.sin(theta)
@@ -185,7 +202,7 @@ class DevelopPath:
                                track: str,
                                target_course: str,
                                path_to_target: list,
-                               last_camera_position: dict) -> go.Figure:
+                               last_camera_position: dict) -> tuple:
     """
     Create a 3D graph of the course trajectory for a particular track.
     
@@ -193,22 +210,25 @@ class DevelopPath:
       - track (str): The track for which the course trajectory is to be generated.
       - target_course (str): The target course.
       - path_to_target (list): The path to the target course.
+      - last_camera_position (dict): The last camera position.
 
     Returns:
-      - go.Figure: The 3D graph of the course trajectory.
+      - tuple: The figure and the complete path to the target course.
     """
 
-    courses = self.course_catalog[track]
     fig = go.Figure()
-    semester_colors = self.__dynamic_color_choice_for_semester(courses)
     course_positions, course_colors = {}, {}
+    courses = self.course_catalog[track]
+    semester_colors = self.__dynamic_color_choice_for_semester(courses)
     
+    # Get the courses taught in the track
     taught_courses = set()
     for year in courses:
       if year != "extra_course_related_info":
         for semester in courses[year]:
           taught_courses.update(courses[year][semester].keys())
 
+    # Add the courses to the 3D graph
     z_level = self.z_level
     semester_elevation = {}
     for year in courses:
@@ -231,7 +251,7 @@ class DevelopPath:
           mode='text',
           showlegend=False,
           textposition='middle center',
-          textfont=dict(size=12, color='black', family="Arial", weight="bold"),
+          textfont=dict(size=12, color='black', weight="bold"),
           hoverinfo='skip'  
         ))
 
@@ -253,6 +273,13 @@ class DevelopPath:
 
           if course in self.all_tracks_course_information[track] and self.all_tracks_course_information[track][course]["dependency_count"] >= self.critical_courses_threshold:
             critical_course_cnt += 1
+            name = self.__add_intermediate_br_tags(
+              description=f"{course}-{course_name}",
+              max_chars=self.legend_max_char_limit
+            ) if course_name else self.__add_intermediate_br_tags(
+              description=course,
+              max_chars=self.legend_max_char_limit
+            )
             fig.add_trace(go.Scatter3d(
               x=[x[i]],
               y=[y[i]],
@@ -262,12 +289,19 @@ class DevelopPath:
               customdata=[course],
               hoverinfo='text',  
               marker=dict(size=self.special_marker_size, color=course_colors[course]),
-              textfont=dict(size=12, color='black', family="Arial", weight="bold"),
+              textfont=dict(size=12, color='black', weight="bold"),
               textposition='top center',
               hovertext=course_desc + f"<br><br>Dependencies: {self.all_tracks_course_information[track][course]['dependency_count']}",
-              name=f"{course}-{course_name}" if course_name else course
+              name=name
             ))
           else:
+            name = self.__add_intermediate_br_tags(
+              description=f"{course}-{course_name}",
+              max_chars=self.legend_max_char_limit
+            ) if course_name else self.__add_intermediate_br_tags(
+              description=course,
+              max_chars=self.legend_max_char_limit
+            )
             fig.add_trace(go.Scatter3d(
               x=[x[i]],
               y=[y[i]],
@@ -277,10 +311,10 @@ class DevelopPath:
               mode='markers+text',
               hoverinfo='text',  
               marker=dict(size=self.marker_size, color=course_colors[course]),
-              textfont=dict(size=12, color='black', family="Arial", weight="bold"),
+              textfont=dict(size=12, color='black', weight="bold"),
               textposition='top center',
               hovertext=course_desc,
-              name=f"{course}-{course_name}" if course_name else course
+              name=name
             ))
 
         if critical_course_cnt >= self.critical_courses_threshold_circle:
@@ -452,29 +486,29 @@ class DevelopPath:
       course_cnt += 1
 
       if [year, semester] not in already_present_semester_circle:
-          already_present_semester_circle.append([year, semester])
-          circle_x, circle_y, circle_z = self.__create_circle("pre-knowledge", 100, semester_elevation)
-          fig.add_trace(go.Scatter3d(
-              x=circle_x + left_shift,
-              y=circle_y,
-              z=circle_z,
-              mode='lines',
-              line=dict(color='black', width=2, dash='dash'),
-              name=f"Year: {year}, Semester: {semester}",
-              showlegend=False,
-              hoverinfo='skip'  
-          ))
-          fig.add_trace(go.Scatter3d(
+        already_present_semester_circle.append([year, semester])
+        circle_x, circle_y, circle_z = self.__create_circle("pre-knowledge", 100, semester_elevation)
+        fig.add_trace(go.Scatter3d(
+            x=circle_x + left_shift,
+            y=circle_y,
+            z=circle_z,
+            mode='lines',
+            line=dict(color='black', width=2, dash='dash'),
+            name=f"Year: {year}, Semester: {semester}",
+            showlegend=False,
+            hoverinfo='skip'  
+        ))
+        fig.add_trace(go.Scatter3d(
           x=[0 + left_shift],
           y=[0],
           z=[semester_elevation],
           text="Pre-Knowledge Courses",
           mode='text',
           showlegend=False,
-          textfont=dict(size=12, color='black', family="Arial", weight="bold"),
+          textfont=dict(size=12, color='black', weight="bold"),
           textposition='middle center',
           hoverinfo='skip'  
-      ))
+        ))
 
       external_positions[prereq] = (x, y, z)
       course_positions[prereq] = (x, y, z)
@@ -482,43 +516,57 @@ class DevelopPath:
       
       course_desc, course_name = "", ""
       if prereq in self.all_tracks_course_information:
-          if "course_description" in self.all_tracks_course_information[prereq]:
-              course_desc = self.__add_intermediate_br_tags(self.all_tracks_course_information[prereq]["course_description"])
-          if "course_name" in self.all_tracks_course_information[prereq]:
-              course_name = self.all_tracks_course_information[prereq]["course_name"]
+        if "course_description" in self.all_tracks_course_information[prereq]:
+          course_desc = self.__add_intermediate_br_tags(self.all_tracks_course_information[prereq]["course_description"])
+        if "course_name" in self.all_tracks_course_information[prereq]:
+          course_name = self.all_tracks_course_information[prereq]["course_name"]
 
-          self.all_tracks_course_information[prereq]["location"] = {"x": x, "y": y, "z": z}
+        self.all_tracks_course_information[prereq]["location"] = {"x": x, "y": y, "z": z}
       if prereq in self.all_tracks_course_information and self.all_tracks_course_information[prereq]["dependency_count"] >= self.critical_courses_threshold:
-          critical_course_cnt += 1
-          fig.add_trace(go.Scatter3d(
-              x=[x],
-              y=[y],
-              z=[z],
-              customdata=[prereq],
-              text=prereq,
-              mode='markers+text',
-              hoverinfo='text',  
-              hovertext=course_desc + f"<br><br>Dependencies: {self.all_tracks_course_information[prereq]['dependency_count']}",
-              marker=dict(size=self.special_marker_size, color='gray'),
-              textfont=dict(size=12, color='black', family="Arial", weight="bold"),
-              showlegend=False,
-              name=f"{prereq}-{course_name}" if course_name else prereq
-          ))
+        critical_course_cnt += 1
+        name = self.__add_intermediate_br_tags(
+          description=f"{prereq}-{course_name}",
+          max_chars=self.legend_max_char_limit
+        ) if course_name else self.__add_intermediate_br_tags(
+          description=prereq,
+          max_chars=self.legend_max_char_limit
+        )
+        fig.add_trace(go.Scatter3d(
+            x=[x],
+            y=[y],
+            z=[z],
+            customdata=[prereq],
+            text=prereq,
+            mode='markers+text',
+            hoverinfo='text',  
+            hovertext=course_desc + f"<br><br>Dependencies: {self.all_tracks_course_information[prereq]['dependency_count']}",
+            marker=dict(size=self.special_marker_size, color='gray'),
+            textfont=dict(size=12, color='black', weight="bold"),
+            showlegend=False,
+            name=name
+        ))
       else:
-          fig.add_trace(go.Scatter3d(
-              x=[x],
-              y=[y],
-              z=[z],
-              customdata=[prereq],
-              text=prereq,
-              mode='markers+text',
-              hoverinfo='text', 
-              hovertext=course_desc,
-              marker=dict(size=self.marker_size, color='gray'),
-              showlegend=False,
-              textfont=dict(size=12, color='black', family="Arial", weight="bold"),
-              name=f"{prereq}-{course_name}" if course_name else prereq
-          ))
+        name = self.__add_intermediate_br_tags(
+          description=f"{prereq}-{course_name}",
+          max_chars=self.legend_max_char_limit
+        ) if course_name else self.__add_intermediate_br_tags(
+          description=prereq,
+          max_chars=self.legend_max_char_limit
+        )
+        fig.add_trace(go.Scatter3d(
+            x=[x],
+            y=[y],
+            z=[z],
+            customdata=[prereq],
+            text=prereq,
+            mode='markers+text',
+            hoverinfo='text', 
+            hovertext=course_desc,
+            marker=dict(size=self.marker_size, color='gray'),
+            showlegend=False,
+            textfont=dict(size=12, color='black', weight="bold"),
+            name=name
+        ))
 
     edge_traces = []
     for year in courses:
@@ -735,6 +783,13 @@ class DevelopPath:
       modified_path_to_target[destination_data["year"]] = dict(sorted(modified_path_to_target[destination_data["year"]].items()))
 
       if source not in already_in_legend:
+        name = self.__add_intermediate_br_tags(
+          description=f"{source}-{source_course_name}",
+          max_chars=self.legend_max_char_limit
+        ) if source_course_name else self.__add_intermediate_br_tags(
+          description=source,
+          max_chars=self.legend_max_char_limit
+        )
         already_in_legend.add(source)
         fig.add_trace(go.Scatter3d(
           x=[x0],
@@ -747,10 +802,17 @@ class DevelopPath:
           hovertext=source_course_desc,
           marker=dict(size=self.marker_size, color='red'),
           textfont=dict(size=12, color='black', weight="bold"),
-          name=f"{source}-{source_course_name}" if source_course_name else source
+          name=name
         ))
 
       if destination not in already_in_legend:
+        name = self.__add_intermediate_br_tags(
+          description=f"{destination}-{destination_course_name}",
+          max_chars=self.legend_max_char_limit
+        ) if destination_course_name else self.__add_intermediate_br_tags(
+          description=destination,
+          max_chars=self.legend_max_char_limit
+        )
         already_in_legend.add(destination)
         fig.add_trace(go.Scatter3d(
           x=[x1],
@@ -763,7 +825,7 @@ class DevelopPath:
           showlegend=False,
           marker=dict(size=self.marker_size, color='red'),
           textfont=dict(size=12, color='black', weight="bold"),
-          name=f"{destination}-{destination_course_name}" if destination_course_name else destination
+          name=name
         ))
       
       if relation == "prerequisite":
@@ -898,16 +960,17 @@ class DevelopPath:
   def run(self,
           track: str,
           target_course: str,
-          last_camera_position: dict) -> go.Figure:
+          last_camera_position: dict) -> tuple:
     """
     Generate a 3d graph of the course catalog.
     
     Args:
       - track (str): The track for which the course trajectory is to be generated.
       - target_course (str): The target course.
+      - last_camera_position (dict): The last camera position of the 3D graph.
     
     Returns:
-      - go.Figure: The 3D graph of the course trajectory to the target course.
+      - tuple: A tuple containing the 3D graph and the complete path to the target course.
     """
 
     if target_course not in self.all_tracks_course_information[track] and target_course != "None":

@@ -1,9 +1,12 @@
 from dash import html
-import plotly.graph_objects as go
 from src.develop_path import DevelopPath
 
 
 class StudentInteraction:
+  """
+  A class that interacts with the student to provide or get the required information from the student.
+  """
+  
   def __init__(self,
                gemini_interfacing) -> None:
     self.gemini_interfacing = gemini_interfacing
@@ -15,15 +18,20 @@ class StudentInteraction:
                                            course_catalog_name: str,
                                            course_catalog_info: dict,
                                            last_camera_position: dict,
-                                           all_tracks_information: dict) -> go.Figure:
+                                           all_tracks_information: dict) -> tuple:
     """
     To perform the path development to the course.
     
     Args:
+      - track (str): The track for which the path needs to be developed.
       - course_code (str): The course code for which the path needs to be developed.
+      - course_catalog_name (str): The name of the course catalog.
+      - course_catalog_info (dict): The information about the course catalog.
+      - last_camera_position (dict): The last camera position of the student.
+      - all_tracks_information (dict): The information about all the tracks.
     
     Returns:
-      - go.Figure: The figure for the path development.
+      - tuple: The figure and the complete path sorted if available, else None and empty list.
     """
 
     fig, complete_path_sorted =  DevelopPath(
@@ -41,7 +49,7 @@ class StudentInteraction:
   def __get_course_specific_information(self,
                                         track: str,
                                         course_code: str,
-                                        all_tracks_information: dict) -> list:
+                                        all_tracks_information: dict) -> tuple:
     """
     To get the course specific information.
 
@@ -51,58 +59,103 @@ class StudentInteraction:
       - all_tracks_information (dict): The information about all the tracks.
 
     Returns:
-      - list: The course specific information, if available indicated by 1, else 0 at 0th index of list.
+      - tuple: The success status and the course specific information.
     """
 
     if course_code not in all_tracks_information[track]:
       return 0, html.P(
-        children=[f"The course code '{course_code}' is not available in the track '{track.replace('_', ' ').title()}'."],
-        style={"color": "white", "margin": "0rem", "padding": "0rem", "margin-bottom": "0.5rem"}
+        children=[
+          f"The course code '{course_code}' is not available in the track '{track.replace('_', ' ').title()}'."
+        ],
+        style={
+          "color": "white", 
+          "margin": "0rem", 
+          "padding": "0rem", 
+          "margin-bottom": "0.5rem"
+        }
       )
     
     course_specific_info = all_tracks_information[track][course_code]
     list_of_formatted_info = []
     for key, value in course_specific_info.items():
-      if key not in ["track", "year", "semester", "complete_path", "on_dependant_courses_count", "dependency_count"]:
+      if key not in ["track", 
+                     "year", 
+                     "semester", 
+                     "complete_path", 
+                     "on_dependant_courses_count", 
+                     "dependency_count"]:
         if key == "course_link":
           list_of_formatted_info.append(
             html.P(
               children=[
-                html.B(children=["Course Link:"]),
+                html.B(
+                  children=[
+                    "Course Link:"
+                  ]
+                ),
                 html.Br(),
-                html.A(children=value, href=value, target="_blank")
+                html.A(
+                  children=value, 
+                  href=value, 
+                  target="_blank"
+                )
               ],
-              style={"color": "white", "margin": "0rem", "padding": "0rem", "margin-bottom": "0.5rem"}
+              style={
+                "color": "white", 
+                "margin": "0rem", 
+                "padding": "0rem", 
+                "margin-bottom": "0.5rem"
+              }
             )
           )
         elif key == "prerequisites" or key == "corequisites" and type(value) == list and len(value) > 0:
-          value = self.__flatten_and_stringify(value)
+          value = self.__flatten_and_stringify(
+            nested_list=value
+          )
           if value == "" or value is None:
             continue
 
           list_of_formatted_info.append(
             html.P(
               children=[
-                html.B(children=[f"{key.title()}:"]),
+                html.B(
+                  children=[
+                    f"{key.title()}:"
+                    ]
+                  ),
                 html.Br(),
                 html.Span(value)
               ],
-              style={"color": "white", "margin": "0rem", "padding": "0rem", "margin-bottom": "0.5rem"}
+              style={
+                "color": "white", 
+                "margin": "0rem", 
+                "padding": "0rem", 
+                "margin-bottom": "0.5rem"
+              }
             )
           )
         elif key == "prerequisites_description" and type(value) == dict and len(value) > 0 and value is not None:
-          value = self.__flatten_and_stringify([f"You need to have '{value[course]}' grade or better in {course} course." for course in value])
+          value = self.__flatten_and_stringify(
+            nested_list=[f"You need to have '{value[course]}' grade or better in {course} course." for course in value]
+          )
           if value == "" or value is None:
             continue
 
           list_of_formatted_info.append(
             html.P(
               children=[
-                html.B(children=[f"{key.title()}:"]),
+                html.B(
+                  children=[f"{key.title()}:"]
+                ),
                 html.Br(),
                 html.Span(value),
               ],
-              style={"color": "white", "margin": "0rem", "padding": "0rem", "margin-bottom": "0.5rem"}
+              style={
+                "color": "white", 
+                "margin": "0rem", 
+                "padding": "0rem", 
+                "margin-bottom": "0.5rem"
+              }
             )
           )
         elif key != "course_link" and key != "prerequisites" and key != "corequisites" and key != "prerequisites_description":
@@ -116,11 +169,20 @@ class StudentInteraction:
           list_of_formatted_info.append(
             html.P(
               children=[
-                html.B(children=[f"{key}:"]),
+                html.B(
+                  children=[
+                    f"{key}:"
+                  ]
+                ),
                 html.Br(),
                 html.Span(value)
               ],
-              style={"color": "white", "margin": "0rem", "padding": "0rem", "margin-bottom": "0.5rem"}
+              style={
+                "color": "white", 
+                "margin": "0rem", 
+                "padding": "0rem", 
+                "margin-bottom": "0.5rem"
+              }
             )
           )
     
@@ -138,8 +200,11 @@ class StudentInteraction:
     of that course till the required year and semester.
 
     Args:
-      - course_code (str): The course code of the course
-      - track_name (str): The name of the track
+      - year (int): The year till which the pre-requisites needs to be fetched.
+      - semester (int): The semester till which the pre-requisites needs to be fetched.
+      - course_code (str): The course code of the course.
+      - track_name (str): The name of the track.
+      - all_tracks_information (dict): The information about all the tracks.
     
     Returns:
       - list: The list of all the pre-requisites of the course till the required year and semester
@@ -147,7 +212,8 @@ class StudentInteraction:
 
     courses_in_required_year_and_semester = []
 
-    def dfs_traversal_of_course_prerequisistes(course_code: str|list, track_name: str):
+    def dfs_traversal_of_course_prerequisistes(course_code: str|list, 
+                                               track_name: str):
       """
       To root down in the pre-requisites of a course to get all the pre-requisites
       of that course till the required year and semester.
@@ -219,7 +285,7 @@ class StudentInteraction:
                                semester: int,
                                track_info: str,
                                all_tracks_information: dict,
-                               career_goals_or_expectations: str) -> None:
+                               career_goals_or_expectations: str) -> list:
     """
     To develop the recommendation for the student.
 
@@ -229,6 +295,9 @@ class StudentInteraction:
       - track_info (str): The track information for which the recommendation needs to be developed.
       - all_tracks_information (dict): The information about all the tracks.
       - career_goals_or_expectations (str): The career goals or expectations of the student.
+    
+    Returns:
+      - list: The formatted recommendation for the student based on the year, semester, track, and career goals or expectations.
     """
 
     track_courses = {}
@@ -241,12 +310,14 @@ class StudentInteraction:
         if "course_name" in all_tracks_information[track_name][course]:
           courses_name_list.append(all_tracks_information[track_name][course]["course_name"])
 
+      # Classifying the track focus based on the courses in the track either as academic or applied
       track_focus = self.gemini_interfacing.formulate_gemini_response(
         model="track_extraction_model",
         data=courses_name_list
       )
 
       if track_focus["focus"] == track_info:
+        # When the track focus is the same as the track information provided by the student
         track_courses[track_name] = []
         only_course_description[track_name] = []
         only_course_pre_requisites_and_corequisites[track_name] = []
@@ -256,7 +327,9 @@ class StudentInteraction:
           if "course_name" in all_tracks_information[track_name][course]:
             course_name = all_tracks_information[track_name][course]["course_name"]
           
+          # Filtering the courses based on the year and semester as it is possible to recommend the courses that are not yet available or done by the student
           if int(all_tracks_information[track_name][course]["year"]) > year:
+            # When the course year is greater than the year provided by the student
             track_courses[track_name].append(all_tracks_information[track_name][course])
             if "course_description" in all_tracks_information[track_name][course]:
               desc = all_tracks_information[track_name][course]["course_description"]
@@ -276,6 +349,7 @@ class StudentInteraction:
             only_course_pre_requisites_and_corequisites[track_name].append([preq, coreq])
 
           elif int(all_tracks_information[track_name][course]["year"]) == year and int(all_tracks_information[track_name][course]["semester"]) >= semester:
+            # When the course year is equal to the year provided by the student and the course semester is greater than or equal to the semester provided by the student
             track_courses[track_name].append(all_tracks_information[track_name][course])
             if "course_description" in all_tracks_information[track_name][course]:
               only_course_description[track_name].append({course_name: {
@@ -304,6 +378,7 @@ class StudentInteraction:
     
     course_recommendation_model_response = {}
     for track_name in only_course_description:
+      # Getting the ranked recommendation of courses based on the career goals of the student using the Gemini
       gemini_ranked_courses = self.gemini_interfacing.formulate_gemini_response(
         model="initial_course_recommendation_model",
         data=f"The career goals of the student are {career_goals_or_expectations}. The tracks information is {only_course_description[track_name]}."
@@ -321,6 +396,8 @@ class StudentInteraction:
           key: value for key, value in complete_information.items()
         })
     
+    # Initial Gemeini recommendation is based on the career goals of the student, which can include courses that cannot be done by the student in the current year and semester
+    # Thus in the first phase of recommendation, we will filter out the courses that can be done by the student in the current year and semester
     phase_one_recommendation = {}
     requirements_dict = {}
 
@@ -337,6 +414,7 @@ class StudentInteraction:
         if "reason_for_recommendation" in course.keys():
           reason_for_recommendation = course["reason_for_recommendation"]
         if course_year == year and course_semester == semester:
+          # In case the course is available in the current year and semester for the student, we will add it to the recommendation list
           if course not in phase_one_recommendation[track]:
             phase_one_recommendation[track].append(course)
           
@@ -360,6 +438,7 @@ class StudentInteraction:
                   requirements_dict
                   requirements_dict[path["source"]]["req_cnt"] += 1
         else:
+          # In case the course is not available in the current year and semester for the student, we will check if any of the course's pre-requisites can be done by the student in the current year and semester
           if "course_code" not in course:
             continue
           req_year_sem_courses = self.__root_down_in_pre_requisites_list(
@@ -401,11 +480,15 @@ class StudentInteraction:
                       }
                       requirements_dict[path["source"]]["req_cnt"] += 1
 
-    requirements_dict = dict(sorted(
-      requirements_dict.items(),
-      key=lambda x: x[1]["req_cnt"],
-      reverse=True
-    ))
+    # In the second phase of recommendation, we will rank the courses based on the dependency count and the rank of the course
+    # Dependency count is the number of courses that are dependent on that particular course. Higher the dependency count, higher the rank of the course as it is a pre-requisite for many courses
+    requirements_dict = dict(
+      sorted(
+        requirements_dict.items(),
+        key=lambda x: x[1]["req_cnt"],
+        reverse=True
+      )
+    )
     phase_two_recommendation = dict(
       sorted(
         phase_one_recommendation.items(),
@@ -414,6 +497,7 @@ class StudentInteraction:
       )
     )
     
+    # Formatting the recommendation to be displayed to the student
     formatted_recommendation = []
     for track in phase_two_recommendation:
       formatted_recommendation.append(
@@ -493,15 +577,20 @@ class StudentInteraction:
                         initial_interaction: str,
                         course_catalog_info: dict,
                         last_camera_position: dict,
-                        all_tracks_information: dict) -> list:
+                        all_tracks_information: dict) -> tuple:
     """
     To start the student interaction.
     
     Args:
-      - initial_interaction (str): The initial interaction with the student.
+      - track (str): The track for which the interaction needs to be started.
+      - course_catalog_name (str): The name of the course catalog.
+      - initial_interaction (str): The initial interaction from the student.
+      - course_catalog_info (dict): The information about the course catalog.
+      - last_camera_position (dict): The last camera position of the student.
+      - all_tracks_information (dict): The information about all the tracks.
     
     Returns:
-      - list: The response from the student interaction.
+      - tuple: The figure if not None, the complete path sorted if not an empty list, and the follow up interaction if any from Gemini.
     """
 
     response_from_gemini = self.gemini_interfacing.formulate_gemini_response(
@@ -510,11 +599,16 @@ class StudentInteraction:
     )
     
     if response_from_gemini[0] == 1:
+      # When the response from the Gemini is to develop the path to the course
       follow_up_interaction = response_from_gemini[1]["follow_up_response"]
       completion_status = response_from_gemini[1]["completed"]
+
       if completion_status == 0:
+        # When the completion status is 0, the interaction is not completed and the follow up interaction is returned. Happens when the course code is not available in the student's query
         return None, [], follow_up_interaction
+      
       elif completion_status == 1:
+        # When the completion status is 1, the interaction is completed and the path to the course is developed
         course_code = response_from_gemini[1]["course_code"]
         fig, complete_path_sorted = self.__perform_path_development_to_course(
           track=track,
@@ -524,35 +618,49 @@ class StudentInteraction:
           last_camera_position=last_camera_position,
           all_tracks_information=all_tracks_information
         )
+
         if fig is None and len(complete_path_sorted) == 0:
+          # When the figure is None and the complete path sorted is an empty list, the course code is not available in the track
           return None, [], f"The course code '{course_code}' is not available in the track '{track.replace('_', ' ').title()}'. Please, check the course code and try again."
         return fig, complete_path_sorted, follow_up_interaction
     
 
     elif response_from_gemini[0] == 2:
+      # When the response from the Gemini is to get the course specific information
       follow_up_interaction = response_from_gemini[1]["follow_up_response"]
       completion_status = response_from_gemini[1]["completed"]
+
       if completion_status == 0:
+        # When the completion status is 0, the interaction is not completed and the follow up interaction is returned. Happens when the course code is not available in the student's query
         return None, [], follow_up_interaction
+      
       elif completion_status == 1:
+        # When the completion status is 1, the interaction is completed and the course specific information is fetched
         course_code = response_from_gemini[1]["course_code"]
         success_status, course_specific_information = self.__get_course_specific_information(
           track=track,
           course_code=course_code,
           all_tracks_information=all_tracks_information
         )
+
         if success_status == 0:
+          # When the success status is 0, the course code is not available in the track
           return None, [], course_specific_information
         else:
           return None, course_specific_information, follow_up_interaction
         
     
     elif response_from_gemini[0] == 3:
+      # When the response from the Gemini is to develop the recommendation for the student
       follow_up_interaction = response_from_gemini[1]["follow_up_response"]
       completion_status = response_from_gemini[1]["completed"]
+
       if completion_status == 0:
+        # When the completion status is 0, the interaction is not completed and the follow up interaction is returned. Happens when the course code is not available in the student's query
         return None, [], follow_up_interaction
+      
       elif completion_status == 1:
+        # When the completion status is 1, the interaction is completed and the recommendation for the student can be developed
         year, semester, track, career_goal = response_from_gemini[1]["year"], response_from_gemini[1]["semester"], response_from_gemini[1]["track"], response_from_gemini[1]["career_goals"]
         return None, self.__develop_recommendation(
           year=year,
@@ -563,5 +671,5 @@ class StudentInteraction:
         ), follow_up_interaction
       
     else:
-
+      # When the response from the Gemini is not recognized
       return None, [], "I am still in the learning phase, maybe in future I will be able to help you with this. As of now, I am not able to understand your query."

@@ -1,12 +1,17 @@
 from configparser import ConfigParser
 
+# Read the configuration file which contains the constants/configurations for the project with the help of the ConfigParser module.
 config = ConfigParser()
 config.read('config.ini')
 
 
 class CourseTrajectoryConsts:
+  """
+  A class to store the constants for the course trajectory graph
+  """
+  
   def __init__(self) -> None:
-    pass
+    self.config = config["3D_COURSE_TRAJECTORY_CONSTS"]
 
 
   def __perform_prechecks(self) -> dict:
@@ -20,20 +25,20 @@ class CourseTrajectoryConsts:
       - dict: The dictionary of constants after performing the prechecks.
     """
     
-    course_trajectory_consts = config["3D_COURSE_TRAJECTORY_CONSTS"]
     return {
-      "z_level": course_trajectory_consts.getint("z_level"),
-      "z_increment": course_trajectory_consts.getint("z_increment"),
-      "marker_size": course_trajectory_consts.getint("marker_size"),
-      "radius_circle": course_trajectory_consts.getint("radius_circle"),
-      "special_marker_size": course_trajectory_consts.getint("special_marker_size"),
-      "color_for_corequisites": course_trajectory_consts.get("color_for_corequisites"),
-      "color_for_prerequisites": course_trajectory_consts.get("color_for_prerequisites"),
-      "complete_path_to_top": course_trajectory_consts.getboolean("complete_path_to_top"),
-      "complete_path_from_start": course_trajectory_consts.getboolean("complete_path_from_start"),
-      "critical_courses_threshold": course_trajectory_consts.getint("critical_courses_threshold"),
-      "critical_courses_threshold_circle" : course_trajectory_consts.getint("critical_courses_threshold_circle"),
-      "left_shift": course_trajectory_consts.getfloat("left_shift_multiplier") * course_trajectory_consts.getint("radius_circle"),
+      "z_level": self.config.getint("z_level"),
+      "z_increment": self.config.getint("z_increment"),
+      "marker_size": self.config.getint("marker_size"),
+      "radius_circle": self.config.getint("radius_circle"),
+      "special_marker_size": self.config.getint("special_marker_size"),
+      "legend_max_char_limit": self.config.getint("legend_max_char_limit"),
+      "color_for_corequisites": self.config.get("color_for_corequisites"),
+      "color_for_prerequisites": self.config.get("color_for_prerequisites"),
+      "complete_path_to_top": self.config.getboolean("complete_path_to_top"),
+      "complete_path_from_start": self.config.getboolean("complete_path_from_start"),
+      "critical_courses_threshold": self.config.getint("critical_courses_threshold"),
+      "critical_courses_threshold_circle" : self.config.getint("critical_courses_threshold_circle"),
+      "left_shift": self.config.getfloat("left_shift_multiplier") * self.config.getint("radius_circle"),
     }
   
 
@@ -89,7 +94,7 @@ class GeminiConstants:
   def __init__(self) -> None:
     self.config = config["GEMINI_CONSTS"]
 
-
+  
   def get_constants(self) -> dict:
     """
     Returns the constants for the Gemini API
