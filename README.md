@@ -12,6 +12,7 @@ git clone -b course-recommendation-chat git@github.com:ShivamSrng-OIE/oie-course
 # Changing the current directory:
 cd .\oie-course-trajectory-visualization\
 
+# In the directory download and add the configuration file 'config.ini' in 'For GemInCourse' directory from the shared Google Drive link in the submitted competition form.
 
 # Using package manager install the required libraries:
 pip install -r .\requirements.txt
