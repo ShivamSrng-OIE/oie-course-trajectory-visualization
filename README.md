@@ -69,6 +69,8 @@ The following enhancements are designed with the specific needs of undergraduate
 * **Shivam Manish Sarang**
   - Graduate Student Research Assistant, for Office of Institutional Effectiveness.
   -  Currently pursuing Master's in Computer Science, Ying Wu College of Computing at New Jersey Institute of Technology.
+  - Contact: [Shivam NJIT Email ID: sms323@njit.edu](mailto:sms323@njit.edu)
 * **Yi Meng**
   - Associate Director for Survey Research, for Office of Institutional Effectiveness.
+  - Contact: [Yi Meng NJIT Email ID: yi.meng@njit.edu](mailto:yi.meng@njit.edu)
 * **Office of Institutional Effectiveness** - New Jersey Institute of Technology
