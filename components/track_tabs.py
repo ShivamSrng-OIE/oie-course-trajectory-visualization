@@ -1,13 +1,19 @@
 from time import sleep
+import plotly.graph_objects as go
 import dash_bootstrap_components as dbc
-from src.develop_path import DevelopPath
 from consts import CourseTrajectoryConsts
+from src.utils.gemini_interfacing import GeminiInterfacing 
 from src.generate_3d_graph import Generate3DGraph
+from dash import Input, Output, html, callback, State
 from src.utils.database_handler import DatabaseHandler
-from dash import Input, Output, html, callback, State, ALL
+from src.student_interaction import StudentInteraction
 
 
 database_handler = DatabaseHandler()
+gemini_interfacing = GeminiInterfacing()
+student_interaction = StudentInteraction(
+  gemini_interfacing=gemini_interfacing
+)
 
 card = html.Div(
   children=[
@@ -93,6 +99,7 @@ card = html.Div(
 last_camera_position = None
 last_click_data = None
 original_fig = None
+chat_history = []
 
 @callback(
     Output("modal-fs", "is_open"),
@@ -166,74 +173,139 @@ color_for_prerequisites = course_trajectory_consts["color_for_prerequisites"]
 
 
 @callback(
-  Output("complete-path-area", "children"),
-  Output("path-to", "value"),
+  Output("user-input", "value"),
+  Output("send-chat-button", "n_clicks"),
+  Output("conversation-area", "children"),
   Output('click-count', 'data'),
   Output('3d_course_graph', 'figure'),
-  Output("reset-button", "n_clicks"),
   
   Input('3d_course_graph', 'clickData'),
   Input('3d_course_graph', 'figure'),
   Input('click-count', 'data'),
   State("camera", "data"),
 
-  State("path-to", "value"),
-  Input("path-to-button", "n_clicks"),
-  Input("reset-button", "n_clicks"),
+  # Data about course catalog name, active tab
   State("course-catalog-store", "data"),
   Input("card-tabs", "active_tab"),
+  
+  # Chatbot data
+  Input("user-input", "value"),
+  Input("send-chat-button", "n_clicks"),
+  State("conversation-area", "children"),
 )
-def update_figure(clickData, fig, click_count, camera_data, subject, n_clicks_submit_btn, n_clicks_reset_btn ,course_catalog, active_tab):
+def update_figure(clickData, fig, click_count, camera_data, course_catalog, active_tab, chatbot_input, chatbot_send_clicks, chat_history):
   global last_click_data
   global original_fig
 
-  if n_clicks_reset_btn == 1:
-    fig = DevelopPath(
-      course_name=course_catalog,
-      course_catalog=database_handler.get_course_catalog_information(
-        course_name=course_catalog
-      ),
-      all_tracks_course_information=database_handler.get_course_track_information(
-        course_name=course_catalog
-      )
-    ).run(
-      track=active_tab,
-      target_course="None",
-      last_camera_position=last_camera_position,
+  if chatbot_send_clicks and chatbot_send_clicks > 0 and chatbot_input is not None and chatbot_input != "":
+    all_tracks_information = database_handler.get_course_track_information(
+      course_name=course_catalog
     )
     
-    return "", "", click_count, fig, 0
-  
-  if subject is not None and subject != "" and last_click_data == clickData:
-    new_fig, complete_detailed_path = DevelopPath(
-      course_name=course_catalog,
-      course_catalog=database_handler.get_course_catalog_information(
-        course_name=course_catalog
+    course_catalog_info = database_handler.get_course_catalog_information(
+      course_name=course_catalog
+    )
+
+    chat_history.append(
+      html.Div(
+        children=[
+          chatbot_input,
+          html.Img(
+            src="assets/images/student.png",
+            style={
+              "margin-left": "0.5rem",
+              "width": "10%",
+              "height": "10%",
+              "border-radius": "50%",
+            }
+          ),
+        ],
+        style={
+          "display": "flex",
+          "flex-direction": "row",
+          "justify-content": "flex-end",
+          "text-align": "right",
+          "color": "white",
+          "margin": "0.5rem",
+          "margin-top": "1.5rem",
+        }
       ),
-      all_tracks_course_information=database_handler.get_course_track_information(
-        course_name=course_catalog
-      )
-    ).run(
+    )
+
+    new_fig, complete_path_sorted, gemini_response = student_interaction.start_interaction(
       track=active_tab,
-      target_course=subject,
+      initial_interaction=chatbot_input,
+      course_catalog_name=course_catalog,
+      course_catalog_info=course_catalog_info,
       last_camera_position=last_camera_position,
+      all_tracks_information=all_tracks_information
     )
     if new_fig is not None:
-      return complete_detailed_path, subject, click_count, new_fig, 0
-    else:
-      return "", "", click_count, fig, 0
-
-  if subject is not None and subject != "" and last_click_data != clickData:
-    fig = original_fig
-    fig, click_count = highlight_course_node(clickData, fig, click_count, camera_data)
-    return "", "", click_count, fig, 0
+      fig = go.Figure(new_fig)
+      result = [gemini_response]
+      result.extend(complete_path_sorted)
+      gemini_response = html.Div(
+        children=[
+          html.P(
+            children=result,
+            style={
+              "color": "white",
+            }
+          )
+        ]
+      )
+    elif new_fig is None and len(complete_path_sorted) > 0:
+      result = [gemini_response]
+      result.extend(complete_path_sorted)
+      gemini_response = html.Div(
+        children=[
+          html.P(
+            children=result,
+            style={
+              "color": "white",
+            }
+          )
+        ]
+      )
+    
+    chat_history.append(
+      html.Div(
+        children=[
+          html.Img(
+            src="assets/images/njit.png",
+            style={
+              "width": "10%",
+              "height": "10%",
+              "border-radius": "50%",
+              "margin-right": "0.5rem",
+            }
+          ),
+          gemini_response 
+        ],
+        style={
+          "display": "flex",
+          "flexDirection": "row",
+          "justifyContent": "flex-start",
+          "color": "white",
+          "margin": "0.5rem",
+          "margin-top": "1.5rem",
+        }
+      )
+    )
+    
+      
+    return "", 0, [
+      html.Div(
+        children=chat_history,
+      )
+    ], click_count, fig
   
   if clickData is None:
     original_fig = fig
   
   last_click_data = clickData
   fig, click_count = highlight_course_node(clickData, fig, click_count, camera_data)
-  return "", "", click_count, fig, 0
+  return chatbot_input, chatbot_send_clicks, chat_history, click_count, fig
 
 
 @callback(

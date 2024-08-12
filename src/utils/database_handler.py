@@ -3,6 +3,10 @@ from consts import MondoDBConsts
 
 
 class DatabaseHandler:
+  """
+  This class is responsible for handling the database operations.
+  """
+  
   def __init__(self) -> None:
     mongo_db_consts = MondoDBConsts().get_constants()
     pymongo_client = pymongo.MongoClient(

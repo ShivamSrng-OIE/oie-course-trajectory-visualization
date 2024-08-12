@@ -1,8 +1,9 @@
 from dash import Dash, html, dcc
-from components import sidebar, main_content
 import dash_bootstrap_components as dbc
+from components import sidebar, main_content
 
 
+# Createing the Dash application with the name of the app, title, update title, external stylesheets, and suppress callback exceptions
 app = Dash(
   name=__name__,
   title="OIE Course Catalog Visualization",
@@ -12,9 +13,12 @@ app = Dash(
     dbc.themes.BOOTSTRAP
   ],
 )
+
+# Setting the favicon for the app as the NJIT logo
 app._favicon = (
   "icon/njit.ico"
 )
+
 server = app.server
 
 
@@ -28,6 +32,7 @@ app.layout = html.Div(
 )
 
 if __name__ == "__main__":
+  # Running the app with debug mode off
   app.run(
     debug=False,
   )
