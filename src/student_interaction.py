@@ -405,7 +405,9 @@ class StudentInteraction:
       phase_one_recommendation[track] = []
 
       for course in course_recommendation_model_response[track]:
-        course_year, course_semester = course["year"], course["semester"]
+        if course is None:
+          continue
+        course_year, course_semester = int(course["year"]), int(course["semester"])
         course_prereq = []
         if "prerequisites" in course:
           course_prereq = course["prerequisites"]
@@ -425,7 +427,7 @@ class StudentInteraction:
                   "destination": {
                     course["course_code"]: {
                       "relation": [path["relation"]],
-                      "grade_requirement": course["prerequisites_description"][path["source"]] if "prerequisites_description" in course and path["source"] in course["prerequisites_description"] else ""
+                      "grade_requirement": course["prerequisites_description"][path["source"]] if "prerequisites_description" in course and path["source"] in course["prerequisites_description"] else None
                     }
                   },
                   "req_cnt": 1
@@ -518,6 +520,8 @@ class StudentInteraction:
       )
 
       for idx, ranked_course in enumerate(phase_two_recommendation[track], start=1):
+        if "course_code" not in ranked_course:
+          continue
         course_code, course_name = ranked_course["course_code"] if "course_code" in ranked_course else "", ranked_course["course_name"] if "course_name" in ranked_course else ""
         prereq, coreq = self.__flatten_and_stringify(
           nested_list=ranked_course["prerequisites"]
