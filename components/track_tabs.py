@@ -52,7 +52,7 @@ card = html.Div(
       children=[
         html.P(
           children=[
-            "© 2024 by ",
+            "For ",
             html.Span(
               children=["New Jersey Institute of Technology"],
               style={

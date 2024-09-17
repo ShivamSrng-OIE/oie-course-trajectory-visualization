@@ -33,6 +33,10 @@ class DatabaseHandler:
     courses_catalog_collection.sort()
     courses_track_information_collection.sort()
 
+    missing = set(courses_catalog_collection) - set(courses_track_information_collection)
+    if missing:
+      raise ValueError("There is some issue with the database. The courses catalog and track information are not in sync.")
+
     if courses_catalog_collection == courses_track_information_collection:
       self.dict_track_count_per_course = {}
 
