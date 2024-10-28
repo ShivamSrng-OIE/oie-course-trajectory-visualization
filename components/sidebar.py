@@ -345,16 +345,16 @@ def update_department_dropdown(n_clicks):
     [
       html.P(
         children = [
-          "Select a course within ",
-          html.Span(
-            department_name, 
-            style={
-              "background-image": "linear-gradient(to right, #f12711, #a562f8)",
-              "font-size": "0.9rem",
-              "color": "transparent",
-              "background-clip": "text",
-            }
-          ),
+          "Select a program",
+          # html.Span(
+          #   department_name, 
+          #   style={
+          #     "background-image": "linear-gradient(to right, #f12711, #a562f8)",
+          #     "font-size": "0.9rem",
+          #     "color": "transparent",
+          #     "background-clip": "text",
+          #   }
+          # ),
         ],
         style={
           "color": "white",
