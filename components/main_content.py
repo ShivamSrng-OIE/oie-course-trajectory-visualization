@@ -8,7 +8,7 @@ layout = html.Div(
           children=[
               html.H1(
                 children=[
-                    "Interactive Coure Catalog Visualization",
+                    "Interactive Course Catalog Visualization",
                 ],
                 style={
                   "background-image": "linear-gradient(to right, #f12711, #a562f8)",

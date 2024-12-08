@@ -57,6 +57,7 @@ class Generate3DGraph(html.Div):
     self.radius_circle = course_trajectory_consts["radius_circle"]
     self.special_marker_size = course_trajectory_consts["special_marker_size"]
     self.complete_path_to_top = course_trajectory_consts["complete_path_to_top"]
+    self.legend_max_char_limit = course_trajectory_consts["legend_max_char_limit"]
     self.color_for_corequisites = course_trajectory_consts["color_for_corequisites"]
     self.color_for_prerequisites = course_trajectory_consts["color_for_prerequisites"]
     self.complete_path_from_start = course_trajectory_consts["complete_path_from_start"]
@@ -96,7 +97,7 @@ class Generate3DGraph(html.Div):
     
     Args:
       - description (str): The original description string.
-      - max_chars (int): Maximum number of characters before inserting a <br> tag (default is 64).
+      - max_chars (int): Maximum number of characters before inserting a <br> tag (default is 50).
     
     Returns:
       - str: The modified description with <br> tags inserted.
@@ -122,16 +123,17 @@ class Generate3DGraph(html.Div):
   def __create_circle(self,
                       tower: str,
                       n_points: int,
-                      z_level: int) -> list[int]:
+                      z_level: int) -> tuple:
     """
     Create a circle of points in 3D space.
      
     Args:
+      - tower (str): The tower of the circle.
       - n_points (int): The number of points in the circle.
       - z_level (int): The z-level of the circle.
        
     Returns:
-      - list[int]: The list of points in the circle.
+      - tuple: The x, y, and z coordinates of the points on the circle.
     """
 
     if tower == "pre-knowledge":
@@ -152,7 +154,22 @@ class Generate3DGraph(html.Div):
     return x, y, z
   
 
-  def __create_random_points_on_circle(self, z_level, num_points, angle_offset=0):
+  def __create_random_points_on_circle(self, 
+                                       z_level: int, 
+                                       num_points: int, 
+                                       angle_offset=0) -> tuple:
+    """
+    Create random points on a circle in 3D space.
+    
+    Args:
+      - z_level (int): The z-level of the circle.
+      - num_points (int): The number of points on the circle.
+      - angle_offset (int): The angle offset of the circle (default is 0).
+    
+    Returns:
+      - tuple: The x, y, and z coordinates of the points on the circle.
+    """
+
     theta = np.linspace(0, 2 * np.pi, num_points) + angle_offset
     x = self.radius_circle * np.cos(theta)
     y = self.radius_circle * np.sin(theta)
@@ -172,17 +189,20 @@ class Generate3DGraph(html.Div):
       - go.Figure: The 3D graph of the course trajectory.
     """
 
-    courses = self.course_catalog[track]
     fig = go.Figure()
-    semester_colors = self.__dynamic_color_choice_for_semester(courses)
+    courses = self.course_catalog[track]
     course_positions, course_colors = {}, {}
+    semester_colors = self.__dynamic_color_choice_for_semester(courses)
     
+    # Get all the courses taught in the track
     taught_courses = set()
     for year in courses:
       if year != "extra_course_related_info":
         for semester in courses[year]:
           taught_courses.update(courses[year][semester].keys())
 
+    # 3D graph base starts with z_level
+    # Each year's semester courses are placed at z_level incremented by z_increment
     z_level = self.z_level
     semester_elevation = {}
     for year in courses:
@@ -196,7 +216,8 @@ class Generate3DGraph(html.Div):
 
         semester_elevation[year][semester] = z_level
         course_colors.update({course: semester_colors[year][semester] for course in courses_in_semester})
-            
+        
+        # Add text for year and semester
         fig.add_trace(go.Scatter3d(
           x=[0],
           y=[0],
@@ -205,7 +226,7 @@ class Generate3DGraph(html.Div):
           mode='text',
           showlegend=False,
           textposition='middle center',
-          textfont=dict(size=12, color='black', family="Arial", weight="bold"),
+          textfont=dict(size=12, color='black', weight="bold"),
           hoverinfo='skip'  
         ))
 
@@ -215,6 +236,7 @@ class Generate3DGraph(html.Div):
         course_positions.update({course: (x[i], y[i], z[i]) for i, course in enumerate(courses_in_semester)})
     
         for i, course in enumerate(courses_in_semester):
+          # Drawing out the course nodes
           course_desc, course_name = "", ""
           course_cnt += 1
           if course in self.all_tracks_course_information[track]:
@@ -226,7 +248,17 @@ class Generate3DGraph(html.Div):
             self.all_tracks_course_information[track][course]["location"] = {"x": x[i], "y": y[i], "z": z[i]}
 
           if course in self.all_tracks_course_information[track] and self.all_tracks_course_information[track][course]["dependency_count"] >= self.critical_courses_threshold:
+            # If the course is a critical course, then increase the size of the marker. A course is a critical course if it has more than the critical_courses_threshold number of dependencies.
+            # Critical courses are sort of gateways to other courses and are important to complete the track.
             critical_course_cnt += 1
+            name = self.__add_intermediate_br_tags(
+              description=f"{course}-{course_name}",
+              max_chars=self.legend_max_char_limit
+            ) if course_name else self.__add_intermediate_br_tags(
+              description=course,
+              max_chars=self.legend_max_char_limit
+            )
+            
             fig.add_trace(go.Scatter3d(
               x=[x[i]],
               y=[y[i]],
@@ -236,12 +268,20 @@ class Generate3DGraph(html.Div):
               customdata=[course],
               hoverinfo='text',  
               marker=dict(size=self.special_marker_size, color=course_colors[course]),
-              textfont=dict(size=12, color='black', family="Arial", weight="bold"),
+              textfont=dict(size=12, color='black', weight="bold"),
               textposition='top center',
               hovertext=course_desc + f"<br><br>Dependencies: {self.all_tracks_course_information[track][course]['dependency_count']}",
-              name=f"{course}-{course_name}" if course_name else course
+              name=name
             ))
           else:
+            # If the course is not a critical course, then keep the size of the marker normal.
+            name = self.__add_intermediate_br_tags(
+              description=f"{course}-{course_name}",
+              max_chars=self.legend_max_char_limit
+            ) if course_name else self.__add_intermediate_br_tags(
+              description=course,
+              max_chars=self.legend_max_char_limit
+            )
             fig.add_trace(go.Scatter3d(
               x=[x[i]],
               y=[y[i]],
@@ -251,13 +291,14 @@ class Generate3DGraph(html.Div):
               mode='markers+text',
               hoverinfo='text',  
               marker=dict(size=self.marker_size, color=course_colors[course]),
-              textfont=dict(size=12, color='black', family="Arial", weight="bold"),
+              textfont=dict(size=12, color='black', weight="bold"),
               textposition='top center',
               hovertext=course_desc,
-              name=f"{course}-{course_name}" if course_name else course
+              name=name
             ))
 
         if critical_course_cnt >= self.critical_courses_threshold_circle:
+          # If the number of critical courses in a semester is greater than or equal to the critical_courses_threshold_circle, then draw a thick circle around the semester.
           circle_x, circle_y, circle_z = self.__create_circle("", 100, z_level)
           fig.add_trace(go.Scatter3d(
             x=circle_x,
@@ -269,6 +310,7 @@ class Generate3DGraph(html.Div):
             hoverinfo='skip'  
           ))
         else:
+          # If the number of critical courses in a semester is less than the critical_courses_threshold_circle, then draw a thin circle around the semester.
           circle_x, circle_y, circle_z = self.__create_circle("", 100, z_level)
           fig.add_trace(go.Scatter3d(
             x=circle_x,
@@ -280,8 +322,10 @@ class Generate3DGraph(html.Div):
             hoverinfo='skip'  
           ))
 
+        # Increment the z_level for the next semester
         z_level += self.z_increment
 
+    # Seperating the courses that are not taught in the track or are the Pre-Knowledge courses
     external_radius = self.radius_circle
     external_positions = {}
     unique_prereqs = []
@@ -412,14 +456,14 @@ class Generate3DGraph(html.Div):
                     unique_prereqs_complete_info[index] = [prerequisites_data, int(year), int(semester), semester_elevation[year][semester]]
                   elif already_present_year == int(year) and already_present_semester > int(semester):
                     unique_prereqs_complete_info[index] = [prerequisites_data, int(year), int(semester), semester_elevation[year][semester]]
-                         
-
+    
     unique_prereqs.sort()
     unique_prereqs_complete_info.sort(key=lambda x: x[0])
     left_shift = self.left_shift
     already_present_semester_circle = []
     course_cnt, critical_course_cnt = 0, 0
 
+    # Plotting the Pre-Knowledge courses in a seperate tower with a smaller radius on the left side of actual course trajectory tower
     for i, prereq in enumerate(unique_prereqs):
       prerequisites_data, year, semester, semester_elevation = unique_prereqs_complete_info[i]
       
@@ -429,29 +473,33 @@ class Generate3DGraph(html.Div):
       course_cnt += 1
 
       if [year, semester] not in already_present_semester_circle:
-          already_present_semester_circle.append([year, semester])
-          circle_x, circle_y, circle_z = self.__create_circle("pre-knowledge", 100, semester_elevation)
-          fig.add_trace(go.Scatter3d(
-              x=circle_x + left_shift,
-              y=circle_y,
-              z=circle_z,
-              mode='lines',
-              line=dict(color='black', width=2, dash='dash'),
-              name=f"Year: {year}, Semester: {semester}",
-              showlegend=False,
-              hoverinfo='skip'  
-          ))
-          fig.add_trace(go.Scatter3d(
-          x=[0 + left_shift],
-          y=[0],
-          z=[semester_elevation],
-          text="Pre-Knowledge Courses",
-          mode='text',
-          showlegend=False,
-          textfont=dict(size=12, color='black', family="Arial", weight="bold"),
-          textposition='middle center',
-          hoverinfo='skip'  
-      ))
+        already_present_semester_circle.append([year, semester])
+        circle_x, circle_y, circle_z = self.__create_circle("pre-knowledge", 100, semester_elevation)
+        fig.add_trace(
+          go.Scatter3d(
+            x=circle_x + left_shift,
+            y=circle_y,
+            z=circle_z,
+            mode='lines',
+            line=dict(color='black', width=2, dash='dash'),
+            name=f"Year: {year}, Semester: {semester}",
+            showlegend=False,
+            hoverinfo='skip'  
+          )
+        )
+        fig.add_trace(
+          go.Scatter3d(
+            x=[0 + left_shift],
+            y=[0],
+            z=[semester_elevation],
+            text="Pre-Knowledge Courses",
+            mode='text',
+            showlegend=False,
+            textfont=dict(size=12, color='black', weight="bold"),
+            textposition='middle center',
+            hoverinfo='skip'  
+          )
+        )
 
       external_positions[prereq] = (x, y, z)
       course_positions[prereq] = (x, y, z)
@@ -459,44 +507,63 @@ class Generate3DGraph(html.Div):
       
       course_desc, course_name = "", ""
       if prereq in self.all_tracks_course_information:
-          if "course_description" in self.all_tracks_course_information[prereq]:
-              course_desc = self.__add_intermediate_br_tags(self.all_tracks_course_information[prereq]["course_description"])
-          if "course_name" in self.all_tracks_course_information[prereq]:
-              course_name = self.all_tracks_course_information[prereq]["course_name"]
+        if "course_description" in self.all_tracks_course_information[prereq]:
+          course_desc = self.__add_intermediate_br_tags(self.all_tracks_course_information[prereq]["course_description"])
+        if "course_name" in self.all_tracks_course_information[prereq]:
+          course_name = self.all_tracks_course_information[prereq]["course_name"]
 
-          self.all_tracks_course_information[prereq]["location"] = {"x": x, "y": y, "z": z}
+        self.all_tracks_course_information[prereq]["location"] = {"x": x, "y": y, "z": z}
+
       if prereq in self.all_tracks_course_information and self.all_tracks_course_information[prereq]["dependency_count"] >= self.critical_courses_threshold:
-          critical_course_cnt += 1
-          fig.add_trace(go.Scatter3d(
-              x=[x],
-              y=[y],
-              z=[z],
-              customdata=[prereq],
-              text=prereq,
-              mode='markers+text',
-              hoverinfo='text',  
-              hovertext=course_desc + f"<br><br>Dependencies: {self.all_tracks_course_information[prereq]['dependency_count']}",
-              marker=dict(size=self.special_marker_size, color='#000000'),
-              textfont=dict(size=12, color='black', family="Arial", weight="bold"),
-              showlegend=False,
-              name=f"{prereq}-{course_name}" if course_name else prereq
-          ))
-      else:
-          fig.add_trace(go.Scatter3d(
-              x=[x],
-              y=[y],
-              z=[z],
-              customdata=[prereq],
-              text=prereq,
-              mode='markers+text',
-              hoverinfo='text', 
-              hovertext=course_desc,
-              marker=dict(size=self.marker_size, color='#000000'),
-              showlegend=False,
-              textfont=dict(size=12, color='black', family="Arial", weight="bold"),
-              name=f"{prereq}-{course_name}" if course_name else prereq
-          ))
+        critical_course_cnt += 1
+        name = self.__add_intermediate_br_tags(
+          description=f"{prereq}-{course_name}",
+          max_chars=self.legend_max_char_limit
+        ) if course_name else self.__add_intermediate_br_tags(
+          description=prereq,
+          max_chars=self.legend_max_char_limit
+        )
+        # If the course is a critical course, then increase the size of the marker. A course is a critical course if it has more than the critical_courses_threshold number of dependencies.
+        fig.add_trace(go.Scatter3d(
+          x=[x],
+          y=[y],
+          z=[z],
+          customdata=[prereq],
+          text=prereq,
+          mode='markers+text',
+          hoverinfo='text',  
+          hovertext=course_desc + f"<br><br>Dependencies: {self.all_tracks_course_information[prereq]['dependency_count']}",
+          marker=dict(size=self.special_marker_size, color='#000000'),
+          textfont=dict(size=12, color='black', weight="bold"),
+          showlegend=False,
+          name=name
+        ))
 
+      else:
+        name = self.__add_intermediate_br_tags(
+          description=f"{prereq}-{course_name}",
+          max_chars=self.legend_max_char_limit
+        ) if course_name else self.__add_intermediate_br_tags(
+          description=prereq,
+          max_chars=self.legend_max_char_limit
+        )
+        # If the course is not a critical course, then keep the size of the marker normal.
+        fig.add_trace(go.Scatter3d(
+          x=[x],
+          y=[y],
+          z=[z],
+          customdata=[prereq],
+          text=prereq,
+          mode='markers+text',
+          hoverinfo='text', 
+          hovertext=course_desc,
+          marker=dict(size=self.marker_size, color='#000000'),
+          showlegend=False,
+          textfont=dict(size=12, color='black', weight="bold"),
+          name=name
+        ))
+
+    # Drawing the edges between the courses
     edge_traces = []
     for year in courses:
       if year == "extra_course_related_info":
@@ -618,9 +685,11 @@ class Generate3DGraph(html.Div):
                     hoverinfo='skip'  
                   ))
     
+    # Adding the edges to the figure
     for edge_trace in edge_traces:
       fig.add_trace(edge_trace)
     
+    # Update the layout of the figure
     course_name = self.course_name.replace('_', ' ').title()
     fig.update_layout(
       margin=dict(l=0, r=0, t=0, b=0),
@@ -649,9 +718,7 @@ class Generate3DGraph(html.Div):
 
 
   def __interactive_dash_app(self,
-                             track: str,
-                             course_graph: go.Figure,
-                             list_of_courses_dropdownmenuitem: list) -> None:
+                             course_graph: go.Figure) -> go.Figure:
     """
     Create an interactive Dash app for the 3D course graph.
 
@@ -665,10 +732,11 @@ class Generate3DGraph(html.Div):
     
     colored_graph = go.Figure(course_graph)
 
+    # Update the layout of the figure to make it more interactive and thus making it grayed out initially
     course_graph.update_layout(
       title=dict(
         text=f"Interactive Course Trajectory for {self.course_name.replace('_', ' ').title()}, {self.track.replace('_', ' ').title()}", 
-        font=dict(size=26, color="black", family="Arial", weight="bold"),
+        font=dict(size=26, color="black", weight="bold"),
         y=0.96,
         x=0.5,
       ),
@@ -692,6 +760,7 @@ class Generate3DGraph(html.Div):
       ),
     )
     
+    # Gray out everything of the course graph
     for i in range(len(course_graph["data"])):
       if "customdata" in course_graph["data"][i]:
         if course_graph["data"][i]["customdata"] and "edge" in course_graph["data"][i]["customdata"][0]:
@@ -733,82 +802,130 @@ class Generate3DGraph(html.Div):
               children=[
                 html.Div(
                   children=[
-                    html.P(
-                      children=["Enter a course to develop a path to it:"],
+                    html.Div(
+                      children=[
+                       html.P(
+                         children=[
+                          html.Div(
+                            children=[
+                              html.Img(
+                                src="assets/images/njit.png",
+                                style={
+                                  "width": "10%",
+                                  "height": "10%",
+                                  "border-radius": "50%",
+                                  "margin-right": "0.5rem",
+                                }
+                              ),
+                              "Hello, I am your virtual assistant, NJITBot. I can help you with:",
+                              html.Br(),
+                              "• Tell me more about the graph.",
+                              html.Br(),
+                              "• Generating trajectories for specific course.",
+                              html.Br(),
+                              "• Provisioning the information about a course's prerequisites and corequisites.",
+                              html.Br(),
+                              "• Providing the course recommendation for a particular semester in a year. Along with that, you must provide information about your career goals or intrests and whether you want to have a track that is more focused on academics or industry/applied.",
+                              html.Br(),
+                              html.Br(),
+                              "Let me know what you would like to do!",
+                            ],
+                            style={
+                              "display": "flex",
+                              "flex-direction": "row",
+                              "justify-content": "flex-start",
+                              "color": "white",
+                              "margin": "0.5rem",
+                            }
+                          ),
+                         ],
+                         id="conversation-area",
+                         style={
+                            "font-size": "0.8rem",
+                            "color": "white",
+                            "height": "100%",
+                            "width": "100%",
+                            "color": "white",
+                            "padding": "0.25rem",
+                            "background": "#212121",
+                            "border-radius": "1.2rem",
+                         }
+                       )
+                      ],
                       style={
-                        "font-size": "0.8rem",
-                        "color": "black",
-                        "font-weight": "bold",
-                        "margin-bottom": "0.2rem",
-                      }
-                    ),
-                    dbc.Input(
-                      id="path-to",
-                      type="text",
-                      placeholder="Enter course (reset to clear)",
-                      style={
+                        "align-items": "center",
+                        "justify-content": "center",
+                        "height": "94.5%",
+                        "overflow-y": "scroll",
                         "width": "100%",
-                        "font-size": "0.8rem",
-                        "border": "1px solid black",
+                        "color": "white",
+                        "background": "#212121",
                         "border-radius": "1.2rem",
+                        "margin-bottom": "1rem",
                       }
                     ),
                     html.Div(
                       children=[
-                        dbc.Button(
-                          id="path-to-button",
-                          children=["Develop Path"],
+                        dbc.Input(
+                          type="text",
+                          id="user-input",
+                          placeholder="Search for a course...",
                           style={
-                            "width": "40%",
+                            "height": "100%",
+                            "width": "85%",
                             "font-size": "0.8rem",
-                            "padding": "0.3rem 0.6rem",
-                            "border": "1px solid black",
-                            "border-radius": "1.2rem",
-                            "background": "#131314",
                             "color": "white",
-                            "align-items": "center",
-                            "margin-right": "1rem",
-                          }
+                            "background": "#212121",
+                            "border-radius": "1.2rem",
+                            "margin-right": "0.2rem",
+                          },
                         ),
                         dbc.Button(
-                          id="reset-button",
-                          children=["Reset"],
+                          children=[
+                            html.Img(
+                              src=f"assets/images/upload.png",
+                              style={
+                                "height": "100%",
+                                "width": "100%",
+                              }
+                            )
+                          ],
+                          id="send-chat-button",
                           style={
-                            "width": "40%",
-                            "font-size": "0.8rem",
-                            "padding": "0.3rem 0.6rem",
-                            "border": "1px solid black",
-                            "border-radius": "1.2rem",
-                            "background": "#131314",
-                            "align-items": "center",
-                            "color": "white",
-                          }
-                        ),
+                            "height": "120%",
+                            "width": "15%",
+                            "border-radius": "50%",
+                            "background": "#1E1F20",
+                            "border": "1px solid #212121",
+                          },
+                        )
                       ],
                       style={
+                        "height": "4%",
+                        "width": "100%",
+                        "align-items": "center",
                         "display": "flex",
-                        "margin-top": "0.5rem",
                         "flex-direction": "row",
                       }
-                    ),
-                    html.P(
-                      id="complete-path-area",
-                      style={
-                        "color": "black",
-                        "margin": "0.5rem",
-                        "min-height": "wrap-content",
-                      }
-                    ),
+                    )
                   ],
-                )
+                  id="course-info",
+                  style={
+                    "width": "100%",
+                    "height": "100%",
+                    "background": "#1E1F20",
+                    "border-radius": "1.2rem",
+                    "padding": "1rem",
+                  },
+                ),
               ],
               style={
                 "position": "absolute",
                 "top": "0",
                 "left": "0",
                 "height": "100%",
-                "width": "17%",
-                "padding": "0.5rem 1rem",
+                "width": "21%",
+                "padding": "0.5rem 0.5rem",
                 "padding-top": "5.5rem",
               },
             ),
@@ -850,61 +967,22 @@ class Generate3DGraph(html.Div):
     )
 
     return layout
-
-
-  def __generate_courses_information_for_track(self,
-                                               track: str) -> list:
-    """
-    Generate the course information for a particular track.
-    
-    Args:
-      - track (str): The track for which the course information is to be generated.
-    
-    Returns:
-      - list: The list of courses for the track.
-    """
-
-    list_of_courses_dropdownmenuitem = []
-    
-    for year in self.course_catalog[track]:
-      if year == "extra_course_related_info":
-        continue
-      for semester in self.course_catalog[track][year]:
-        list_of_courses_dropdownmenuitem.append(dbc.DropdownMenuItem(f"Year: {year}, Semester: {semester}", header=True))
-        for course in self.course_catalog[track][year][semester]:
-          list_of_courses_dropdownmenuitem.append(dbc.DropdownMenuItem(course))
-      list_of_courses_dropdownmenuitem.append(dbc.DropdownMenuItem(divider=True))
-
-    return list_of_courses_dropdownmenuitem
   
 
   def run(self,
-          track=None) -> None:
+          track: str) -> go.Figure:
     """
     Generate a 3d graph of the course catalog.
     
     Args:
-      - None
+      - track (str): The track for which the 3D graph is to be generated.
     
     Returns:
-      - None
+      - go.Figure: The 3D graph of the course catalog.
     """
 
-    if track is None:
-      all_tracks_3d_graphs = {}
-      track_specific_figure = []
-
-      for track in self.all_tracks_course_information:
-        track_specific_figure.append(self.__create_course_trajectory(track))
-      
-      return all_tracks_3d_graphs
-    
-    elif track:
-      self.track = track
-      course_graph = self.__create_course_trajectory(track)
-      list_of_courses_dropdownmenuitem = self.__generate_courses_information_for_track(track)
-      return self.__interactive_dash_app(
-        track=track,
-        course_graph=course_graph,
-        list_of_courses_dropdownmenuitem=list_of_courses_dropdownmenuitem
-      )
+    self.track = track
+    course_graph = self.__create_course_trajectory(track)
+    return self.__interactive_dash_app(
+      course_graph=course_graph,
+    )
